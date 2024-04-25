@@ -36,7 +36,7 @@ namespace Sparta_Dungeon
         {
             if (Inven.GetItemCount() > 0)
             {
-                if (Inven.GetItem(index) != null)
+                if (Inven.GetItem(index-1) != null)
                 {
                     Equipment equipment = Inven.GetItem(index - 1);
                     SetGold((int)(equipment.Price * 0.85));
