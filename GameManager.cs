@@ -1,8 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Buffers;
-using System.Runtime.Serialization.Formatters.Binary;
-
+﻿
 namespace Sparta_Dungeon
 {
     public enum Difficulty
@@ -15,21 +11,30 @@ namespace Sparta_Dungeon
 
     internal class GameManager
     {
+        // 무기가 장착되었을 때의 Event Action
         public static Action<Equipment>? onEquipWeapon;
 
+        // 무기가 해제되었을 때의 Event Action
         public static Action<Equipment>? onDetachWeapon;
 
+        // 방어구가 장착되었을 때의 Event Action
         public static Action<Equipment>? onEquipArmor;
 
+        // 방어구가 해제되었을 때의 Event Action
         public static Action<Equipment>? onDetachArmor;
 
+
+        // 간편하게 접근하기 위한 플레이어
         public static Player player = new Player("플레이어");
 
+        // 간편하게 접근하기 위한 상점
         public static Store store = new Store();
 
+        // 간편하게 접근하기 위한 던전
         public static Dungeon dungeon = new Dungeon();
 
 
+        // 화면별 게임 상태
         public enum GameState
         {
             None,
@@ -47,9 +52,8 @@ namespace Sparta_Dungeon
             End
         }
 
-
-
         public static GameState state = GameState.Main;
+
 
         // Error 발생 시 True로 만들어서 입력란 밑에 에러를 발생시키는 코드
         public static bool isError = false;
@@ -59,18 +63,18 @@ namespace Sparta_Dungeon
 
         // 구매 시도 시 골드가 부족한 경우 처리
         public static bool isEmpty = false;
+
+        // 힐링 성공 시 힐링을 성공했음을 알림
         public static bool isHealed = false;
         static void Main(string[] args)
         {
             // 거슬리는 커서의 움직임을 없애기 위해서 Visible을 False로
             Console.CursorVisible = false;
 
-
             // GameManager 속 전체적인 흐름
             // END상태가 될 경우 게임이 끝난다.
             while (state != GameState.End)
             {
-
                 if (state == GameState.Main)
                 {
                     Display("", "", GameState.Main);
@@ -127,6 +131,7 @@ namespace Sparta_Dungeon
 
                 }
 
+                // Display 후 선택 기회 전달
                 SelectOption();
             }
             Display("", "", GameState.End);
@@ -177,6 +182,7 @@ namespace Sparta_Dungeon
                     isError = true;
                 }
             }
+            // 스테이터스 선택지
             else if (state == GameState.Status)
             {
                 if (int.TryParse(Console.ReadLine(), out selNum))
@@ -198,6 +204,8 @@ namespace Sparta_Dungeon
                     isError = true;
                 }
             }
+
+            // 인벤토리 선택지
             else if (state == GameState.Inventory)
             {
                 if (int.TryParse(Console.ReadLine(), out selNum))
@@ -222,7 +230,9 @@ namespace Sparta_Dungeon
                     isError = true;
                 }
             }
-            else if(state == GameState.ItemManagement)
+
+            // 아이템 관리
+            else if (state == GameState.ItemManagement)
             {
                 if (int.TryParse(Console.ReadLine(), out selNum))
                 {
@@ -245,6 +255,8 @@ namespace Sparta_Dungeon
                     isError = true;
                 }
             }
+
+            // 스토어
             else if (state == GameState.Store)
             {
                 if (int.TryParse(Console.ReadLine(), out selNum))
@@ -273,6 +285,8 @@ namespace Sparta_Dungeon
                     isError = true;
                 }
             }
+            
+            // 아이템 구매 시
             else if(state == GameState.BuyItem)
             {
                 if (int.TryParse(Console.ReadLine(), out selNum))
@@ -298,7 +312,9 @@ namespace Sparta_Dungeon
                     isError = true;
                 }
             }
-            else if(state == GameState.SellItem)
+
+            // 아이템 판매 시
+            else if (state == GameState.SellItem)
             {
                 if (int.TryParse(Console.ReadLine(), out selNum))
                 {
@@ -323,6 +339,8 @@ namespace Sparta_Dungeon
                     isError = true;
                 }
             }
+
+            // 던전 입장
             else if (state == GameState.Dungeon)
             {
                 if (int.TryParse(Console.ReadLine(), out selNum))
@@ -356,6 +374,8 @@ namespace Sparta_Dungeon
                     isError = true;
                 }
             }
+            
+            // 던전 클리어
             else if (state == GameState.DungeonClear)
             {
                 if (int.TryParse(Console.ReadLine(), out selNum))
@@ -379,7 +399,9 @@ namespace Sparta_Dungeon
                     isError = true;
                 }
             }
-            else if(state == GameState.DungeonFailed)
+
+            // 던전 실패
+            else if (state == GameState.DungeonFailed)
             {
                 if (int.TryParse(Console.ReadLine(), out selNum))
                 {
@@ -402,8 +424,9 @@ namespace Sparta_Dungeon
                     isError = true;
                 }
             }
-            
-            else if(state == GameState.Hospital)
+
+            // 휴식처
+            else if (state == GameState.Hospital)
             {
                 if (int.TryParse(Console.ReadLine(), out selNum))
                 {
@@ -639,25 +662,24 @@ namespace Sparta_Dungeon
         }
 
 
-        public static void SaveData()
-        {
-
-        }
     }
 
     #region ========== Player ==========
 
+    // 플레이어
     [Serializable]
     public class Player
     {
         public event Action<Equipment>? onSellItem;
 
+        // 이름
+        public string Name { get; set; }
 
-        public string Name { get; private set; }
+        // 스테이터스
+        public PlayerStatus Status { get;  set; }
 
-        public PlayerStatus Status { get; private set; }
-
-        public Inventory Inven { get; private set; }
+        // 인벤토리
+        public Inventory Inven { get;  set; }
 
         public Player(string name)
         {
@@ -665,6 +687,7 @@ namespace Sparta_Dungeon
 
             Status = new PlayerStatus(Name, 1, "전사", 10, 5, 100, 1500);
             Inven = new Inventory();
+
         }
 
         public void SetGold(int gold)
@@ -686,6 +709,8 @@ namespace Sparta_Dungeon
             }
         }
         // 장비 장착 상태까지 포함하여 스테이터스 표시 메서드
+        
+        // 모든 스테이터스 정보를 포맷화하여 출력
         public string ShowAllStatus()
         {
             if (Inven.Weapon != null && Inven.Armor != null)
@@ -732,6 +757,7 @@ namespace Sparta_Dungeon
 
         }
 
+        // 데미지를 주고 출력
         public int Damage(int damage)
         {
             Status.VIT -= damage;
@@ -744,6 +770,7 @@ namespace Sparta_Dungeon
             return Status.VIT;
         }
 
+        // 던전 보상 및 출력
         public int RewardGold(int gold)
         {
             Status.Gold += gold;
@@ -767,13 +794,13 @@ namespace Sparta_Dungeon
     [Serializable]
     public class PlayerStatus
     {
-        public string Name { get; private set; }
-        public int Level { get; private set; }
-        public string Chad { get; private set; }
+        public string Name { get;  set; }
+        public int Level { get;  set; }
+        public string Chad { get;  set; }
 
-        public int ATK { get; private set; }
+        public int ATK { get;  set; }
 
-        public int DEF { get; private set; }
+        public int DEF { get;  set; }
 
         public int VIT { get; set; }
 
@@ -789,6 +816,7 @@ namespace Sparta_Dungeon
             DEF = def;
             VIT = vit;
             Gold = gold;
+
 
             GameManager.onEquipWeapon += SetWeaponAbility;
             GameManager.onEquipArmor += SetArmorAbility;
@@ -966,9 +994,9 @@ namespace Sparta_Dungeon
 
         public Inventory()
         {
-            Armor armor = new Armor("무쇠갑옷", 0, 9, "무쇠로 만들어져 튼튼한 갑옷입니다.",2200, false, true);
-            Weapon spear = new Weapon("스파르타의 창", 7, 0, "스파르타의 전사들이 사용했다는 전설의 창입니다.",3200, false, true);
-            Weapon oldSword = new Weapon("낡은 검", 2, 0, "쉽게 볼 수 있는 낡은 검입니다." ,600, false, true);
+            Armor armor = new Armor("무쇠갑옷", 0, 9, "무쇠로 만들어져 튼튼한 갑옷입니다.", 2200, false, true);
+            Weapon spear = new Weapon("스파르타의 창", 7, 0, "스파르타의 전사들이 사용했다는 전설의 창입니다.", 3200, false, true);
+            Weapon oldSword = new Weapon("낡은 검", 2, 0, "쉽게 볼 수 있는 낡은 검입니다.", 600, false, true);
 
             Equip(spear);
             Equip(armor);
@@ -976,6 +1004,7 @@ namespace Sparta_Dungeon
             SetItem(spear);
             SetItem(armor);
             SetItem(oldSword);
+
 
             Store.onBuyItem += SetItem;
         }
@@ -1033,6 +1062,17 @@ namespace Sparta_Dungeon
             }
         }
 
+        public string ShowAllItemData()
+        {
+            string data = "";
+            foreach(var item in items)
+            {
+                data += $"{item.Name},{item.ATK},{item.DEF}, {item.Description},{item.Price},{Enum.GetName(item.type)},{item.isEquipped},{item.isSelled},";
+            }
+            data += "\n";
+            return data;
+        }
+
         public string ShowAllSellItem()
         {
             string data = String.Empty;
@@ -1079,6 +1119,23 @@ namespace Sparta_Dungeon
 
                     equip.Equip(equip);
                     Armor = equip;
+                }
+            }
+            else
+            {
+                if(Weapon == null)
+                {
+                    if(equip.type == EquipType.Weapon)
+                    {
+                        equip.Equip(equip);
+                    }
+                }
+                else if(Armor == null)
+                {
+                    if (equip.type == EquipType.Armor)
+                    {
+                        equip.Equip(equip);
+                    }
                 }
             }
         }
@@ -1189,7 +1246,17 @@ namespace Sparta_Dungeon
         List<Equipment> items = new List<Equipment>();
 
         public static event Action<Equipment>? onBuyItem;
-        
+
+        public string ShowAllItemData()
+        {
+            string data = "";
+            foreach (var item in items)
+            {
+                data += $"{item.Name},{item.ATK},{item.DEF},{item.Description},{item.Price},{Enum.GetName(item.type)},{item.isEquipped},{item.isSelled},";
+            }
+            data += "\n";
+            return data;
+        }
 
         // 플레이어가 상점으로부터 아이템을 구매할 때 사용하는 메서드
         public void Buy(int index)
@@ -1232,10 +1299,6 @@ namespace Sparta_Dungeon
                     isFind = false;
                 }
             }
-
-            if (!isFind)
-            { }
-
 
         }
 
