@@ -105,13 +105,11 @@ namespace Sparta_Dungeon
                     Display(store.ShowItemlist(true), "", GameState.BuyItem);
 
                 }
-
                 else if(state == GameState.SellItem)
                 {
                     Display(player.Inven.ShowAllSellItem(), "", GameState.SellItem);
 
                 }
-                
                 else if(state == GameState.Dungeon)
                 {
                     Display("", "", GameState.Dungeon);
@@ -141,10 +139,9 @@ namespace Sparta_Dungeon
         public static void SelectOption()
         {
             int selNum;
-
-            if (state == GameState.Main)
+            if (int.TryParse(Console.ReadLine(), out selNum))
             {
-                if (int.TryParse(Console.ReadLine(), out selNum))
+                if (state == GameState.Main)
                 {
                     switch (selNum)
                     {
@@ -164,7 +161,7 @@ namespace Sparta_Dungeon
                         // Main -> Dungeon
                         case 4:
                             state = GameState.Dungeon;
-                                break;
+                            break;
 
                         case 5:
                             state = GameState.Hospital;
@@ -176,16 +173,9 @@ namespace Sparta_Dungeon
                             break;
                     }
                 }
-                // 숫자 외의 값을 입력했을 경우
-                else
-                {
-                    isError = true;
-                }
-            }
-            // 스테이터스 선택지
-            else if (state == GameState.Status)
-            {
-                if (int.TryParse(Console.ReadLine(), out selNum))
+
+                // 스테이터스 선택지
+                else if (state == GameState.Status)
                 {
                     switch (selNum)
                     {
@@ -199,16 +189,9 @@ namespace Sparta_Dungeon
                             break;
                     }
                 }
-                else
-                {
-                    isError = true;
-                }
-            }
 
-            // 인벤토리 선택지
-            else if (state == GameState.Inventory)
-            {
-                if (int.TryParse(Console.ReadLine(), out selNum))
+                // 인벤토리 선택지
+                else if (state == GameState.Inventory)
                 {
                     switch (selNum)
                     {
@@ -217,7 +200,6 @@ namespace Sparta_Dungeon
                             break;
                         case 1:
                             state = GameState.ItemManagement;
-
                             break;
 
                         default:
@@ -225,41 +207,27 @@ namespace Sparta_Dungeon
                             break;
                     }
                 }
-                else
-                {
-                    isError = true;
-                }
-            }
 
-            // 아이템 관리
-            else if (state == GameState.ItemManagement)
-            {
-                if (int.TryParse(Console.ReadLine(), out selNum))
+                // 아이템 관리
+                else if (state == GameState.ItemManagement)
                 {
-                    if(player.Inven.GetItemCount() >= selNum && selNum != 0)
+                    if (player.Inven.GetItemCount() >= selNum && selNum != 0)
                     {
                         player.Inven.SelectItem(selNum);
 
                     }
-                    else if(selNum > player.Inven.GetItemCount())
+                    else if (selNum > player.Inven.GetItemCount())
                     {
                         isError = true;
                     }
-                    else if(selNum == 0)
+                    else if (selNum == 0)
                     {
-                        state = GameState.Main;
+                        state = GameState.Inventory;
                     }
                 }
-                else
-                {
-                    isError = true;
-                }
-            }
 
-            // 스토어
-            else if (state == GameState.Store)
-            {
-                if (int.TryParse(Console.ReadLine(), out selNum))
+                // 스토어
+                else if (state == GameState.Store)
                 {
                     switch (selNum)
                     {
@@ -280,70 +248,43 @@ namespace Sparta_Dungeon
                             break;
                     }
                 }
-                else
+
+                // 아이템 구매 시
+                else if (state == GameState.BuyItem)
                 {
-                    isError = true;
-                }
-            }
-            
-            // 아이템 구매 시
-            else if(state == GameState.BuyItem)
-            {
-                if (int.TryParse(Console.ReadLine(), out selNum))
-                {
-                    if(store.GetItemCount() >= selNum && selNum != 0)
+                    if (store.GetItemCount() >= selNum && selNum != 0)
                     {
                         store.Buy(selNum);
-                        state = GameState.Store;
                     }
-                    else if(selNum > store.GetItemCount())
+                    else if (selNum > store.GetItemCount())
                     {
                         isError = true;
-                        state = GameState.Store;
                     }
                     else if (selNum == 0)
                     {
-                        state = GameState.Main;
+                        state = GameState.Store;
                     }
-
                 }
-                else
-                {
-                    isError = true;
-                }
-            }
 
-            // 아이템 판매 시
-            else if (state == GameState.SellItem)
-            {
-                if (int.TryParse(Console.ReadLine(), out selNum))
+                // 아이템 판매 시
+                else if (state == GameState.SellItem)
                 {
                     if (player.Inven.GetItemCount() >= selNum && selNum != 0)
                     {
                         player.Sell(selNum);
-                        state = GameState.Store;
                     }
                     else if (selNum > player.Inven.GetItemCount())
                     {
                         isError = true;
-                        state = GameState.Store;
                     }
                     else if (selNum == 0)
                     {
-                        state = GameState.Main;
+                        state = GameState.Store;
                     }
-
                 }
-                else
-                {
-                    isError = true;
-                }
-            }
 
-            // 던전 입장
-            else if (state == GameState.Dungeon)
-            {
-                if (int.TryParse(Console.ReadLine(), out selNum))
+                // 던전 입장
+                else if (state == GameState.Dungeon)
                 {
                     switch (selNum)
                     {
@@ -369,41 +310,9 @@ namespace Sparta_Dungeon
                             break;
                     }
                 }
-                else
-                {
-                    isError = true;
-                }
-            }
-            
-            // 던전 클리어
-            else if (state == GameState.DungeonClear)
-            {
-                if (int.TryParse(Console.ReadLine(), out selNum))
-                {
-                    switch (selNum)
-                    {
-                        // DungeonClear -> Main
-                        case 0:
-                            state = GameState.Main;
-                            break;
-  
-                        default:
-                            isError = true;
-                            state = GameState.Main;
 
-                            break;
-                    }
-                }
-                else
-                {
-                    isError = true;
-                }
-            }
-
-            // 던전 실패
-            else if (state == GameState.DungeonFailed)
-            {
-                if (int.TryParse(Console.ReadLine(), out selNum))
+                // 던전 클리어
+                else if (state == GameState.DungeonClear)
                 {
                     switch (selNum)
                     {
@@ -414,21 +323,29 @@ namespace Sparta_Dungeon
 
                         default:
                             isError = true;
-                            state = GameState.Main;
 
                             break;
                     }
                 }
-                else
-                {
-                    isError = true;
-                }
-            }
 
-            // 휴식처
-            else if (state == GameState.Hospital)
-            {
-                if (int.TryParse(Console.ReadLine(), out selNum))
+                // 던전 실패
+                else if (state == GameState.DungeonFailed)
+                {
+                    switch (selNum)
+                    {
+                        // DungeonClear -> Main
+                        case 0:
+                            state = GameState.Main;
+                            break;
+
+                        default:
+                            isError = true;
+                            break;
+                    }
+                }
+
+                // 휴식처
+                else if (state == GameState.Hospital)
                 {
                     switch (selNum)
                     {
@@ -442,17 +359,17 @@ namespace Sparta_Dungeon
 
                         default:
                             isError = true;
-                            state = GameState.Main;
 
                             break;
                     }
                 }
-                else
-                {
-                    isError = true;
-                }
+            }
+            else
+            {
+                isError = true;
             }
         }
+
 
         // 화면 정보 표시 메서드
         public static void Display(string text1 = " ", string text2 =" ", GameState state = GameState.None)

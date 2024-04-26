@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "9sTmvGOaGUNxFV9uzH7KteBwOgCOdrQs9XLP4c8Im+l4LDAcS9DfyPxOJPrZAHNEuyuAZtR58h9lyw7y2X/+nA==",
+  "dgSpecHash": "4HFMDeULtt8zRN9C8xH2T6g4IwuiTt+Q+vPHY1WtYwrOCcOe0dKQVMY1MjWDiUa4DvmUC4v3PL/ecjbPPZMR3Q==",
   "success": true,
   "projectFilePath": "C:\\Users\\ksuo1\\source\\repos\\ConsoleApp1\\Sparta Dungeon\\Sparta Dungeon.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\ksuo1\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
   "logs": []
 }
