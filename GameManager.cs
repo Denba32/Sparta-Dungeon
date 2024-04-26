@@ -521,7 +521,7 @@ namespace Sparta_Dungeon
 
                 player = dataManager.Load<Player>();
                 store = dataManager.Load<Store>();
-
+                
             }
             else
             {
