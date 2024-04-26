@@ -462,6 +462,7 @@ namespace Sparta_Dungeon
                     Console.Write("TIP : 좀 더 좋은 장비를 착용한다면?\n");
                     break;
             }
+            // display >>
 
             // 에러 처리, 오류가 발생했을 시 처리
             if (isError)
@@ -521,7 +522,6 @@ namespace Sparta_Dungeon
 
                 player = dataManager.Load<Player>();
                 store = dataManager.Load<Store>();
-                
             }
             else
             {

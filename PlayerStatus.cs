@@ -64,7 +64,6 @@ namespace Sparta_Dungeon
             else
             {
                 ATK -= weapon.ATK;
-
             }
         }
         public void SetArmorAbility(Equipment armor)

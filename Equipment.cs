@@ -47,7 +47,6 @@ namespace Sparta_Dungeon
                 this.isEquipped = isEquipped;
                 this.isSelled = isSelled;
             }
-
         }
 
         public string IsEquipped()
@@ -80,7 +79,6 @@ namespace Sparta_Dungeon
             if(type == EquipType.Weapon)
             {
                 GameManager.onEquipWeapon?.Invoke(equip);
-                GameManager.onDetachWeapon?.Invoke(equip);
 
             }
             else if (type == EquipType.Armor)

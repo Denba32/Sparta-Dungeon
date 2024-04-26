@@ -78,8 +78,6 @@ namespace Sparta_Dungeon
         }
 
 
-
-
         public int GetItemCount() => items.Count;
         // 상점에서 소유하고 있는 총 아이템 정보에 대해서 출력
         public string ShowItemlist(bool isBuy)

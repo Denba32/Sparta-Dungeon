@@ -9,9 +9,11 @@ namespace Sparta_Dungeon
     {
         public void Save<T>(T data)
         {
+            // 데이터
             string json = JsonConvert.SerializeObject(data);
             //string json = JsonSerializer.Serialize<T>(data, jso);
 
+            // 파일명과 디렉터리
             string fileName = $"{DefaultPath()}\\{typeof(T)}.json";
 
             FileWrite(fileName, json);

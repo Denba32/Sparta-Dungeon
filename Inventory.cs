@@ -124,6 +124,7 @@ namespace Sparta_Dungeon
             }
         }
 
+
         public void Equip(Equipment equip)
         {
             if (!equip.isEquipped)
@@ -152,6 +153,7 @@ namespace Sparta_Dungeon
          * 1.아이템이 장착되어있는 것일 경우
          * 2.장착되어있지 않을경우
          */
+
         public void SelectItem(int count)
         {
             int selNum = count - 1;
