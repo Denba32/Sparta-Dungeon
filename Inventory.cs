@@ -160,7 +160,7 @@ namespace Sparta_Dungeon
                 // 무기일 경우
                 if (items[selNum].type == EquipType.Weapon)
                 {
-                    if (Weapon.Name == items[selNum].Name)
+                    if (Weapon.Name ==items[selNum].Name)
                     {
                         Detach(items[selNum]);
                     }
