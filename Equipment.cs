@@ -17,31 +17,37 @@ namespace Sparta_Dungeon
         void Detach(Equipment equip);
     }
 
-
-    public abstract class Equipment
+    [System.Serializable]
+    public class Equipment
     {
-        public string Name { get; private set; }
-        public int ATK { get; private set; }
-        public int DEF { get; private set; }
+        public string Name { get; set; }
+        public int ATK { get; set; }
+        public int DEF { get; set; }
 
-        public string Description { get; private set; }
-        public int Price { get; private set; }
+        public string Description { get; set; }
+        public int Price { get; set; }
 
-        public EquipType type;
         public bool isEquipped = false;
         public bool isSelled = false;
 
+        public EquipType type;
 
+
+        public Equipment() { }
 
         public Equipment(string name, int ATK, int DEF, string Description, int Price, bool isEquipped, bool isSelled)
         {
-            Name = name;
-            this.ATK = ATK;
-            this.DEF = DEF;
-            this.Description = Description;
-            this.Price = Price;
-            this.isEquipped = isEquipped;
-            this.isSelled = isSelled;
+            if(!GameManager.isLoaded)
+            {
+                Name = name;
+                this.ATK = ATK;
+                this.DEF = DEF;
+                this.Description = Description;
+                this.Price = Price;
+                this.isEquipped = isEquipped;
+                this.isSelled = isSelled;
+            }
+
         }
 
         public string IsEquipped()
@@ -71,11 +77,32 @@ namespace Sparta_Dungeon
         public virtual void Equip(Equipment equip)
         {
             isEquipped = true;
+            if(type == EquipType.Weapon)
+            {
+                GameManager.onEquipWeapon?.Invoke(equip);
+                GameManager.onDetachWeapon?.Invoke(equip);
+
+            }
+            else if (type == EquipType.Armor)
+            {
+                GameManager.onEquipArmor?.Invoke(equip);
+
+            }
         }
 
         public virtual void Detach(Equipment equip)
         {
             isEquipped = false;
+            if (type == EquipType.Weapon)
+            {
+                GameManager.onDetachWeapon?.Invoke(equip);
+
+            }
+            else if (type == EquipType.Armor)
+            {
+                GameManager.onDetachArmor?.Invoke(equip);
+
+            }
         }
     }
 }

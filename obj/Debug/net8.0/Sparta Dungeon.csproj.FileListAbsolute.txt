@@ -13,6 +13,14 @@ C:\Users\ksuo1\source\repos\ConsoleApp1\Sparta Dungeon\obj\Debug\net8.0\refint\S
 C:\Users\ksuo1\source\repos\ConsoleApp1\Sparta Dungeon\obj\Debug\net8.0\Sparta Dungeon.pdb
 C:\Users\ksuo1\source\repos\ConsoleApp1\Sparta Dungeon\obj\Debug\net8.0\Sparta Dungeon.genruntimeconfig.cache
 C:\Users\ksuo1\source\repos\ConsoleApp1\Sparta Dungeon\obj\Debug\net8.0\ref\Sparta Dungeon.dll
-C:\Users\ksuo1\source\repos\ConsoleApp1\Sparta Dungeon\bin\Debug\net8.0\Newtonsoft.Json.dll
 C:\Users\ksuo1\source\repos\ConsoleApp1\Sparta Dungeon\obj\Debug\net8.0\Sparta Dungeon.csproj.AssemblyReference.cache
 C:\Users\ksuo1\source\repos\ConsoleApp1\Sparta Dungeon\obj\Debug\net8.0\Sparta D.5A4E36EA.Up2Date
+C:\Users\ksuo1\source\repos\ConsoleApp1\Sparta Dungeon\bin\Debug\net8.0\Microsoft.Extensions.Configuration.dll
+C:\Users\ksuo1\source\repos\ConsoleApp1\Sparta Dungeon\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\ksuo1\source\repos\ConsoleApp1\Sparta Dungeon\bin\Debug\net8.0\Microsoft.Extensions.Configuration.FileExtensions.dll
+C:\Users\ksuo1\source\repos\ConsoleApp1\Sparta Dungeon\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Json.dll
+C:\Users\ksuo1\source\repos\ConsoleApp1\Sparta Dungeon\bin\Debug\net8.0\Microsoft.Extensions.FileProviders.Abstractions.dll
+C:\Users\ksuo1\source\repos\ConsoleApp1\Sparta Dungeon\bin\Debug\net8.0\Microsoft.Extensions.FileProviders.Physical.dll
+C:\Users\ksuo1\source\repos\ConsoleApp1\Sparta Dungeon\bin\Debug\net8.0\Microsoft.Extensions.FileSystemGlobbing.dll
+C:\Users\ksuo1\source\repos\ConsoleApp1\Sparta Dungeon\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
+C:\Users\ksuo1\source\repos\ConsoleApp1\Sparta Dungeon\bin\Debug\net8.0\Newtonsoft.Json.dll

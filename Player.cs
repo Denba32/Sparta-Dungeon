@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Sparta_Dungeon
 {
+    [System.Serializable]
     public class Player
     {
         public event Action<Equipment>? onSellItem;
@@ -19,13 +21,13 @@ namespace Sparta_Dungeon
         // 인벤토리
         public Inventory Inven { get; set; }
 
+        public Player() { } 
         public Player(string name)
         {
             Name = name;
 
             Status = new PlayerStatus(Name, 1, "전사", 10, 5, 100, 1500);
             Inven = new Inventory();
-
         }
 
         public void SetGold(int gold)
@@ -38,7 +40,7 @@ namespace Sparta_Dungeon
             {
                 if (Inven.GetItem(index-1) != null)
                 {
-                    Equipment equipment = Inven.GetItem(index - 1);
+                    Equipment? equipment = Inven.GetItem(index - 1);
                     SetGold((int)(equipment.Price * 0.85));
                     Inven.SellItem(equipment);
 

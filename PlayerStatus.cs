@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sparta_Dungeon
 {
+    [System.Serializable]
     public class PlayerStatus
     {
         public string Name { get; set; }
@@ -20,7 +21,15 @@ namespace Sparta_Dungeon
 
         public int Gold { get; set; }
 
+        public PlayerStatus()
+        {
+            GameManager.onEquipWeapon += SetWeaponAbility;
+            GameManager.onEquipArmor += SetArmorAbility;
 
+            GameManager.onDetachWeapon += SetWeaponAbility;
+            GameManager.onDetachArmor += SetArmorAbility;
+
+        }
         public PlayerStatus(string name, int level, string chad, int atk, int def, int vit, int gold)
         {
             Name = name;
@@ -31,13 +40,11 @@ namespace Sparta_Dungeon
             VIT = vit;
             Gold = gold;
 
-
             GameManager.onEquipWeapon += SetWeaponAbility;
             GameManager.onEquipArmor += SetArmorAbility;
 
             GameManager.onDetachWeapon += SetWeaponAbility;
             GameManager.onDetachArmor += SetArmorAbility;
-
         }
 
         public void LevelUp(int level)

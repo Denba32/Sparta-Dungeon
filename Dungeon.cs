@@ -1,6 +1,14 @@
 ﻿
 namespace Sparta_Dungeon
 {
+    public enum Difficulty
+    {
+        None,
+        Easy,
+        Normal,
+        Hard
+    }
+
     internal class Dungeon
     {
         Difficulty difficulty = Difficulty.None;

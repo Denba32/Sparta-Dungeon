@@ -6,25 +6,28 @@ using System.Threading.Tasks;
 
 namespace Sparta_Dungeon
 {
+    [System.Serializable]
     public class Inventory
     {
-        List<Equipment> items = new List<Equipment>();
-
+        public List<Equipment> items { get; private set; } = new List<Equipment>();
         public Equipment? Weapon { get; set; }
         public Equipment? Armor { get; set; }
 
         public Inventory()
         {
-            Armor armor = new Armor("무쇠갑옷", 0, 9, "무쇠로 만들어져 튼튼한 갑옷입니다.", 2200, false, true);
-            Weapon spear = new Weapon("스파르타의 창", 7, 0, "스파르타의 전사들이 사용했다는 전설의 창입니다.", 3200, false, true);
-            Weapon oldSword = new Weapon("낡은 검", 2, 0, "쉽게 볼 수 있는 낡은 검입니다.", 600, false, true);
+            if(!GameManager.isLoaded)
+            {
+                Armor armor = new Armor("무쇠갑옷", 0, 9, "무쇠로 만들어져 튼튼한 갑옷입니다.", 2200, false, true);
+                Weapon spear = new Weapon("스파르타의 창", 7, 0, "스파르타의 전사들이 사용했다는 전설의 창입니다.", 3200, false, true);
+                Weapon oldSword = new Weapon("낡은 검", 2, 0, "쉽게 볼 수 있는 낡은 검입니다.", 600, false, true);
 
-            Equip(spear);
-            Equip(armor);
+                Equip(spear);
+                Equip(armor);
 
-            SetItem(spear);
-            SetItem(armor);
-            SetItem(oldSword);
+                SetItem(spear);
+                SetItem(armor);
+                SetItem(oldSword);
+            }
 
 
             Store.onBuyItem += SetItem;
@@ -142,23 +145,6 @@ namespace Sparta_Dungeon
                     Armor = equip;
                 }
             }
-            else
-            {
-                if (Weapon == null)
-                {
-                    if (equip.type == EquipType.Weapon)
-                    {
-                        equip.Equip(equip);
-                    }
-                }
-                else if (Armor == null)
-                {
-                    if (equip.type == EquipType.Armor)
-                    {
-                        equip.Equip(equip);
-                    }
-                }
-            }
         }
 
         /*
@@ -174,7 +160,7 @@ namespace Sparta_Dungeon
                 // 무기일 경우
                 if (items[selNum].type == EquipType.Weapon)
                 {
-                    if (Weapon == items[selNum])
+                    if (Weapon.Name == items[selNum].Name)
                     {
                         Detach(items[selNum]);
                     }
@@ -182,7 +168,7 @@ namespace Sparta_Dungeon
                 // 방어구일 경우
                 else
                 {
-                    if (Armor == items[selNum])
+                    if (Armor.Name == items[selNum].Name)
                     {
                         Detach(items[selNum]);
                     }
@@ -217,13 +203,13 @@ namespace Sparta_Dungeon
                 }
             }
         }
-        public void Detach(Equipment equip)
+        private void Detach(Equipment equip)
         {
             if (equip.isEquipped)
             {
                 if (equip.type == EquipType.Weapon)
                 {
-                    if (Weapon == equip)
+                    if (Weapon.Name == equip.Name)
                     {
                         Weapon = null;
                         equip.Detach(equip);
@@ -231,7 +217,7 @@ namespace Sparta_Dungeon
                 }
                 else if (equip.type == EquipType.Armor)
                 {
-                    if (Armor == equip)
+                    if (Armor.Name == equip.Name)
                     {
                         Armor = null;
                         equip.Detach(equip);
