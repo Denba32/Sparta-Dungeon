@@ -6,11 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sparta_Dungeon
 {
-    public enum EquipType
-    {
-        Weapon,
-        Armor
-    }
+
     public interface IEquipable
     {
         void Equip(Equipment equip);
@@ -30,14 +26,14 @@ namespace Sparta_Dungeon
         public bool isEquipped = false;
         public bool isSelled = false;
 
-        public EquipType type;
+        public Define.EquipType type;
 
 
         public Equipment() { }
 
         public Equipment(string name, int ATK, int DEF, string Description, int Price, bool isEquipped, bool isSelled)
         {
-            if(!GameManager.isLoaded)
+            if(!GameManager.Instance.isLoaded)
             {
                 Name = name;
                 this.ATK = ATK;
@@ -76,14 +72,14 @@ namespace Sparta_Dungeon
         public virtual void Equip(Equipment equip)
         {
             isEquipped = true;
-            if(type == EquipType.Weapon)
+            if(type == Define.EquipType.Weapon)
             {
-                GameManager.onEquipWeapon?.Invoke(equip);
+                GameManager.Instance.Event.onEquipWeapon?.Invoke(equip);
 
             }
-            else if (type == EquipType.Armor)
+            else if (type == Define.EquipType.Armor)
             {
-                GameManager.onEquipArmor?.Invoke(equip);
+                GameManager.Instance.Event.onEquipArmor?.Invoke(equip);
 
             }
         }
@@ -91,14 +87,14 @@ namespace Sparta_Dungeon
         public virtual void Detach(Equipment equip)
         {
             isEquipped = false;
-            if (type == EquipType.Weapon)
+            if (type == Define.EquipType.Weapon)
             {
-                GameManager.onDetachWeapon?.Invoke(equip);
+                GameManager.Instance.Event.onDetachWeapon?.Invoke(equip);
 
             }
-            else if (type == EquipType.Armor)
+            else if (type == Define.EquipType.Armor)
             {
-                GameManager.onDetachArmor?.Invoke(equip);
+                GameManager.Instance.Event.onDetachArmor?.Invoke(equip);
 
             }
         }

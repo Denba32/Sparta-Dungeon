@@ -13,7 +13,7 @@ namespace Sparta_Dungeon
 
         public Weapon(string name, int ATK, int DEF, string Description, int Price, bool isEquipped, bool isSelled) : base(name, ATK, DEF, Description, Price, isEquipped, isSelled)
         {
-            type = EquipType.Weapon;
+            type = Define.EquipType.Weapon;
         }
 
     }

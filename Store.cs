@@ -14,7 +14,7 @@ namespace Sparta_Dungeon
 
         public Store()
         {
-            if(!GameManager.isLoaded)
+            if(!GameManager.Instance.isLoaded)
             {
                 items.Add(new Armor("수련자 갑옷", 0, 5, "수련에 도움을 주는 갑옷입니다.", 1000, false, false));
                 items.Add(new Armor("무쇠갑옷", 0, 9, "무쇠로 만들어져 튼튼한 갑옷입니다.", 2200, false, true));
@@ -24,7 +24,7 @@ namespace Sparta_Dungeon
                 items.Add(new Weapon("스파르타의 창", 7, 0, "스파르타의 전사들이 사용했다는 전설의 창입니다.", 3200, false, true));
             }
 
-            GameManager.player.onSellItem += Sell;
+            GameManager.Instance.Player.onSellItem += Sell;
 
         }
         public string ShowAllItemData()
@@ -45,17 +45,17 @@ namespace Sparta_Dungeon
             {
                 if (items[index - 1].isSelled)
                 {
-                    GameManager.isBuyed = true;
+                    GameManager.Instance.isBuyed = true;
                     return;
                 }
-                if (items[index - 1].Price > GameManager.player.Status.Gold)
+                if (items[index - 1].Price > GameManager.Instance.Player.Status.Gold)
                 {
-                    GameManager.isEmpty = true;
+                    GameManager.Instance.isEmpty = true;
                     return;
                 }
                 else
                 {
-                    GameManager.player.SetGold(-items[index - 1].Price);
+                    GameManager.Instance.Player.SetGold(-items[index - 1].Price);
                     items[index - 1].isSelled = true;
                 }
             }
@@ -90,7 +90,7 @@ namespace Sparta_Dungeon
                 {
                     for (int i = 0; i < items.Count; i++)
                     {
-                        if (items[i].type == EquipType.Weapon)
+                        if (items[i].type == Define.EquipType.Weapon)
                         {
                             data += $"- {i + 1} {items[i].Name}    | 공격력 +{items[i].ATK}  | {items[i].Description}  | {items[i].IsSelled()}\n";
                         }
@@ -104,7 +104,7 @@ namespace Sparta_Dungeon
                 {
                     for (int i = 0; i < items.Count; i++)
                     {
-                        if (items[i].type == EquipType.Weapon)
+                        if (items[i].type == Define.EquipType.Weapon)
                         {
                             data += $"- {items[i].Name}    | 공격력 +{items[i].ATK}  | {items[i].Description}  | {items[i].IsSelled()}\n";
                         }

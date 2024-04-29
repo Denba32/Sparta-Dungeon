@@ -16,7 +16,7 @@ namespace Sparta_Dungeon
 
         public Inventory()
         {
-            if(!GameManager.isLoaded)
+            if(!GameManager.Instance.isLoaded)
             {
                 Armor armor = new Armor("무쇠갑옷", 0, 9, "무쇠로 만들어져 튼튼한 갑옷입니다.", 2200, false, true);
                 Weapon spear = new Weapon("스파르타의 창", 7, 0, "스파르타의 전사들이 사용했다는 전설의 창입니다.", 3200, false, true);
@@ -68,7 +68,7 @@ namespace Sparta_Dungeon
             {
                 for (int i = 0; i < items.Count; i++)
                 {
-                    if (items[i].type == EquipType.Weapon)
+                    if (items[i].type == Define.EquipType.Weapon)
                     {
                         data += $"- {i + 1} {items[i].IsEquipped()}{items[i].Name}   | 공격력 +{items[i].ATK} | {items[i].Description}\n";
                     }
@@ -106,7 +106,7 @@ namespace Sparta_Dungeon
             {
                 for (int i = 0; i < items.Count; i++)
                 {
-                    if (items[i].type == EquipType.Weapon)
+                    if (items[i].type == Define.EquipType.Weapon)
                     {
                         data += $"- {i + 1} {items[i].Name}   | 공격력 +{items[i].ATK} | {items[i].Description}   | {items[i].Price * 0.85} G\n";
                     }
@@ -131,7 +131,7 @@ namespace Sparta_Dungeon
             {
                 equip.isEquipped = true;
 
-                if (equip.type == EquipType.Weapon)
+                if (equip.type == Define.EquipType.Weapon)
                 {
                     if (Weapon == equip) return;
 
@@ -139,7 +139,7 @@ namespace Sparta_Dungeon
                     Weapon = equip;
 
                 }
-                else if (equip.type == EquipType.Armor)
+                else if (equip.type == Define.EquipType.Armor)
                 {
                     if (Armor == equip) return;
 
@@ -161,7 +161,7 @@ namespace Sparta_Dungeon
             if (items[selNum].isEquipped)
             {
                 // 무기일 경우
-                if (items[selNum].type == EquipType.Weapon)
+                if (items[selNum].type == Define.EquipType.Weapon)
                 {
                     if (Weapon.Name ==items[selNum].Name)
                     {
@@ -179,7 +179,7 @@ namespace Sparta_Dungeon
             }
             else
             {
-                if (items[selNum].type == EquipType.Weapon)
+                if (items[selNum].type == Define.EquipType.Weapon)
                 {
                     // 아이템이 존재할 경우
                     if (Weapon != null)
@@ -210,7 +210,7 @@ namespace Sparta_Dungeon
         {
             if (equip.isEquipped)
             {
-                if (equip.type == EquipType.Weapon)
+                if (equip.type == Define.EquipType.Weapon)
                 {
                     if (Weapon.Name == equip.Name)
                     {
@@ -218,7 +218,7 @@ namespace Sparta_Dungeon
                         equip.Detach(equip);
                     }
                 }
-                else if (equip.type == EquipType.Armor)
+                else if (equip.type == Define.EquipType.Armor)
                 {
                     if (Armor.Name == equip.Name)
                     {

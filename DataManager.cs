@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace Sparta_Dungeon
 {
-    internal class DataManager
+    public class DataManager
     {
         public void Save<T>(T data)
         {

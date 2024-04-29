@@ -12,7 +12,7 @@ namespace Sparta_Dungeon
         public Armor() { }
         public Armor(string name, int ATK, int DEF, string Description, int Price, bool isEquipped, bool isSelled) : base(name, ATK, DEF, Description, Price, isEquipped, isSelled)
         {
-            type = EquipType.Armor;
+            type = Define.EquipType.Armor;
         }
     }
 }

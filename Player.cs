@@ -103,7 +103,7 @@ namespace Sparta_Dungeon
             Status.VIT -= damage;
             if (Status.VIT <= 0)
             {
-                GameManager.state = GameManager.GameState.End;
+                GameManager.Instance.state = Define.GameState.End;
                 Status.VIT = 0;
                 return 0;
             }
@@ -123,11 +123,11 @@ namespace Sparta_Dungeon
             {
                 SetGold(-500);
                 Status.VIT = 100;
-                GameManager.isHealed = true;
+                GameManager.Instance.isHealed = true;
             }
             else
             {
-                GameManager.isEmpty = true;
+                GameManager.Instance.isEmpty = true;
             }
         }
     }

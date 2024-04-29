@@ -23,11 +23,11 @@ namespace Sparta_Dungeon
 
         public PlayerStatus()
         {
-            GameManager.onEquipWeapon += SetWeaponAbility;
-            GameManager.onEquipArmor += SetArmorAbility;
+            GameManager.Instance.Event.onEquipWeapon += SetWeaponAbility;
+            GameManager.Instance.Event.onEquipArmor += SetArmorAbility;
 
-            GameManager.onDetachWeapon += SetWeaponAbility;
-            GameManager.onDetachArmor += SetArmorAbility;
+            GameManager.Instance.Event.onDetachWeapon += SetWeaponAbility;
+            GameManager.Instance.Event.onDetachArmor += SetArmorAbility;
 
         }
         public PlayerStatus(string name, int level, string chad, int atk, int def, int vit, int gold)
@@ -40,11 +40,11 @@ namespace Sparta_Dungeon
             VIT = vit;
             Gold = gold;
 
-            GameManager.onEquipWeapon += SetWeaponAbility;
-            GameManager.onEquipArmor += SetArmorAbility;
+            GameManager.Instance.Event.onEquipWeapon += SetWeaponAbility;
+            GameManager.Instance.Event.onEquipArmor += SetArmorAbility;
 
-            GameManager.onDetachWeapon += SetWeaponAbility;
-            GameManager.onDetachArmor += SetArmorAbility;
+            GameManager.Instance.Event.onDetachWeapon += SetWeaponAbility;
+            GameManager.Instance.Event.onDetachArmor += SetArmorAbility;
         }
 
         public void LevelUp(int level)
