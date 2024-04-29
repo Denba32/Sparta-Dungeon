@@ -43,6 +43,8 @@ namespace Sparta_Dungeon
         public EventManager Event { get => Instance._event; }
         public Player Player { get => Instance.player; }
 
+        public SceneManager Scene = new SceneManager();
+
         public Define.GameState state = GameState.Main;
 
 
@@ -298,17 +300,11 @@ namespace Sparta_Dungeon
 
         public void GameStart()
         {
-            if (state == GameState.Main)
-            {
-                UI.Display("", "", GameState.Main);
-            }
 
-            else if (state == GameState.Status)
-            {
-                UI.Display(player.ShowAllStatus(), "", GameState.Status);
-            }
+            Scene.TownScene();
 
-            else if (state == GameState.Inventory)
+
+            if (state == GameState.Inventory)
             {
                 UI.Display("", "", GameState.Inventory);
             }
@@ -353,7 +349,6 @@ namespace Sparta_Dungeon
                 UI.Display("", "", GameState.End);
 
             }
-            SelectOption();
         }
     }
 }

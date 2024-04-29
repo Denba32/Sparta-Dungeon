@@ -24,3 +24,29 @@ C:\Users\ksuo1\source\repos\ConsoleApp1\Sparta Dungeon\bin\Debug\net8.0\Microsof
 C:\Users\ksuo1\source\repos\ConsoleApp1\Sparta Dungeon\bin\Debug\net8.0\Microsoft.Extensions.FileSystemGlobbing.dll
 C:\Users\ksuo1\source\repos\ConsoleApp1\Sparta Dungeon\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
 C:\Users\ksuo1\source\repos\ConsoleApp1\Sparta Dungeon\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\USER\Desktop\Git\Sparta-Dungeon\bin\Debug\net8.0\Sparta Dungeon.exe
+C:\Users\USER\Desktop\Git\Sparta-Dungeon\bin\Debug\net8.0\Sparta Dungeon.deps.json
+C:\Users\USER\Desktop\Git\Sparta-Dungeon\bin\Debug\net8.0\Sparta Dungeon.runtimeconfig.json
+C:\Users\USER\Desktop\Git\Sparta-Dungeon\bin\Debug\net8.0\Sparta Dungeon.dll
+C:\Users\USER\Desktop\Git\Sparta-Dungeon\bin\Debug\net8.0\Sparta Dungeon.pdb
+C:\Users\USER\Desktop\Git\Sparta-Dungeon\bin\Debug\net8.0\Microsoft.Extensions.Configuration.dll
+C:\Users\USER\Desktop\Git\Sparta-Dungeon\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\USER\Desktop\Git\Sparta-Dungeon\bin\Debug\net8.0\Microsoft.Extensions.Configuration.FileExtensions.dll
+C:\Users\USER\Desktop\Git\Sparta-Dungeon\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Json.dll
+C:\Users\USER\Desktop\Git\Sparta-Dungeon\bin\Debug\net8.0\Microsoft.Extensions.FileProviders.Abstractions.dll
+C:\Users\USER\Desktop\Git\Sparta-Dungeon\bin\Debug\net8.0\Microsoft.Extensions.FileProviders.Physical.dll
+C:\Users\USER\Desktop\Git\Sparta-Dungeon\bin\Debug\net8.0\Microsoft.Extensions.FileSystemGlobbing.dll
+C:\Users\USER\Desktop\Git\Sparta-Dungeon\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
+C:\Users\USER\Desktop\Git\Sparta-Dungeon\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\USER\Desktop\Git\Sparta-Dungeon\obj\Debug\net8.0\Sparta Dungeon.csproj.AssemblyReference.cache
+C:\Users\USER\Desktop\Git\Sparta-Dungeon\obj\Debug\net8.0\Sparta Dungeon.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\USER\Desktop\Git\Sparta-Dungeon\obj\Debug\net8.0\Sparta Dungeon.AssemblyInfoInputs.cache
+C:\Users\USER\Desktop\Git\Sparta-Dungeon\obj\Debug\net8.0\Sparta Dungeon.AssemblyInfo.cs
+C:\Users\USER\Desktop\Git\Sparta-Dungeon\obj\Debug\net8.0\Sparta Dungeon.csproj.CoreCompileInputs.cache
+C:\Users\USER\Desktop\Git\Sparta-Dungeon\obj\Debug\net8.0\Sparta Dungeon.sourcelink.json
+C:\Users\USER\Desktop\Git\Sparta-Dungeon\obj\Debug\net8.0\Sparta D.5A4E36EA.Up2Date
+C:\Users\USER\Desktop\Git\Sparta-Dungeon\obj\Debug\net8.0\Sparta Dungeon.dll
+C:\Users\USER\Desktop\Git\Sparta-Dungeon\obj\Debug\net8.0\refint\Sparta Dungeon.dll
+C:\Users\USER\Desktop\Git\Sparta-Dungeon\obj\Debug\net8.0\Sparta Dungeon.pdb
+C:\Users\USER\Desktop\Git\Sparta-Dungeon\obj\Debug\net8.0\Sparta Dungeon.genruntimeconfig.cache
+C:\Users\USER\Desktop\Git\Sparta-Dungeon\obj\Debug\net8.0\ref\Sparta Dungeon.dll
