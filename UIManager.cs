@@ -11,57 +11,6 @@ namespace Sparta_Dungeon
 {
     public class UIManager
     {
-        // 화면 정보 표시 메서드
-        public void Display(string text1 = " ", string text2 = " ", GameState state = GameState.None)
-        {
-            Console.Clear();
-
-            Console.SetCursorPosition(0, 0);
-
-            switch (state)
-            {
-                case GameState.None:
-                    Console.Write(text1);
-                    break;
-                case GameState.DungeonClear:
-                    Console.ForegroundColor = ConsoleColor.DarkYellow;
-                    Console.Write("던전 클리어\n");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.Write("축하합니다!!\n" +
-                                    $"{text2}\n\n" +
-                                    "0. 나가기\n\n" +
-                                    "원하시는 행동을 입력해주세요.\n" +
-                                    ">>");
-                    break;
-                case GameState.DungeonFailed:
-                    Console.ForegroundColor = ConsoleColor.DarkYellow;
-                    Console.Write("던전 실패\n");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.Write("TIP : 좀 더 좋은 장비를 착용한다면?\n" +
-                                    $"{text2}\n" +
-                                    "0. 나가기\n\n" +
-                                    "원하시는 행동을 입력해주세요.\n" +
-                                    ">>");
-                    break;
-                case GameState.Hospital:
-                    Console.ForegroundColor = ConsoleColor.DarkYellow;
-                    Console.Write("휴식하기\n");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.Write($"500 G를 내면 체력을 회복할 수 있습니다. (보유 골드 : {GameManager.Instance.Player.Status.Gold} G)\n\n" +
-                                    $"1. 휴식하기\n" +
-                                    "0. 나가기\n\n" +
-                                    "원하시는 행동을 입력해주세요.\n" +
-                                    ">>");
-                    break;
-                case GameState.End:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write("유다희....\n\n\n\n");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.Write("TIP : 좀 더 좋은 장비를 착용한다면?\n");
-                    break;
-            }
-        }
-
         //매개변수에 씬의 제목을 입력시 화면 최상단에 출력
         public void TiteleText(string str)
         {
@@ -132,10 +81,19 @@ namespace Sparta_Dungeon
             Console.WriteLine("   잘못된 입력입니다!!!");
             Thread.Sleep(300);
         }
+        //보유 골드를 화면 우상단에 표시
         public void GoldText()
         {
             Console.SetCursorPosition(30, 6);
-            Console.WriteLine($"[보유중인 골드] : {0} G");
+            Console.WriteLine($"[보유중인 골드] : {GameManager.Instance.Player.PlayerData.Gold} G");
+        }
+        //사망메세지
+        public void DieText()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write("유다희....\n\n\n\n");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("TIP : 좀 더 좋은 장비를 착용한다면?");
         }
     }
 }

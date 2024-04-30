@@ -91,53 +91,28 @@ namespace Sparta_Dungeon
         // 장비 장착 상태까지 포함하여 스테이터스 표시 메서드
 
         // 모든 스테이터스 정보를 포맷화하여 출력
-        public string ShowAllStatus()
+        public void ShowAllStatus()
         {
-            // 장비를 장착 중일 때
-            if (Inven.Weapon != null && Inven.Armor != null)
+            Console.WriteLine($"이름 : {PlayerData.Name}");
+            Console.WriteLine($"Chad ( {PlayerData.Chad} )");
+            if (Inven.Weapon != null)
             {
-                return $"이름 : {PlayerData.Name}\n" +
-                        $"Lv. {PlayerData.Level.ToString("D2")}\n" +
-                        $"Chad ( {PlayerData.Chad} )\n" +
-                        $"공격력 : {PlayerData.Atk} (+{Inven.GetWeaponAbility()})\n" +
-                        $"방어력 : {PlayerData.Def} (+{Inven.GetArmorAbility()})\n" +
-                        $"체력 : {PlayerData.Vit}\n" +
-                        $"Gold : {PlayerData.Gold} G\n";
+                Console.WriteLine($"공격력 : {PlayerData.Atk + Inven.GetWeaponAbility()} + ({Inven.GetWeaponAbility()})");
             }
-            // 무기만 장착 중일 때
-            else if (Inven.Weapon != null && Inven.Armor == null)
-            {
-                return $"이름 : {PlayerData.Name}\n" +
-                        $"Lv. {PlayerData.Level.ToString("D2")}\n" +
-                        $"Chad ( {PlayerData.Chad} )\n" +
-                        $"공격력 : {PlayerData.Atk} (+{Inven.GetWeaponAbility()})\n" +
-                        $"방어력 : {PlayerData.Def}\n" +
-                        $"체력 : {PlayerData.Vit}\n" +
-                        $"Gold : {PlayerData.Gold} G\n";
-            }
-            // 방어구만 장착중일 때
-            else if (Inven.Weapon == null && Inven.Armor != null)
-            {
-                return $"이름 : {PlayerData.Name}\n" +
-                        $"Lv. {PlayerData.Level.ToString("D2")}\n" +
-                        $"Chad ( {PlayerData.Chad} )\n" +
-                        $"공격력 : {PlayerData.Atk}\n" +
-                        $"방어력 : {PlayerData.Def} (+{Inven.GetArmorAbility()})\n" +
-                        $"체력 : {PlayerData.Vit}\n" +
-                        $"Gold : {PlayerData.Gold} G\n";
-            }
-            // 장비를 장착중이지 않을 때
             else
             {
-                return $"이름 : {PlayerData.Name}\n" +
-                        $"Lv. {PlayerData.Level.ToString("D2")}\n" +
-                        $"Chad ( {PlayerData.Chad} )\n" +
-                        $"공격력 : {PlayerData.Atk}\n" +
-                        $"방어력 : {PlayerData.Def}\n" +
-                        $"체력 : {PlayerData.Vit}\n" +
-                        $"Gold : {PlayerData.Gold} G\n";
-
+                Console.WriteLine($"공격력 : {PlayerData.Atk}");
             }
+            if (Inven.Armor != null)
+            {
+                Console.WriteLine($"방어력 : {PlayerData.Def + Inven.GetArmorAbility()} + ({Inven.GetArmorAbility()})");
+            }
+            else
+            {
+                Console.WriteLine($"방어력 : {PlayerData.Def}");
+            }
+            Console.WriteLine($"체력 : {PlayerData.Vit}");
+            Console.WriteLine($"Gold : {PlayerData.Gold}");
         }
 
         // 데미지를 주고 출력
