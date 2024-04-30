@@ -24,3 +24,29 @@ C:\Users\ksuo1\source\repos\ConsoleApp1\Sparta Dungeon\bin\Debug\net8.0\Microsof
 C:\Users\ksuo1\source\repos\ConsoleApp1\Sparta Dungeon\bin\Debug\net8.0\Microsoft.Extensions.FileSystemGlobbing.dll
 C:\Users\ksuo1\source\repos\ConsoleApp1\Sparta Dungeon\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
 C:\Users\ksuo1\source\repos\ConsoleApp1\Sparta Dungeon\bin\Debug\net8.0\Newtonsoft.Json.dll
+E:\GitHub\Sparta-Dungeon\bin\Debug\net8.0\Sparta Dungeon.exe
+E:\GitHub\Sparta-Dungeon\bin\Debug\net8.0\Sparta Dungeon.deps.json
+E:\GitHub\Sparta-Dungeon\bin\Debug\net8.0\Sparta Dungeon.runtimeconfig.json
+E:\GitHub\Sparta-Dungeon\bin\Debug\net8.0\Sparta Dungeon.dll
+E:\GitHub\Sparta-Dungeon\bin\Debug\net8.0\Sparta Dungeon.pdb
+E:\GitHub\Sparta-Dungeon\bin\Debug\net8.0\Microsoft.Extensions.Configuration.dll
+E:\GitHub\Sparta-Dungeon\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Abstractions.dll
+E:\GitHub\Sparta-Dungeon\bin\Debug\net8.0\Microsoft.Extensions.Configuration.FileExtensions.dll
+E:\GitHub\Sparta-Dungeon\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Json.dll
+E:\GitHub\Sparta-Dungeon\bin\Debug\net8.0\Microsoft.Extensions.FileProviders.Abstractions.dll
+E:\GitHub\Sparta-Dungeon\bin\Debug\net8.0\Microsoft.Extensions.FileProviders.Physical.dll
+E:\GitHub\Sparta-Dungeon\bin\Debug\net8.0\Microsoft.Extensions.FileSystemGlobbing.dll
+E:\GitHub\Sparta-Dungeon\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
+E:\GitHub\Sparta-Dungeon\bin\Debug\net8.0\Newtonsoft.Json.dll
+E:\GitHub\Sparta-Dungeon\obj\Debug\net8.0\Sparta Dungeon.csproj.AssemblyReference.cache
+E:\GitHub\Sparta-Dungeon\obj\Debug\net8.0\Sparta Dungeon.GeneratedMSBuildEditorConfig.editorconfig
+E:\GitHub\Sparta-Dungeon\obj\Debug\net8.0\Sparta Dungeon.AssemblyInfoInputs.cache
+E:\GitHub\Sparta-Dungeon\obj\Debug\net8.0\Sparta Dungeon.AssemblyInfo.cs
+E:\GitHub\Sparta-Dungeon\obj\Debug\net8.0\Sparta Dungeon.csproj.CoreCompileInputs.cache
+E:\GitHub\Sparta-Dungeon\obj\Debug\net8.0\Sparta Dungeon.sourcelink.json
+E:\GitHub\Sparta-Dungeon\obj\Debug\net8.0\Sparta D.5A4E36EA.Up2Date
+E:\GitHub\Sparta-Dungeon\obj\Debug\net8.0\Sparta Dungeon.dll
+E:\GitHub\Sparta-Dungeon\obj\Debug\net8.0\refint\Sparta Dungeon.dll
+E:\GitHub\Sparta-Dungeon\obj\Debug\net8.0\Sparta Dungeon.pdb
+E:\GitHub\Sparta-Dungeon\obj\Debug\net8.0\Sparta Dungeon.genruntimeconfig.cache
+E:\GitHub\Sparta-Dungeon\obj\Debug\net8.0\ref\Sparta Dungeon.dll
