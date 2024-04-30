@@ -5,22 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Sparta_Dungeon
-{
-    [System.Serializable]
-    public class Weapon : Equipment
+{    public class Weapon : Equipment
     {
-        public Weapon() 
+        public Weapon() { }
+
+        public Weapon(int oid, string name, int atk, int def, string description, int price, bool isEquipped, bool isSelled) : base(oid, name, atk, def, description, price, isEquipped, isSelled)
         {
-            // 1
-            // 2
-
-            
+            Type = Define.EquipType.Weapon;
         }
-
-        public Weapon(string name, int ATK, int DEF, string Description, int Price, bool isEquipped, bool isSelled) : base(name, ATK, DEF, Description, Price, isEquipped, isSelled)
-        {
-            type = Define.EquipType.Weapon;
-        }
-
     }
 }

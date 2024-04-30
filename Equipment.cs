@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Extensions.Primitives;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,41 +15,42 @@ namespace Sparta_Dungeon
         void Detach(Equipment equip);
     }
 
-    [System.Serializable]
     public class Equipment
     {
-        public string Name { get; set; }
-        public int Atk { get; set; }
-        public int Def { get; set; }
-
-        public string Description { get; set; }
-        public int Price { get; set; }
-
-        public bool isEquipped = false;
-        public bool isSelled = false;
-
-        public Define.EquipType type;
-
-
+        public EquipmentData EquipData { get; set; }
+        public Define.EquipType Type { get; set; }
         public Equipment() { }
-
-        public Equipment(string name, int ATK, int DEF, string Description, int Price, bool isEquipped, bool isSelled)
+        public Equipment(int oid, string name, int atk, int def, string description, int price, bool isEquipped, bool isSelled)
         {
-            if(!GameManager.Instance.isLoaded)
+            EquipData = new EquipmentData();
+            EquipData.Oid = oid;
+            EquipData.Name = name;
+            EquipData.Atk = atk;
+            EquipData.Def = def;
+            EquipData.Description = description;
+            EquipData.Price = price;
+            EquipData.IsEquipped = isEquipped;
+            EquipData.IsSelled = isSelled;
+        }
+
+        public string ShowItemInfo()
+        {
+            string data = "";
+            if(Type == Define.EquipType.Weapon)
             {
-                Name = name;
-                this.Atk = ATK;
-                this.Def = DEF;
-                this.Description = Description;
-                this.Price = Price;
-                this.isEquipped = isEquipped;
-                this.isSelled = isSelled;
+                data += $"{IsEquipped()}{EquipData.Name}  | 공격력 +{EquipData.Atk}  | {EquipData.Description}";
             }
+            else if(Type == Define.EquipType.Armor)
+            {
+                data += $"{IsEquipped()}{EquipData.Name}  | 방어력 +{EquipData.Def}  | {EquipData.Description}";
+
+            }
+            return data;
         }
 
         public string IsEquipped()
         {
-            if (isEquipped)
+            if (EquipData.IsEquipped)
             {
                 return "[E]";
             }
@@ -59,24 +62,24 @@ namespace Sparta_Dungeon
 
         public string IsSelled()
         {
-            if (isSelled)
+            if (EquipData.IsSelled)
             {
                 return "구매완료";
             }
             else
             {
-                return Price.ToString() + " G";
+                return EquipData.Price.ToString() + " G";
             }
         }
 
         public virtual void Equip(Equipment equip)
         {
-            isEquipped = true;
-            if(type == Define.EquipType.Weapon)
+            EquipData.IsEquipped = true;
+            if(Type == Define.EquipType.Weapon)
             {
                 GameManager.Instance.Event.EquipWeapon(equip);
             }
-            else if (type == Define.EquipType.Armor)
+            else if (Type == Define.EquipType.Armor)
             {
                 GameManager.Instance.Event.EquipArmor(equip);
             }
@@ -84,13 +87,13 @@ namespace Sparta_Dungeon
 
         public virtual void Detach(Equipment equip)
         {
-            isEquipped = false;
-            if (type == Define.EquipType.Weapon)
+            EquipData.IsEquipped = false;
+            if (Type == Define.EquipType.Weapon)
             {
                 GameManager.Instance.Event.DetachWeapon(equip);
 
             }
-            else if (type == Define.EquipType.Armor)
+            else if (Type == Define.EquipType.Armor)
             {
                 GameManager.Instance.Event.DetachArmor(equip);
 
