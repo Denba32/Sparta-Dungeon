@@ -10,10 +10,9 @@ namespace Sparta_Dungeon
     {
         private EnemyData? enemyData;
 
-        public Enemy(string name, int level, int atk, int hp) 
+        public Enemy(string name, int level, int atk, int hp)
         {
             enemyData = new EnemyData(name, level, atk, hp);
         }
-
     }
 }
