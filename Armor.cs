@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Sparta_Dungeon
 {
-    [System.Serializable]
     public class Armor : Equipment
     {
         public Armor() { }
-        public Armor(string name, int ATK, int DEF, string Description, int Price, bool isEquipped, bool isSelled) : base(name, ATK, DEF, Description, Price, isEquipped, isSelled)
+
+        public Armor(int oid, string name, int atk, int def, string description, int price, bool isEquipped, bool isSelled) : base(oid, name, atk, def, description, price, isEquipped, isSelled)
         {
-            type = Define.EquipType.Armor;
+            Type = Define.EquipType.Armor;
         }
     }
 }

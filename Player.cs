@@ -8,11 +8,14 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Sparta_Dungeon
 {
-    [System.Serializable]
     public class Player
     {
         private PlayerData? playerData;
         private Inventory? inventory;
+
+        public Equipment? Weapon { get; set; }
+        public Equipment? Armor { get; set; }
+
 
         public PlayerData PlayerData
         {
@@ -23,6 +26,7 @@ namespace Sparta_Dungeon
                     if (GameManager.Instance.Data.FileExists(typeof(PlayerData)))
                     {
                         playerData = GameManager.Instance.Data.Load<PlayerData>();
+                        
                     }
                     else
                     {
@@ -37,6 +41,7 @@ namespace Sparta_Dungeon
             }
         }
 
+
         // 인벤토리
         public Inventory Inven
         {
@@ -47,6 +52,7 @@ namespace Sparta_Dungeon
                     if(GameManager.Instance.Data.FileExists(typeof(Inventory)))
                     {
                         inventory = GameManager.Instance.Data.Load<Inventory>();
+                        InitEquip();
                     }
                     else
                     {
@@ -62,6 +68,25 @@ namespace Sparta_Dungeon
             }
         }
 
+        private void InitEquip()
+        {
+            foreach(var item in inventory.items)
+            {
+                if(item.EquipData.IsEquipped)
+                {
+                    if(item.Type == Define.EquipType.Weapon)
+                    {
+                        Weapon = item;
+                    }
+                    else if(item.Type == Define.EquipType.Armor)
+                    {
+                        Armor = item;
+                    }
+
+                }
+            }
+        }
+
         public void SetGold(int gold)
         {
             PlayerData.Gold += gold;
@@ -73,15 +98,15 @@ namespace Sparta_Dungeon
                 if (Inven.GetItem(index-1) != null)
                 {
                     Equipment? equipment = Inven.GetItem(index - 1);
-                    SetGold((int)(equipment.Price * 0.85));
+                    SetGold((int)(equipment.EquipData.Price * 0.85));
                     Inven.SellItem(equipment);
 
-                    if(equipment.type == Define.EquipType.Weapon)
+                    if(equipment.Type == Define.EquipType.Weapon)
                     {
                         GameManager.Instance.Event.DetachWeapon(equipment);
 
                     }
-                    else if(equipment.type == Define.EquipType.Armor)
+                    else if(equipment.Type == Define.EquipType.Armor)
                     {
                         GameManager.Instance.Event.DetachArmor(equipment);
                     }
@@ -94,7 +119,7 @@ namespace Sparta_Dungeon
         public string ShowAllStatus()
         {
             // 장비를 장착 중일 때
-            if (Inven.Weapon != null && Inven.Armor != null)
+            if (Weapon != null && Armor != null)
             {
                 return $"이름 : {PlayerData.Name}\n" +
                         $"Lv. {PlayerData.Level.ToString("D2")}\n" +
@@ -105,7 +130,7 @@ namespace Sparta_Dungeon
                         $"Gold : {PlayerData.Gold} G\n";
             }
             // 무기만 장착 중일 때
-            else if (Inven.Weapon != null && Inven.Armor == null)
+            else if (Weapon != null && Armor == null)
             {
                 return $"이름 : {PlayerData.Name}\n" +
                         $"Lv. {PlayerData.Level.ToString("D2")}\n" +
@@ -115,8 +140,9 @@ namespace Sparta_Dungeon
                         $"체력 : {PlayerData.Vit}\n" +
                         $"Gold : {PlayerData.Gold} G\n";
             }
+
             // 방어구만 장착중일 때
-            else if (Inven.Weapon == null && Inven.Armor != null)
+            else if (Weapon == null && Armor != null)
             {
                 return $"이름 : {PlayerData.Name}\n" +
                         $"Lv. {PlayerData.Level.ToString("D2")}\n" +

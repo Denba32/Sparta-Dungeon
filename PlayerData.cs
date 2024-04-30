@@ -83,34 +83,34 @@ namespace Sparta_Dungeon
         #region Add Event Function
         private void PlusWeaponAbility(Equipment weapon)
         {
-            if (weapon.isEquipped)
+            if (weapon.EquipData.IsEquipped)
             {
-                Atk += weapon.Atk;
+                Atk += weapon.EquipData.Atk;
             }
         }
 
         private void MinusWeaponAbility(Equipment weapon)
         {
-            if(!weapon.isEquipped)
+            if(!weapon.EquipData.IsEquipped)
             {
-                Atk -= weapon.Atk;
+                Atk -= weapon.EquipData.Atk;
 
             }
         }
 
         private void PlusArmorAbility(Equipment armor)
         {
-            if (armor.isEquipped)
+            if (armor.EquipData.IsEquipped)
             {
-                Def += armor.Def;
+                Def += armor.EquipData.Def;
             }
         }
 
         private void MinusArmorAbility(Equipment armor)
         {
-            if (!armor.isEquipped)
+            if (!armor.EquipData.IsEquipped)
             {
-                Def -= armor.Def;
+                Def -= armor.EquipData.Def;
 
             }
         }

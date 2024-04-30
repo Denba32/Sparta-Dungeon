@@ -299,8 +299,21 @@ namespace Sparta_Dungeon
 
         public void GameStart()
         {
+            Store? store = null;
+
+            if(Data.FileExists(typeof(Store)))
+            {
+                store = Data.Load<Store>();
+            }
+            else
+            {
+                store = new Store();
+                store.Init();
+            }
+            // while로 변경 예정
             Data.Save<PlayerData>(Player.PlayerData);
             Data.Save<Inventory>(Player.Inven);
+            Data.Save<Store>(store);
             // TODO 자동 저장, 플레이어 정보, 인벤 정보, 상점 정보,
             // 던전 클리어 횟수 정보
             if (state == GameState.Main)
