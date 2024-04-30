@@ -34,6 +34,7 @@ namespace Sparta_Dungeon
         }
 
         private DataManager data = new DataManager();
+
         private UIManager ui = new UIManager();
         private EventManager _event = new EventManager();
         private Player player = new Player();
@@ -303,6 +304,10 @@ namespace Sparta_Dungeon
             Scene.StartScene();
             while (true)
             {
+                Data.Save<PlayerData>(Player.PlayerData);
+                Data.Save<Inventory>(Player.Inven);
+                // TODO 자동 저장, 플레이어 정보, 인벤 정보, 상점 정보,
+                // 던전 클리어 횟수 정보
                 Scene.TownScene();
             }
         }

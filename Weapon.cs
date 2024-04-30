@@ -9,7 +9,13 @@ namespace Sparta_Dungeon
     [System.Serializable]
     public class Weapon : Equipment
     {
-        public Weapon() { }
+        public Weapon() 
+        {
+            // 1
+            // 2
+
+            
+        }
 
         public Weapon(string name, int ATK, int DEF, string Description, int Price, bool isEquipped, bool isSelled) : base(name, ATK, DEF, Description, Price, isEquipped, isSelled)
         {
