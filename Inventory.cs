@@ -10,9 +10,7 @@ namespace Sparta_Dungeon
     public class Inventory
     {
         public List<Equipment> items { get; private set; } = new List<Equipment>();
-     
-        public Equipment? Weapon { get; set; }
-        public Equipment? Armor { get; set; }
+    
 
         public Inventory()
         {
@@ -21,9 +19,9 @@ namespace Sparta_Dungeon
         
         public void Init()
         {
-            Armor armor = new Armor("무쇠갑옷", 0, 9, "무쇠로 만들어져 튼튼한 갑옷입니다.", 2200, false, true);
-            Weapon spear = new Weapon("스파르타의 창", 7, 0, "스파르타의 전사들이 사용했다는 전설의 창입니다.", 3200, false, true);
-            Weapon oldSword = new Weapon("낡은 검", 2, 0, "쉽게 볼 수 있는 낡은 검입니다.", 600, false, true);
+            Armor armor = new Armor(2, "무쇠갑옷", 0, 9, "무쇠로 만들어져 튼튼한 갑옷입니다.", 2200, false, true);
+            Weapon spear = new Weapon(6, "스파르타의 창", 7, 0, "스파르타의 전사들이 사용했다는 전설의 창입니다.", 3200, false, true);
+            Weapon oldSword = new Weapon(4, "낡은 검", 2, 0, "쉽게 볼 수 있는 낡은 검입니다.", 600, false, true);
 
             Equip(spear);
             Equip(armor);
@@ -31,7 +29,6 @@ namespace Sparta_Dungeon
             SetItem(spear);
             SetItem(armor);
             SetItem(oldSword);
-
         }
 
         public int GetItemCount()
@@ -55,7 +52,7 @@ namespace Sparta_Dungeon
         public void SellItem(Equipment item)
         {
             Detach(item);
-            item.isSelled = false;
+            item.EquipData.IsSelled = false;
 
             items.Remove(item);
         }
@@ -66,16 +63,16 @@ namespace Sparta_Dungeon
 
             if (GetItemCount() > 0)
             {
-                for (int i = 0; i < items.Count; i++)
-                {
-                    if (items[i].type == Define.EquipType.Weapon)
+                for (int i = 0; i < items.Count; i++) 
+                { 
+                 
+                    if (items[i].Type == Define.EquipType.Weapon)
                     {
-                        data += $"- {i + 1} {items[i].IsEquipped()}{items[i].Name}   | 공격력 +{items[i].Atk} | {items[i].Description}\n";
+                        data += $"- {i + 1} {items[i].ShowItemInfo()}\n";
                     }
                     else
                     {
-                        data += $"- {i + 1} {items[i].IsEquipped()}{items[i].Name}   | 방어력 +{items[i].Def} | {items[i].Description}\n";
-
+                        data += $"- {i + 1} {items[i].ShowItemInfo()}\n";
                     }
                 }
                 return data;
@@ -86,18 +83,6 @@ namespace Sparta_Dungeon
             }
         }
 
-
-        public string ShowAllItemData()
-        {
-            string data = "";
-            foreach (var item in items)
-            {
-                data += $"{item.Name},{item.Atk},{item.Def}, {item.Description},{item.Price},{Enum.GetName(item.type)},{item.isEquipped},{item.isSelled},";
-            }
-            data += "\n";
-            return data;
-        }
-
         public string ShowAllSellItem()
         {
             string data = String.Empty;
@@ -106,13 +91,13 @@ namespace Sparta_Dungeon
             {
                 for (int i = 0; i < items.Count; i++)
                 {
-                    if (items[i].type == Define.EquipType.Weapon)
+                    if (items[i].Type == Define.EquipType.Weapon)
                     {
-                        data += $"- {i + 1} {items[i].Name}   | 공격력 +{items[i].Atk} | {items[i].Description}   | {items[i].Price * 0.85} G\n";
+                        data += $"- {i + 1} {items[i].EquipData.Name}   | 공격력 +{items[i].EquipData.Atk} | {items[i].EquipData.Description}   | {items[i].EquipData.Price * 0.85} G\n";
                     }
                     else
                     {
-                        data += $"- {i + 1} {items[i].Name}   | 방어력 +{items[i].Def} | {items[i].Description}   | {items[i].Price * 0.85} G\n";
+                        data += $"- {i + 1} {items[i].EquipData.Name}   | 방어력 +{items[i].EquipData.Def} | {items[i].EquipData.Description}   | {items[i].EquipData.Price * 0.85} G\n";
 
                     }
                 }
@@ -127,25 +112,42 @@ namespace Sparta_Dungeon
 
         public void Equip(Equipment equip)
         {
-            if (!equip.isEquipped)
+            // 장비를 미장착중일 때
+            if (!equip.EquipData.IsEquipped)
             {
-                equip.isEquipped = true;
+                equip.EquipData.IsEquipped = true;
 
-                if (equip.type == Define.EquipType.Weapon)
+                if (equip.Type == Define.EquipType.Weapon)
                 {
-                    if (Weapon == equip) return;
+                    if (GameManager.Instance.Player.Weapon == equip) return;
 
                     equip.Equip(equip);
-                    Weapon = equip;
+                    GameManager.Instance.Player.Weapon = equip;
 
                 }
-                else if (equip.type == Define.EquipType.Armor)
+                else if (equip.Type == Define.EquipType.Armor)
                 {
-                    if (Armor == equip) return;
+                    if (GameManager.Instance.Player.Armor == equip) return;
 
                     equip.Equip(equip);
-                    Armor = equip;
+                    GameManager.Instance.Player.Armor = equip;
                 }
+            }
+            // 장비를 장착 중일 때 Swap
+            else
+            {
+                if (equip.Type == Define.EquipType.Weapon)
+                {
+                    Detach(GameManager.Instance.Player.Weapon);
+                    GameManager.Instance.Player.Weapon = equip;
+                }
+                else if (equip.Type == Define.EquipType.Armor)
+                {
+                    Detach(GameManager.Instance.Player.Armor);
+                    GameManager.Instance.Player.Armor = equip;
+                }
+                
+                equip.Equip(equip);
             }
         }
 
@@ -158,12 +160,12 @@ namespace Sparta_Dungeon
         {
             int selNum = count - 1;
 
-            if (items[selNum].isEquipped)
+            if (items[selNum].EquipData.IsEquipped)
             {
                 // 무기일 경우
-                if (items[selNum].type == Define.EquipType.Weapon)
+                if (items[selNum].Type == Define.EquipType.Weapon)
                 {
-                    if (Weapon.Name ==items[selNum].Name)
+                    if (GameManager.Instance.Player.Weapon.EquipData.Oid ==items[selNum].EquipData.Oid)
                     {
                         Detach(items[selNum]);
                     }
@@ -171,7 +173,7 @@ namespace Sparta_Dungeon
                 // 방어구일 경우
                 else
                 {
-                    if (Armor.Name == items[selNum].Name)
+                    if (GameManager.Instance.Player.Armor.EquipData.Oid == items[selNum].EquipData.Oid)
                     {
                         Detach(items[selNum]);
                     }
@@ -179,12 +181,12 @@ namespace Sparta_Dungeon
             }
             else
             {
-                if (items[selNum].type == Define.EquipType.Weapon)
+                if (items[selNum].Type == Define.EquipType.Weapon)
                 {
                     // 아이템이 존재할 경우
-                    if (Weapon != null)
+                    if (GameManager.Instance.Player.Weapon != null)
                     {
-                        Detach(Weapon);
+                        Detach(GameManager.Instance.Player.Weapon);
                         Equip(items[selNum]);
                     }
                     else
@@ -194,9 +196,9 @@ namespace Sparta_Dungeon
                 }
                 else
                 {
-                    if (Armor != null)
+                    if (GameManager.Instance.Player.Armor != null)
                     {
-                        Detach(Armor);
+                        Detach(GameManager.Instance.Player.Armor);
                         Equip(items[selNum]);
                     }
                     else
@@ -208,21 +210,24 @@ namespace Sparta_Dungeon
         }
         private void Detach(Equipment equip)
         {
-            if (equip.isEquipped)
+            if (equip.EquipData.IsEquipped)
             {
-                if (equip.type == Define.EquipType.Weapon)
+                if (equip.Type == Define.EquipType.Weapon)
                 {
-                    if (Weapon.Name == equip.Name)
+                    if (GameManager.Instance.Player.Weapon.EquipData.Oid == equip.EquipData.Oid)
                     {
-                        Weapon = null;
+                        items.Find(x => x == equip).EquipData.IsEquipped = false;
+                        GameManager.Instance.Player.Weapon = null;
                         equip.Detach(equip);
                     }
                 }
-                else if (equip.type == Define.EquipType.Armor)
+                else if (equip.Type == Define.EquipType.Armor)
                 {
-                    if (Armor.Name == equip.Name)
+                    if (GameManager.Instance.Player.Armor.EquipData.Oid == equip.EquipData.Oid)
                     {
-                        Armor = null;
+                        items.Find(x => x == equip).EquipData.IsEquipped = false;
+
+                        GameManager.Instance.Player.Armor = null;
                         equip.Detach(equip);
                     }
                 }
@@ -230,18 +235,18 @@ namespace Sparta_Dungeon
         }
         public int GetWeaponAbility()
         {
-            if (Weapon == null)
+            if (GameManager.Instance.Player.Weapon == null)
                 return 0;
 
-            return Weapon.Atk;
+            return GameManager.Instance.Player.Weapon.EquipData.Atk;
         }
 
         public int GetArmorAbility()
         {
-            if (Armor == null)
+            if (GameManager.Instance.Player.Armor == null)
                 return 0;
 
-            return Armor.Def;
+            return GameManager.Instance.Player.Armor.EquipData.Def;
         }
 
     }
