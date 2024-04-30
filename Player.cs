@@ -22,7 +22,7 @@ namespace Sparta_Dungeon
         public Inventory Inven { get; set; }
 
         public Player() { } 
-        public void Player1(string name)
+        public Player(string name)
         {
             Name = name;
 
@@ -51,32 +51,49 @@ namespace Sparta_Dungeon
         // 장비 장착 상태까지 포함하여 스테이터스 표시 메서드
 
         // 모든 스테이터스 정보를 포맷화하여 출력
-        public void ShowAllStatus()
+        public string ShowAllStatus()
         {
-            Player1("ㅇㅇ");
-
-            Console.WriteLine($"   Lv. {Status.Level.ToString("D2")}");
-            Console.WriteLine($"   이  름 : {Status.Name}");
-            Console.WriteLine($"   직  업 : {Status.Chad}");
-            if (Inven.Weapon != null)
+            if (Inven.Weapon != null && Inven.Armor != null)
             {
-                Console.WriteLine($"   공격력 : {Status.ATK + Inven.GetWeaponAbility()}");
+                return $"이름 : {Name}\n" +
+                        $"Lv. {Status.Level.ToString("D2")}\n" +
+                        $"Chad ( {Status.Chad} )\n" +
+                        $"공격력 : {Status.ATK} (+{Inven.GetWeaponAbility()})\n" +
+                        $"방어력 : {Status.DEF} (+{Inven.GetArmorAbility()})\n" +
+                        $"체력 : {Status.VIT}\n" +
+                        $"Gold : {Status.Gold} G\n";
+            }
+            else if (Inven.Weapon != null && Inven.Armor == null)
+            {
+                return $"이름 : {Name}\n" +
+                        $"Lv. {Status.Level.ToString("D2")}\n" +
+                        $"Chad ( {Status.Chad} )\n" +
+                        $"공격력 : {Status.ATK} (+{Inven.GetWeaponAbility()})\n" +
+                        $"방어력 : {Status.DEF}\n" +
+                        $"체력 : {Status.VIT}\n" +
+                        $"Gold : {Status.Gold} G\n";
+            }
+            else if (Inven.Weapon == null && Inven.Armor != null)
+            {
+                return $"이름 : {Name}\n" +
+                        $"Lv. {Status.Level.ToString("D2")}\n" +
+                        $"Chad ( {Status.Chad} )\n" +
+                        $"공격력 : {Status.ATK}\n" +
+                        $"방어력 : {Status.DEF} (+{Inven.GetArmorAbility()})\n" +
+                        $"체력 : {Status.VIT}\n" +
+                        $"Gold : {Status.Gold} G\n";
             }
             else
             {
-                Console.WriteLine($"   공격력 : {Status.ATK}");
-            }
-            if (Inven.Armor != null)
-            {
-                Console.WriteLine($"   방어력 : {Status.DEF + Inven.GetArmorAbility()}");
-            }
-            else
-            {
-                Console.WriteLine($"   방어력 : {Status.DEF}");
-            }
-            Console.WriteLine($"   체  력 : {Status.VIT}");
-            Console.WriteLine($"    Gold  : {Status.Gold}");
+                return $"이름 : {Name}\n" +
+                        $"Lv. {Status.Level.ToString("D2")}\n" +
+                        $"Chad ( {Status.Chad} )\n" +
+                        $"공격력 : {Status.ATK}\n" +
+                        $"방어력 : {Status.DEF}\n" +
+                        $"체력 : {Status.VIT}\n" +
+                        $"Gold : {Status.Gold} G\n";
 
+            }
         }
 
         // 데미지를 주고 출력

@@ -300,54 +300,10 @@ namespace Sparta_Dungeon
 
         public void GameStart()
         {
-
-            Scene.TownScene();
-
-
-            if (state == GameState.Inventory)
+            Scene.StartScene();
+            while (true)
             {
-                UI.Display("", "", GameState.Inventory);
-            }
-
-            else if (state == GameState.ItemManagement)
-            {
-                UI.Display(player.Inven.ShowAllItem(), "", GameState.ItemManagement);
-            }
-
-            else if (state == GameState.Store)
-            {
-
-            }
-
-            else if (state == GameState.BuyItem)
-            {
-
-            }
-            else if (state == GameState.SellItem)
-            {
-                UI.Display(player.Inven.ShowAllSellItem(), "", GameState.SellItem);
-
-            }
-            else if (state == GameState.Dungeon)
-            {
-                UI.Display("", "", GameState.Dungeon);
-            }
-            else if (state == GameState.DungeonClear)
-            {
-
-            }
-            else if (state == GameState.DungeonFailed)
-            {
-            }
-            else if (state == GameState.Hospital)
-            {
-                UI.Display("", "", GameState.Hospital);
-
-            }
-            else if (state == GameState.End)
-            {
-                UI.Display("", "", GameState.End);
-
+                Scene.TownScene();
             }
         }
     }
