@@ -33,17 +33,85 @@ namespace Sparta_Dungeon
 
             Console.ReadKey();
         }
-        //로그인 화면(임시)
+        //로그인 화면
         public void LoginScene()
         {
             GameManager.Instance.UI.TiteleText("로그인");
-            GameManager.Instance.UI.LoreText("");
+            GameManager.Instance.UI.LoreText("캐릭터를 생성합니다.");
 
-            //기능 추가 필요
+            GameManager.Instance.UI.LoginText();
+            GameManager.Instance.Player.PlayerData.Name = Console.ReadLine();
+
+            GameManager.Instance.UI.TiteleText("로그인");
+            GameManager.Instance.UI.LoreText("캐릭터를 생성합니다.");
+
+            GameManager.Instance.UI.SelectGuide(5);
+            Console.WriteLine($"   당신의 이름은 {GameManager.Instance.Player.PlayerData.Name}");
+            Console.WriteLine("   이 이름으로 하시겠습니까?");
+
+            GameManager.Instance.UI.SelectGuide(1);
+            Console.WriteLine("   0.예");
+            Console.WriteLine("   1.아니오");
 
             GameManager.Instance.UI.InputText();
             string input = Console.ReadLine();
 
+            if (GameManager.Instance.UI.IsNumTest(input))
+            {
+                switch (int.Parse(input))
+                {
+                    case 0:
+                        SelectChar();
+                        break;
+                    case 1:
+                        LoginScene();
+                        break;
+                    default:
+                        GameManager.Instance.UI.ErrorText();
+                        LoginScene();
+                        break;
+                }
+            }
+            else
+            {
+                GameManager.Instance.UI.ErrorText();
+                LoginScene();
+            }
+        }
+        //캐릭터 선택 화면
+        public void SelectChar()
+        {
+            GameManager.Instance.UI.TiteleText("캐릭터 선택");
+            GameManager.Instance.UI.LoreText("원하는 캐릭터를 선택합니다.");
+
+            GameManager.Instance.UI.SelectGuide(10);
+            Console.WriteLine("   1.전사");
+            Console.WriteLine("   2.궁수");
+
+            GameManager.Instance.UI.InputText();
+            string input = Console.ReadLine();
+
+            if (GameManager.Instance.UI.IsNumTest(input))
+            {
+                switch (int.Parse(input))
+                {
+                    case 1:
+                        GameManager.Instance.Player.PlayerData.Chad = "전사";
+                        break;
+                    case 2:
+                        GameManager.Instance.Player.PlayerData.Chad = "궁수";
+                        break;
+                    default:
+                        GameManager.Instance.UI.ErrorText();
+                        SelectChar();
+                        break;
+                }
+            }
+            else
+            {
+                GameManager.Instance.UI.ErrorText();
+                SelectChar();
+            }
         }
         //마을 화면
         public void TownScene()

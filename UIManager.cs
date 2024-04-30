@@ -61,6 +61,21 @@ namespace Sparta_Dungeon
             Console.Write("   현재 입력 : ");
             Console.CursorVisible = false;
         }
+        //로그인 화면에 출력하는 입력텍스트 양식
+        public void LoginText()
+        {
+
+            Console.SetCursorPosition(0, 23);
+            for (int i = 0; i < 40; i++)
+            {
+                Console.Write("=");
+            }
+            Console.SetCursorPosition(0, 25);
+            Console.WriteLine("   당신의 이름을 입력해주세요");
+            Console.WriteLine("");
+            Console.Write("   현재 입력 : ");
+            Console.CursorVisible = false;
+        }
         //input이 int인지 검사
         public bool IsNumTest(string str)
         {

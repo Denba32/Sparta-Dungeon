@@ -66,6 +66,7 @@ namespace Sparta_Dungeon
         public void GameStart()
         {
             Scene.StartScene();
+            Scene.LoginScene();
             while (true)
             {
                 Data.Save<PlayerData>(Player.PlayerData);
