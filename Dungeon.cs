@@ -7,6 +7,12 @@ namespace Sparta_Dungeon
 {
     public class Dungeon
     {
+        public string name;
+        public int count;
 
+        public void SpawnMonster()
+        {
+
+        }
     }
 }
