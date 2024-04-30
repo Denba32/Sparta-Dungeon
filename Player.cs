@@ -31,7 +31,7 @@ namespace Sparta_Dungeon
                     else
                     {
                         PlayerData = new PlayerData("플레이어", 1, "전사", 10, 5, 100, 1500);
-                    }
+                   }
                 }
                 return playerData;
             }
@@ -122,7 +122,7 @@ namespace Sparta_Dungeon
             Console.WriteLine($"Chad ( {PlayerData.Chad} )");
             if (Weapon != null)
             {
-                Console.WriteLine($"공격력 : {PlayerData.Atk + Inven.GetWeaponAbility()} + ({Inven.GetWeaponAbility()})");
+                Console.WriteLine($"공격력 : {PlayerData.Atk} + ({Inven.GetWeaponAbility()})");
             }
             // 무기만 장착 중일 때
             else if (Weapon != null && Armor == null)
@@ -131,7 +131,7 @@ namespace Sparta_Dungeon
             }
             if (Armor != null)
             {
-                Console.WriteLine($"방어력 : {PlayerData.Def + Inven.GetArmorAbility()} + ({Inven.GetArmorAbility()})");
+                Console.WriteLine($"방어력 : {PlayerData.Def} + ({Inven.GetArmorAbility()})");
             }
             else
             {
