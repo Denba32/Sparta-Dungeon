@@ -21,7 +21,7 @@ namespace Sparta_Dungeon
 
         public EnemyData(string name, int level, int atk, int hp) 
         {
-            Name = Name;
+            Name = name;
             Level = level;
             Atk = atk;
             Hp = hp;

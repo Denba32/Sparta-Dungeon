@@ -8,20 +8,12 @@ namespace Sparta_Dungeon
 {
     public class Enemy
     {
-        public static List<EnemyData> Monster()
+        private EnemyData? enemyData;
+
+        public Enemy(string name, int level, int atk, int hp) 
         {
-            List<EnemyData> monster = new List<EnemyData>
-            {
-                new EnemyData("슬라임", 1, 2, 5),
-                new EnemyData("고블린", 3, 5, 10),
-                new EnemyData("스켈레톤", 8, 9, 5),
-                new EnemyData("게 허르 좁", 80, 1, 1),
-                new EnemyData("존 나르센", 99, 80, 70),
-                new EnemyData("단 데르기", 1, 1, 99)
-
-            };
-
-            return monster;
+            enemyData = new EnemyData(name, level, atk, hp);
         }
+
     }
 }
