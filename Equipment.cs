@@ -17,8 +17,8 @@ namespace Sparta_Dungeon
     public class Equipment
     {
         public string Name { get; set; }
-        public int ATK { get; set; }
-        public int DEF { get; set; }
+        public int Atk { get; set; }
+        public int Def { get; set; }
 
         public string Description { get; set; }
         public int Price { get; set; }
@@ -36,8 +36,8 @@ namespace Sparta_Dungeon
             if(!GameManager.Instance.isLoaded)
             {
                 Name = name;
-                this.ATK = ATK;
-                this.DEF = DEF;
+                this.Atk = ATK;
+                this.Def = DEF;
                 this.Description = Description;
                 this.Price = Price;
                 this.isEquipped = isEquipped;
@@ -74,13 +74,11 @@ namespace Sparta_Dungeon
             isEquipped = true;
             if(type == Define.EquipType.Weapon)
             {
-                GameManager.Instance.Event.onEquipWeapon?.Invoke(equip);
-
+                GameManager.Instance.Event.EquipWeapon(equip);
             }
             else if (type == Define.EquipType.Armor)
             {
-                GameManager.Instance.Event.onEquipArmor?.Invoke(equip);
-
+                GameManager.Instance.Event.EquipArmor(equip);
             }
         }
 
@@ -89,12 +87,12 @@ namespace Sparta_Dungeon
             isEquipped = false;
             if (type == Define.EquipType.Weapon)
             {
-                GameManager.Instance.Event.onDetachWeapon?.Invoke(equip);
+                GameManager.Instance.Event.DetachWeapon(equip);
 
             }
             else if (type == Define.EquipType.Armor)
             {
-                GameManager.Instance.Event.onDetachArmor?.Invoke(equip);
+                GameManager.Instance.Event.DetachArmor(equip);
 
             }
         }

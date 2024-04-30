@@ -10,7 +10,6 @@ namespace Sparta_Dungeon
     {
         public List<Equipment> items { get; set; } = new List<Equipment>();
 
-        public static event Action<Equipment>? onBuyItem;
 
         public Store()
         {
@@ -24,7 +23,7 @@ namespace Sparta_Dungeon
                 items.Add(new Weapon("스파르타의 창", 7, 0, "스파르타의 전사들이 사용했다는 전설의 창입니다.", 3200, false, true));
             }
 
-            GameManager.Instance.Player.onSellItem += Sell;
+            GameManager.Instance.Event.onSellItem += Sell;
 
         }
         public string ShowAllItemData()
@@ -32,7 +31,7 @@ namespace Sparta_Dungeon
             string data = "";
             foreach (var item in items)
             {
-                data += $"{item.Name},{item.ATK},{item.DEF},{item.Description},{item.Price},{Enum.GetName(item.type)},{item.isEquipped},{item.isSelled},";
+                data += $"{item.Name},{item.Atk},{item.Def},{item.Description},{item.Price},{Enum.GetName(item.type)},{item.isEquipped},{item.isSelled},";
             }
             data += "\n";
             return data;
@@ -48,7 +47,7 @@ namespace Sparta_Dungeon
                     GameManager.Instance.isBuyed = true;
                     return;
                 }
-                if (items[index - 1].Price > GameManager.Instance.Player.Status.Gold)
+                if (items[index - 1].Price > GameManager.Instance.Player.PlayerData.Gold)
                 {
                     GameManager.Instance.isEmpty = true;
                     return;
@@ -59,7 +58,7 @@ namespace Sparta_Dungeon
                     items[index - 1].isSelled = true;
                 }
             }
-            onBuyItem?.Invoke(items[index - 1]);
+            GameManager.Instance.Event.BuyItem(items[index - 1]);
         }
 
         // 플레이어가 상점으로부터 아이템을 판매할 때 사용하는 메서드
@@ -92,11 +91,11 @@ namespace Sparta_Dungeon
                     {
                         if (items[i].type == Define.EquipType.Weapon)
                         {
-                            data += $"- {i + 1} {items[i].Name}    | 공격력 +{items[i].ATK}  | {items[i].Description}  | {items[i].IsSelled()}\n";
+                            data += $"- {i + 1} {items[i].Name}    | 공격력 +{items[i].Atk}  | {items[i].Description}  | {items[i].IsSelled()}\n";
                         }
                         else
                         {
-                            data += $"- {i + 1} {items[i].Name}    | 방어력 +{items[i].DEF}  | {items[i].Description}  | {items[i].IsSelled()}\n";
+                            data += $"- {i + 1} {items[i].Name}    | 방어력 +{items[i].Def}  | {items[i].Description}  | {items[i].IsSelled()}\n";
                         }
                     }
                 }
@@ -106,11 +105,11 @@ namespace Sparta_Dungeon
                     {
                         if (items[i].type == Define.EquipType.Weapon)
                         {
-                            data += $"- {items[i].Name}    | 공격력 +{items[i].ATK}  | {items[i].Description}  | {items[i].IsSelled()}\n";
+                            data += $"- {items[i].Name}    | 공격력 +{items[i].Atk}  | {items[i].Description}  | {items[i].IsSelled()}\n";
                         }
                         else
                         {
-                            data += $"- {items[i].Name}    | 방어력 +{items[i].DEF}  | {items[i].Description}  | {items[i].IsSelled()}\n";
+                            data += $"- {items[i].Name}    | 방어력 +{items[i].Def}  | {items[i].Description}  | {items[i].IsSelled()}\n";
                         }
                     }
                 }

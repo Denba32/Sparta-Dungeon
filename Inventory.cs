@@ -16,22 +16,22 @@ namespace Sparta_Dungeon
 
         public Inventory()
         {
-            if(!GameManager.Instance.isLoaded)
-            {
-                Armor armor = new Armor("무쇠갑옷", 0, 9, "무쇠로 만들어져 튼튼한 갑옷입니다.", 2200, false, true);
-                Weapon spear = new Weapon("스파르타의 창", 7, 0, "스파르타의 전사들이 사용했다는 전설의 창입니다.", 3200, false, true);
-                Weapon oldSword = new Weapon("낡은 검", 2, 0, "쉽게 볼 수 있는 낡은 검입니다.", 600, false, true);
+            GameManager.Instance.Event.onSellItem += SetItem;
+        }
+        
+        public void Init()
+        {
+            Armor armor = new Armor("무쇠갑옷", 0, 9, "무쇠로 만들어져 튼튼한 갑옷입니다.", 2200, false, true);
+            Weapon spear = new Weapon("스파르타의 창", 7, 0, "스파르타의 전사들이 사용했다는 전설의 창입니다.", 3200, false, true);
+            Weapon oldSword = new Weapon("낡은 검", 2, 0, "쉽게 볼 수 있는 낡은 검입니다.", 600, false, true);
 
-                Equip(spear);
-                Equip(armor);
+            Equip(spear);
+            Equip(armor);
 
-                SetItem(spear);
-                SetItem(armor);
-                SetItem(oldSword);
-            }
+            SetItem(spear);
+            SetItem(armor);
+            SetItem(oldSword);
 
-
-            Store.onBuyItem += SetItem;
         }
 
         public int GetItemCount()
@@ -70,15 +70,14 @@ namespace Sparta_Dungeon
                 {
                     if (items[i].type == Define.EquipType.Weapon)
                     {
-                        data += $"- {i + 1} {items[i].IsEquipped()}{items[i].Name}   | 공격력 +{items[i].ATK} | {items[i].Description}\n";
+                        data += $"- {i + 1} {items[i].IsEquipped()}{items[i].Name}   | 공격력 +{items[i].Atk} | {items[i].Description}\n";
                     }
                     else
                     {
-                        data += $"- {i + 1} {items[i].IsEquipped()}{items[i].Name}   | 방어력 +{items[i].DEF} | {items[i].Description}\n";
+                        data += $"- {i + 1} {items[i].IsEquipped()}{items[i].Name}   | 방어력 +{items[i].Def} | {items[i].Description}\n";
 
                     }
                 }
-
                 return data;
             }
             else
@@ -87,12 +86,13 @@ namespace Sparta_Dungeon
             }
         }
 
+
         public string ShowAllItemData()
         {
             string data = "";
             foreach (var item in items)
             {
-                data += $"{item.Name},{item.ATK},{item.DEF}, {item.Description},{item.Price},{Enum.GetName(item.type)},{item.isEquipped},{item.isSelled},";
+                data += $"{item.Name},{item.Atk},{item.Def}, {item.Description},{item.Price},{Enum.GetName(item.type)},{item.isEquipped},{item.isSelled},";
             }
             data += "\n";
             return data;
@@ -108,11 +108,11 @@ namespace Sparta_Dungeon
                 {
                     if (items[i].type == Define.EquipType.Weapon)
                     {
-                        data += $"- {i + 1} {items[i].Name}   | 공격력 +{items[i].ATK} | {items[i].Description}   | {items[i].Price * 0.85} G\n";
+                        data += $"- {i + 1} {items[i].Name}   | 공격력 +{items[i].Atk} | {items[i].Description}   | {items[i].Price * 0.85} G\n";
                     }
                     else
                     {
-                        data += $"- {i + 1} {items[i].Name}   | 방어력 +{items[i].DEF} | {items[i].Description}   | {items[i].Price * 0.85} G\n";
+                        data += $"- {i + 1} {items[i].Name}   | 방어력 +{items[i].Def} | {items[i].Description}   | {items[i].Price * 0.85} G\n";
 
                     }
                 }
@@ -233,7 +233,7 @@ namespace Sparta_Dungeon
             if (Weapon == null)
                 return 0;
 
-            return Weapon.ATK;
+            return Weapon.Atk;
         }
 
         public int GetArmorAbility()
@@ -241,7 +241,7 @@ namespace Sparta_Dungeon
             if (Armor == null)
                 return 0;
 
-            return Armor.DEF;
+            return Armor.Def;
         }
 
     }

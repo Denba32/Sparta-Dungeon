@@ -81,5 +81,14 @@ namespace Sparta_Dungeon
         {
             return Directory.GetCurrentDirectory();
         }
+
+        public bool FileExists(Type type)
+        {
+            FileInfo file = new FileInfo(DefaultPath() + $"\\{type}.json");
+            if (file.Exists)
+                return true;
+            else
+                return false;
+        }
     }
 }

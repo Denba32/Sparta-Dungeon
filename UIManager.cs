@@ -80,7 +80,7 @@ namespace Sparta_Dungeon
                     Console.Write("필요한 아이템을 얻을 수 있는 상점입니다.\n\n" +
                                   "[보유 골드]\n");
                     Console.ForegroundColor = ConsoleColor.DarkMagenta;
-                    Console.Write($"{GameManager.Instance.Player.Status.Gold} G\n\n");
+                    Console.Write($"{GameManager.Instance.Player.PlayerData.Gold} G\n\n");
                     Console.ForegroundColor = ConsoleColor.White;
 
                     Console.Write($"[아이템 목록]\n" +
@@ -100,7 +100,7 @@ namespace Sparta_Dungeon
                     Console.Write("필요한 아이템을 얻을 수 있는 상점입니다.\n\n" +
                                   "[보유 골드]\n");
                     Console.ForegroundColor = ConsoleColor.DarkMagenta;
-                    Console.Write($"{GameManager.Instance.Player.Status.Gold} G\n\n");
+                    Console.Write($"{GameManager.Instance.Player.PlayerData.Gold} G\n\n");
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.Write($"[아이템 목록]\n" +
                                     $"{text1}\n" +
@@ -116,7 +116,7 @@ namespace Sparta_Dungeon
                     Console.Write("필요한 아이템을 얻을 수 있는 상점입니다.\n\n" +
                                     "[보유 골드]\n");
                     Console.ForegroundColor = ConsoleColor.DarkMagenta;
-                    Console.Write($"{GameManager.Instance.Player.Status.Gold} G\n\n");
+                    Console.Write($"{GameManager.Instance.Player.PlayerData.Gold} G\n\n");
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.Write($"[아이템 목록]\n" +
                                     $"{text1}\n" +
@@ -161,7 +161,7 @@ namespace Sparta_Dungeon
                     Console.ForegroundColor = ConsoleColor.DarkYellow;
                     Console.Write("휴식하기\n");
                     Console.ForegroundColor = ConsoleColor.White;
-                    Console.Write($"500 G를 내면 체력을 회복할 수 있습니다. (보유 골드 : {GameManager.Instance.Player.Status.Gold} G)\n\n" +
+                    Console.Write($"500 G를 내면 체력을 회복할 수 있습니다. (보유 골드 : {GameManager.Instance.Player.PlayerData.Gold} G)\n\n" +
                                     $"1. 휴식하기\n" +
                                     "0. 나가기\n\n" +
                                     "원하시는 행동을 입력해주세요.\n" +
