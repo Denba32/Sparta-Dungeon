@@ -118,27 +118,60 @@ namespace Sparta_Dungeon
         // 모든 스테이터스 정보를 포맷화하여 출력
         public void ShowAllStatus()
         {
-            Console.WriteLine($"이름 : {PlayerData.Name}");
-            Console.WriteLine($"Chad ( {PlayerData.Chad} )");
+            Console.WriteLine("");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write($"   이  름 : ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"{PlayerData.Name}");
+            Console.WriteLine("");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write($"   직  업 : ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"[{PlayerData.Chad}]");
+            Console.WriteLine("");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write("   공격력 : ");
             if (Weapon != null)
             {
-                Console.WriteLine($"공격력 : {PlayerData.Atk} + ({Inven.GetWeaponAbility()})");
-            }
-            // 무기만 장착 중일 때
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write($"{PlayerData.Atk}");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine($" + ({Inven.GetWeaponAbility()})");
+                Console.WriteLine("");
+                ;            }
             else if (Weapon != null && Armor == null)
             {
-                Console.WriteLine($"공격력 : {PlayerData.Atk}");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine($"{PlayerData.Atk}");
+                Console.WriteLine("");
             }
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write("   방어력 : ");
             if (Armor != null)
             {
-                Console.WriteLine($"방어력 : {PlayerData.Def} + ({Inven.GetArmorAbility()})");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write($"{PlayerData.Def}");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine($" + ({Inven.GetWeaponAbility()})");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("");
             }
             else
             {
-                Console.WriteLine($"방어력 : {PlayerData.Def}");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write($"{PlayerData.Def}");
+                Console.WriteLine("");
             }
-            Console.WriteLine($"체력 : {PlayerData.Vit}");
-            Console.WriteLine($"Gold : {PlayerData.Gold}");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write("   체  력 : ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"{PlayerData.Vit}");
+            Console.WriteLine("");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write("   소지금 : ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"{PlayerData.Gold} G");
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         // 데미지를 주고 출력
@@ -147,7 +180,7 @@ namespace Sparta_Dungeon
             PlayerData.SetVit(-damage);
             if (PlayerData.Vit <= 0)
             {
-                GameManager.Instance.state = Define.GameState.End;
+                
                 return 0;
             }
             return PlayerData.Vit;

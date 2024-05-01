@@ -11,7 +11,7 @@ namespace Sparta_Dungeon
     {
 
 
-        //시작 화면
+        // 시작 화면
         public void StartScene()
         {
             Console.Clear();
@@ -33,13 +33,13 @@ namespace Sparta_Dungeon
 
             Console.ReadKey();
         }
-        //로그인 화면
+        // 로그인 화면
         public void LoginScene()
         {
             GameManager.Instance.UI.TiteleText("로그인");
             GameManager.Instance.UI.LoreText("캐릭터를 생성합니다.");
 
-            GameManager.Instance.UI.LoginText();
+            GameManager.Instance.UI.InputText("당신의 이름을 입력해주세요");
             GameManager.Instance.Player.PlayerData.Name = Console.ReadLine();
 
             GameManager.Instance.UI.TiteleText("로그인");
@@ -49,9 +49,9 @@ namespace Sparta_Dungeon
             Console.WriteLine($"   당신의 이름은 {GameManager.Instance.Player.PlayerData.Name}");
             Console.WriteLine("   이 이름으로 하시겠습니까?");
 
-            GameManager.Instance.UI.SelectGuide(1);
-            Console.WriteLine("   0.예");
-            Console.WriteLine("   1.아니오");
+            GameManager.Instance.UI.SelectGuide(2);
+            Console.Write("   0.아니오");
+            Console.Write("       1.예");
 
             GameManager.Instance.UI.InputText();
             string input = Console.ReadLine();
@@ -61,10 +61,10 @@ namespace Sparta_Dungeon
                 switch (int.Parse(input))
                 {
                     case 0:
-                        SelectChar();
+                        LoginScene();
                         break;
                     case 1:
-                        LoginScene();
+                        SelectChar();
                         break;
                     default:
                         GameManager.Instance.UI.ErrorText();
@@ -78,7 +78,7 @@ namespace Sparta_Dungeon
                 LoginScene();
             }
         }
-        //캐릭터 선택 화면
+        // 캐릭터 선택 화면
         public void SelectChar()
         {
             GameManager.Instance.UI.TiteleText("캐릭터 선택");
@@ -113,18 +113,22 @@ namespace Sparta_Dungeon
                 SelectChar();
             }
         }
-        //마을 화면
+        // 마을 화면
         public void TownScene()
         {
+            Console.ForegroundColor = ConsoleColor.Green;
             GameManager.Instance.UI.TiteleText("마을");
+            Console.ForegroundColor = ConsoleColor.White;
             GameManager.Instance.UI.LoreText("스파르타 마을에 오신 여러분 환영합니다.", "이곳에서 던전으로 들어가기 전 활동을 할 수 있습니다.");
 
             GameManager.Instance.UI.SelectGuide(4);
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("   1.상태 보기");
             Console.WriteLine("   2.인벤토리");
             Console.WriteLine("   3.상점");
-            Console.WriteLine("   4.던전 입장");
+            Console.WriteLine($"   4.던전 입장 : (현재 {GameManager.Instance.UI.dungeonFloor}층)");
             Console.WriteLine("   5.휴식하기");
+            Console.ForegroundColor = ConsoleColor.Green;
 
             GameManager.Instance.UI.InputText();
 
@@ -160,10 +164,12 @@ namespace Sparta_Dungeon
                 GameManager.Instance.UI.ErrorText();
             }
         }
-        //상태 화면
-        public void StatusScene()
+        // 상태 화면
+        void StatusScene()
         {
+            Console.ForegroundColor = ConsoleColor.Cyan;
             GameManager.Instance.UI.TiteleText("상태 보기");
+            Console.ForegroundColor = ConsoleColor.White;
             GameManager.Instance.UI.LoreText("캐릭터의 정보가 표시됩니다.");
 
             GameManager.Instance.Player.ShowAllStatus();
@@ -171,6 +177,7 @@ namespace Sparta_Dungeon
             GameManager.Instance.UI.SelectGuide(0);
             Console.WriteLine("   0.나가기");
 
+            Console.ForegroundColor = ConsoleColor.Cyan;
             GameManager.Instance.UI.InputText();
             string input = Console.ReadLine();
 
@@ -192,17 +199,17 @@ namespace Sparta_Dungeon
                 StatusScene();
             }
         }
-        //인벤토리 화면(기능 추가 필요)
-        public void InventoryScene()
+        // 인벤토리 화면
+        void InventoryScene()
         {
             GameManager.Instance.UI.TiteleText("인벤토리");
             GameManager.Instance.UI.LoreText("보유중인 아이템을 관리할 수 있습니다.", "[아이템 목록]");
 
+            GameManager.Instance.Event.ShowItemList();
+
             GameManager.Instance.UI.SelectGuide(1);
             Console.WriteLine("   0.나가기");
             Console.WriteLine("   1.장착 관리");
-
-            //기능 추가 필요(아이템 목록)
 
             GameManager.Instance.UI.InputText();
             string input = Console.ReadLine();
@@ -228,8 +235,8 @@ namespace Sparta_Dungeon
                 InventoryScene();
             }
         }
-        //인벤토리 관리화면(기능 추가 필요)
-        public void ItemManageScene()
+        // 인벤토리 관리화면(기능 추가 필요)
+        void ItemManageScene()
         {
             GameManager.Instance.UI.TiteleText("인벤토리");
             GameManager.Instance.UI.LoreText("원하는 아이템의 번호를 입력해서 장착/해제할 수 있습니다.", "[아이템 목록]");
@@ -262,8 +269,8 @@ namespace Sparta_Dungeon
                 ItemManageScene();
             }
         }
-        //상점 화면(기능 추가 필요)
-        public void StoreScene()
+        // 상점 화면(기능 추가 필요)
+        void StoreScene()
         {
             GameManager.Instance.UI.TiteleText("상점");
             GameManager.Instance.UI.GoldText();
@@ -303,8 +310,8 @@ namespace Sparta_Dungeon
                 StoreScene();
             }
         }
-        //아이템 구매 화면(기능 추가 필요)
-        public void BuyItemScene()
+        // 아이템 구매 화면(기능 추가 필요)
+        void BuyItemScene()
         {
             GameManager.Instance.UI.TiteleText("상점 - 아이템 구매");
             GameManager.Instance.UI.GoldText();
@@ -339,8 +346,8 @@ namespace Sparta_Dungeon
                 BuyItemScene();
             }
         }
-        //아이템 판매 화면(기능 추가 필요)
-        public void SellItemScene()
+        // 아이템 판매 화면(기능 추가 필요)
+        void SellItemScene()
         {
             GameManager.Instance.UI.TiteleText("상점 - 아이템 판매");
             GameManager.Instance.UI.GoldText();
@@ -375,17 +382,15 @@ namespace Sparta_Dungeon
                 SellItemScene();
             }
         }
-        //던전 선택창(던전 추가 필요)
-        public void DungeonSelectScene()
+        // 던전 선택창
+        void DungeonSelectScene()
         {
             GameManager.Instance.UI.TiteleText("던전 입구");
             GameManager.Instance.UI.LoreText("던전에 입장할 수 있습니다.");
 
-            GameManager.Instance.UI.SelectGuide(3);
+            GameManager.Instance.UI.SelectGuide(1);
             Console.WriteLine("   0.나가기");
-            Console.WriteLine("   1.쉬운 던전");
-            Console.WriteLine("   2.보통 던전");
-            Console.WriteLine("   3.어려운 던전");
+            Console.WriteLine($"   1.던전 입장 : (현재 {GameManager.Instance.UI.dungeonFloor}층)");
 
             GameManager.Instance.UI.InputText();
             string input = Console.ReadLine();
@@ -397,16 +402,7 @@ namespace Sparta_Dungeon
                     case 0:
                         break;
                     case 1:
-                        BattelScene();
-                        DungeonSelectScene();
-                        break;
-                    case 2:
-                        GameManager.Instance.UI.SystemText("   미구현!!!");
-                        DungeonSelectScene();
-                        break;
-                    case 3:
-                        GameManager.Instance.UI.SystemText("   미구현!!!");
-                        DungeonSelectScene();
+                        BattleScene();
                         break;
                     default:
                         GameManager.Instance.UI.ErrorText();
@@ -420,54 +416,143 @@ namespace Sparta_Dungeon
                 DungeonSelectScene();
             }
         }
-        //전투 화면(제작중)
-        public void BattelScene()
+        // 전투 화면(제작중)
+        void BattleScene()
         {
-            GameManager.Instance.UI.TiteleText("!!!전투 시작!!!");
-
-            GameManager.Instance.UI.SelectGuide(10);
-            Console.WriteLine($"   [{GameManager.Instance.Player.PlayerData.Name}]");
-            Console.WriteLine("   ");
-            Console.WriteLine($"   Lv . {GameManager.Instance.Player.PlayerData.Level}    ({GameManager.Instance.Player.PlayerData.Chad})");
-            Console.WriteLine($"   HP  {GameManager.Instance.Player.PlayerData.Vit}");
-            Console.WriteLine("   ");
-            GameManager.Instance.UI.SelectGuide(4);
-            Console.WriteLine("   전투 메세지");
-            Console.WriteLine("   전투 메세지");
-            Console.WriteLine("   전투 메세지");
-            Console.WriteLine("   전투 메세지");
-
-            GameManager.Instance.UI.InputText();
-            string input = Console.ReadLine();
-
-            if (GameManager.Instance.UI.IsNumTest(input))
+            while (true)
             {
-                switch (int.Parse(input))
+                GameManager.Instance.UI.TiteleText("!!!전투!!!");
+                GameManager.Instance.UI.EnemyText(GameManager.Instance.Enemy.ShowEnemies());
+
+                GameManager.Instance.UI.PlayerUI();
+
+                GameManager.Instance.UI.BattelActionText();
+
+                GameManager.Instance.UI.NowFloorText();
+
+                GameManager.Instance.UI.InputText();
+                string input = Console.ReadLine();
+
+                if (GameManager.Instance.UI.IsNumTest(input))
                 {
-                    case 0:
-                        break;
-                    case 1:
-                        GameManager.Instance.UI.SystemText("   미구현!!!");
-                        DungeonSelectScene();
-                        break;
-                    case 2:
-                        GameManager.Instance.UI.SystemText("   미구현!!!");
-                        DungeonSelectScene();
-                        break;
-                    case 3:
-                        GameManager.Instance.UI.SystemText("   미구현!!!");
-                        DungeonSelectScene();
-                        break;
-                    default:
-                        GameManager.Instance.UI.ErrorText();
-                        DungeonSelectScene();
-                        break;
+                    switch (int.Parse(input))
+                    {
+                        case 0:
+                            return;
+                        case 1:
+                            BattleAttackScene();
+                            break;
+                        case 2:
+                            BattleItemScene();
+                            break;
+                        case 3:
+                            WinScene();
+                            return;
+                        case 4:
+                            DieScene();
+                            return;
+                        default:
+                            GameManager.Instance.UI.ErrorText();
+                            break;
+                    }
+                }
+                else
+                {
+                    GameManager.Instance.UI.ErrorText();
                 }
             }
+        }
+        void BattleAttackScene()
+        {
+            while (true)
+            {
+                GameManager.Instance.UI.TiteleText("공격하기");
+                GameManager.Instance.UI.EnemyText(GameManager.Instance.Enemy.ShowEnemies());
+
+                GameManager.Instance.UI.PlayerUI();
+
+                GameManager.Instance.UI.BattelAttackText();
+
+                GameManager.Instance.UI.NowFloorText();
+
+                GameManager.Instance.UI.InputText();
+                string input = Console.ReadLine();
+
+                if (GameManager.Instance.UI.IsNumTest(input))
+                {
+                    switch (int.Parse(input))
+                    {
+                        case 0:
+                            return;
+                        case 1:
+                            BattleLogScene();
+                            return;
+                        default:
+                            GameManager.Instance.UI.ErrorText();
+                            break;
+                    }
+                }
+                else
+                {
+                    GameManager.Instance.UI.ErrorText();
+                }
+
+            }
+        }
+        //전투중 아이템 선택창
+        void BattleItemScene()
+        {
+            while (true)
+            {
+                GameManager.Instance.UI.TiteleText("아이템 사용");
+                GameManager.Instance.UI.EnemyText(GameManager.Instance.Enemy.ShowEnemies());
+
+                GameManager.Instance.UI.PlayerUI();
+
+                GameManager.Instance.UI.BattleItemText();
+
+                GameManager.Instance.UI.NowFloorText();
+
+                while (true)
+                {
+                    GameManager.Instance.UI.InputText();
+                    string input = Console.ReadLine();
+
+                    if (GameManager.Instance.UI.IsNumTest(input))
+                    {
+                        switch (int.Parse(input))
+                        {
+                            case 0:
+                                return;
+                            default:
+                                GameManager.Instance.UI.ErrorText();
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        GameManager.Instance.UI.ErrorText();
+                    }
+                }
+            }
+        }
+        void BattleLogScene()
+        {
+            GameManager.Instance.UI.TiteleText("!!!적의 행동!!!");
+            GameManager.Instance.UI.EnemyText(GameManager.Instance.Enemy.ShowEnemies());
+
+            GameManager.Instance.UI.PlayerUI();
+
+            GameManager.Instance.UI.BattleLogText();
+
+            GameManager.Instance.UI.NowFloorText();
+
+            GameManager.Instance.UI.InputText("아무 키나 눌러서 다음 화면으로");
+            Console.ReadKey();
 
         }
-        //휴식 화면(기능 추가 필요)
-        public void HospitalScene()
+        // 휴식 화면(기능 추가 필요)
+        void HospitalScene()
         {
             GameManager.Instance.UI.TiteleText("휴식하기");
             GameManager.Instance.UI.GoldText();
@@ -504,5 +589,55 @@ namespace Sparta_Dungeon
                 HospitalScene();
             }
         }
+        // 승리 화면(기능 추가 필요)
+        void WinScene()
+        {
+            GameManager.Instance.UI.TiteleText("!!!승리!!!");
+            GameManager.Instance.UI.LoreText("전투에서 승리하셨습니다!");
+
+            GameManager.Instance.UI.SelectGuide(1);
+            Console.WriteLine("   0.마을로 돌아가기");
+            Console.WriteLine("   1.다음 층으로");
+
+            GameManager.Instance.UI.InputText();
+            string input = Console.ReadLine();
+
+            if (GameManager.Instance.UI.IsNumTest(input))
+            {
+                switch (int.Parse(input))
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        GameManager.Instance.UI.dungeonFloor++;
+                        BattleScene();                        
+                        break;
+                    default:
+                        GameManager.Instance.UI.ErrorText();
+                        WinScene();
+                        break;
+                }
+            }
+            else
+            {
+                GameManager.Instance.UI.ErrorText();
+                WinScene();
+            }
+        }
+        // 사망화면(기능 추가 필요)
+        void DieScene()
+        {
+            GameManager.Instance.UI.dungeonFloor = 1;
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            GameManager.Instance.UI.TiteleText("YOU DIED...");
+            GameManager.Instance.UI.DieText();
+            GameManager.Instance.UI.InputText("아무키나 눌러서 마을로...");
+            
+            // 사망 패널티등등 구현하기
+
+            Console.ReadKey();
+        }
+
+        
     }
 }

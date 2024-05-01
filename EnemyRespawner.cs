@@ -28,7 +28,7 @@ namespace Sparta_Dungeon
             for(int i=0 ; i<Scale ; i++)
             {
                 int randIdx = rand.Next(0, 4);
-                data += $"{i + 1} Lv.{enemies[randIdx].Level} {enemies[randIdx].Name} HP {enemies[randIdx].Vit}\n";
+                data += $"   {i + 1} Lv.{enemies[randIdx].Level} {enemies[randIdx].Name} HP {enemies[randIdx].Vit}\n";
             }
 
             return data;

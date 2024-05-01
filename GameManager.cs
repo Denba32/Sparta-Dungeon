@@ -38,14 +38,14 @@ namespace Sparta_Dungeon
         private UIManager ui = new UIManager();
         private EventManager _event = new EventManager();
         private Player player = new Player();
+        private EnemyRespawner enemy = new EnemyRespawner();
 
         public DataManager Data { get => Instance.data; }
         public UIManager UI { get => Instance.ui; }
         public EventManager Event { get => Instance._event; }
         public SceneManager Scene { get => Instance.scene; }
         public Player Player { get => Instance.player; }
-
-        public Define.GameState state = GameState.Main;
+        public EnemyRespawner Enemy { get => Instance.enemy; }
 
 
         // Error 발생 시 True로 만들어서 입력란 밑에 에러를 발생시키는 코드
@@ -65,6 +65,8 @@ namespace Sparta_Dungeon
 
         public void GameStart()
         {
+            Store store = new Store();
+
             // 플레이어의 정보가 존재하지 않을 시
             if(!Data.FileExists(typeof(PlayerData)))
             {

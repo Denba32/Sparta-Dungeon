@@ -54,5 +54,11 @@ namespace Sparta_Dungeon
             onBuyItem?.Invoke(equipment);
         }
 
+        public event Action? onShowItems;
+
+        public void ShowItemList()
+        {
+            onShowItems?.Invoke();
+        }
     }
 }
