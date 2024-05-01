@@ -12,7 +12,7 @@ namespace Sparta_Dungeon
 
         public EnemyRespawner()
         {
-            enemies.Add(new EnemyData("미니언", 1, 15, 2));
+            enemies.Add(new EnemyData("미니언", 1, 15, 3));
             enemies.Add(new EnemyData("대포미니언", 5, 25, 7));
             enemies.Add(new EnemyData("공허충", 3, 10, 12));
             enemies.Add(new EnemyData("내셔남작", 6, 40, 20));

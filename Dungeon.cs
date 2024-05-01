@@ -5,6 +5,11 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Sparta_Dungeon
 {
+    public interface IDamagable
+    {
+        void Damage(float Damage);
+    }
+
     public class Dungeon
     {
 

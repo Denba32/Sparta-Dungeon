@@ -13,13 +13,15 @@ namespace Sparta_Dungeon
         [JsonProperty]
         public string Name {  get; set; }
         [JsonProperty]
-        public int Level { get; set; }
+        public float Level { get; set; }
         [JsonProperty]
-        public int Atk { get; set; }
+        public float Atk { get; set; }
         [JsonProperty]
-        public int Vit { get; set; }
+        public float Vit { get; set; }
+        [JsonProperty]
+        public float MaxVit { get; set; }
 
-        public EnemyData(string name, int level, int atk, int vit) 
+        public EnemyData(string name, float level, float atk, float vit)
         {
             Name = name;
             Level = level;
