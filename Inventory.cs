@@ -10,8 +10,7 @@ namespace Sparta_Dungeon
     public class Inventory
     {
         public List<Equipment> items { get; private set; } = new List<Equipment>();
-    
-
+        
         public Inventory()
         {
             GameManager.Instance.Event.onSellItem += SetItem;

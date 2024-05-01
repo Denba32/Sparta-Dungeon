@@ -8,10 +8,7 @@ namespace Sparta_Dungeon
     {
         static void Main(string[] args)
         {
-            while (true)
-            {
-                GameManager.Instance.GameStart();
-            }
+            GameManager.Instance.GameStart();
         }
     }
 }
