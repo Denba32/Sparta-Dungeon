@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\admin\\Desktop\\Sparta-Dungeon\\Sparta Dungeon.csproj": {}
+    "E:\\GitHub\\Sparta-Dungeon\\Sparta Dungeon.csproj": {}
   },
   "projects": {
-    "C:\\Users\\admin\\Desktop\\Sparta-Dungeon\\Sparta Dungeon.csproj": {
+    "E:\\GitHub\\Sparta-Dungeon\\Sparta Dungeon.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\admin\\Desktop\\Sparta-Dungeon\\Sparta Dungeon.csproj",
+        "projectUniqueName": "E:\\GitHub\\Sparta-Dungeon\\Sparta Dungeon.csproj",
         "projectName": "Sparta Dungeon",
-        "projectPath": "C:\\Users\\admin\\Desktop\\Sparta-Dungeon\\Sparta Dungeon.csproj",
+        "projectPath": "E:\\GitHub\\Sparta-Dungeon\\Sparta Dungeon.csproj",
         "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\admin\\Desktop\\Sparta-Dungeon\\obj\\",
+        "outputPath": "E:\\GitHub\\Sparta-Dungeon\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
