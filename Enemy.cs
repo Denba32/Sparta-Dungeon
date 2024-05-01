@@ -25,16 +25,34 @@ namespace Sparta_Dungeon
         {
             if (random.Next(0, 100) < 10)
             {
-
+                // TODO 공격을 회피하는 작업을 수행합니다.
             }
             else
             {
                 enemyData.Vit -= damage;
                 if (enemyData.Vit <= 0)
                 {
-
+                    Dead();
                 }
             }
         }
+        public void SkDamage(float Skdamage)
+        {
+            if (enemyData.Vit <= 0)
+            {
+                return;
+            }
+            enemyData.Vit -= Skdamage;
+            
+            if (enemyData.Vit <= 0)
+            {
+                Dead();
+            }
+        }
+        public void Dead()
+        {
+            // TODO 적을 처리하는 작업을 수행합니다.
+        }
+
     }
 }
