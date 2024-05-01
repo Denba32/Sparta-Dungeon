@@ -38,12 +38,14 @@ namespace Sparta_Dungeon
         private UIManager ui = new UIManager();
         private EventManager _event = new EventManager();
         private Player player = new Player();
+        private Dungeon dungeon = new Dungeon();
 
         public DataManager Data { get => Instance.data; }
         public UIManager UI { get => Instance.ui; }
         public EventManager Event { get => Instance._event; }
         public SceneManager Scene { get => Instance.scene; }
         public Player Player { get => Instance.player; }
+        public Dungeon Dungeon { get => Instance.dungeon; }
 
         public Define.GameState state = GameState.Main;
 

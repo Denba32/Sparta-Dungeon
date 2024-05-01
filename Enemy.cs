@@ -12,9 +12,9 @@ namespace Sparta_Dungeon
         private EnemyData? enemyData;
         private Random random;
 
-        public Enemy(string name, float level, float atk, float vit)
+        public Enemy(string name, float level, float atk, float vit, char lifeYn)
         {
-            enemyData = new EnemyData(name, level, atk, vit);
+            enemyData = new EnemyData(name, level, atk, vit, lifeYn);
             random = new Random();
         }
         public void Attack()
@@ -52,6 +52,22 @@ namespace Sparta_Dungeon
         public void Dead()
         {
             // TODO 적을 처리하는 작업을 수행합니다.
+        }
+        public string GetName()
+        {
+            return enemyData.Name;
+        }
+        public float GetLevel()
+        {
+            return enemyData.Level;
+        }
+        public float GetAtk()
+        {
+            return enemyData.Atk;
+        }
+        public float GetVit()
+        {
+            return enemyData.Vit;
         }
 
     }
