@@ -34,9 +34,11 @@ namespace Sparta_Dungeon
         }
 
         private DataManager data = new DataManager();
+        private EventManager _event = new EventManager();
+
+
         private SceneManager scene = new SceneManager();
         private UIManager ui = new UIManager();
-        private EventManager _event = new EventManager();
         private Player player = new Player();
 
         public DataManager Data { get => Instance.data; }

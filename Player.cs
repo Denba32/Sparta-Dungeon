@@ -12,10 +12,6 @@ namespace Sparta_Dungeon
 
         public SkillController skillController = new SkillController();
 
-        public Player()
-        {
-            GameManager.Instance.Event.onReward += Reward;
-        }
 
         public PlayerData PlayerData
         {
@@ -33,6 +29,8 @@ namespace Sparta_Dungeon
                         PlayerData = new PlayerData("플레이어", 1, "전사", 10.0f, 5.0f, 100.0f, 50, 0 ,1500);
                    }
                 }
+                GameManager.Instance.Event.onReward += Reward;
+
                 return playerData;
             }
             set
