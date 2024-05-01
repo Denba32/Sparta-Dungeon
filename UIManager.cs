@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -15,10 +16,12 @@ namespace Sparta_Dungeon
         public int dungeonFloor = 1;
 
         // 매개변수에 씬의 제목을 입력시 화면 최상단에 출력
-        public void TiteleText(string str)
+        public void TiteleText(string str, ConsoleColor color = ConsoleColor.White, ConsoleColor color2 = ConsoleColor.Black)
         {
             Console.Clear();
             Console.SetCursorPosition(0, 0);
+            Console.ForegroundColor = color;
+            Console.BackgroundColor = color2;
             for (int i = 0; i < 40; i++)
             {
                 Console.Write("=");
@@ -30,6 +33,7 @@ namespace Sparta_Dungeon
             {
                 Console.Write("=");
             }
+            ConsoleColorReset();
         }
         // 매개변수에 씬의 설명을 입력하면 화면 상단에 출력
         public void LoreText(string str, string str2 = null)
@@ -50,8 +54,9 @@ namespace Sparta_Dungeon
             Console.SetCursorPosition(0, 22 - num);
         }
         // 입력 텍스트를 화면 하단에 출력
-        public void InputText()
+        public void InputText(ConsoleColor color = ConsoleColor.White)
         {
+            Console.ForegroundColor = color;
             Console.SetCursorPosition(0, 23);
             for (int i = 0; i < 40; i++)
             {
@@ -62,10 +67,12 @@ namespace Sparta_Dungeon
             Console.WriteLine("");
             Console.Write("   현재 입력 : ");
             Console.CursorVisible = false;
+            ConsoleColorReset();
         }
         // 입력 텍스트를 원하는 글자로 화면 하단에 출력
-        public void InputText(string str)
+        public void InputText(string str, ConsoleColor color = ConsoleColor.White)
         {
+            Console.ForegroundColor = color;
             Console.SetCursorPosition(0, 23);
             for (int i = 0; i < 40; i++)
             {

@@ -116,9 +116,8 @@ namespace Sparta_Dungeon
         // 마을 화면
         public void TownScene()
         {
-            Console.ForegroundColor = ConsoleColor.Green;
-            GameManager.Instance.UI.TiteleText("마을");
-            Console.ForegroundColor = ConsoleColor.White;
+            
+            GameManager.Instance.UI.TiteleText("마을", ConsoleColor.Green);            
             GameManager.Instance.UI.LoreText("스파르타 마을에 오신 여러분 환영합니다.", "이곳에서 던전으로 들어가기 전 활동을 할 수 있습니다.");
 
             GameManager.Instance.UI.SelectGuide(4);
@@ -128,9 +127,8 @@ namespace Sparta_Dungeon
             Console.WriteLine("   3.상점");
             Console.WriteLine($"   4.던전 입장 : (현재 {GameManager.Instance.UI.dungeonFloor}층)");
             Console.WriteLine("   5.휴식하기");
-            Console.ForegroundColor = ConsoleColor.Green;
 
-            GameManager.Instance.UI.InputText();
+            GameManager.Instance.UI.InputText(ConsoleColor.Green);
 
 
             string input = Console.ReadLine();
@@ -167,9 +165,7 @@ namespace Sparta_Dungeon
         // 상태 화면
         void StatusScene()
         {
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            GameManager.Instance.UI.TiteleText("상태 보기");
-            Console.ForegroundColor = ConsoleColor.White;
+            GameManager.Instance.UI.TiteleText("상태 보기", ConsoleColor.Cyan);
             GameManager.Instance.UI.LoreText("캐릭터의 정보가 표시됩니다.");
 
             GameManager.Instance.Player.ShowAllStatus();
@@ -177,8 +173,7 @@ namespace Sparta_Dungeon
             GameManager.Instance.UI.SelectGuide(0);
             Console.WriteLine("   0.나가기");
 
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            GameManager.Instance.UI.InputText();
+            GameManager.Instance.UI.InputText(ConsoleColor.Cyan);
             string input = Console.ReadLine();
 
             if (GameManager.Instance.UI.IsNumTest(input))
