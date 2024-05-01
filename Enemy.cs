@@ -14,5 +14,7 @@ namespace Sparta_Dungeon
         {
             enemyData = new EnemyData(name, level, atk, hp);
         }
+
+
     }
 }

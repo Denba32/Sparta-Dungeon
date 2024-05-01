@@ -7,6 +7,16 @@ namespace Sparta_Dungeon
 {
     public class DataManager
     {
+        public Dictionary<int, int> levelDict = new Dictionary<int, int>();
+
+        public DataManager()
+        {
+            levelDict.Add(1, 10);
+            levelDict.Add(2, 35);
+            levelDict.Add(3, 65);
+            levelDict.Add(4, 100);
+        }
+
         public void Save<T>(T data)
         {
             string json = JsonConvert.SerializeObject(data);

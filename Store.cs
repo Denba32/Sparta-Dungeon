@@ -8,7 +8,6 @@ namespace Sparta_Dungeon
 {
     public class Store
     {
-        
         public List<Equipment> items { get; set; } = new List<Equipment>();
 
 

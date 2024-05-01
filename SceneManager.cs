@@ -9,8 +9,6 @@ namespace Sparta_Dungeon
 {
     public class SceneManager
     {
-
-
         // 시작 화면
         public void StartScene()
         {
@@ -96,10 +94,10 @@ namespace Sparta_Dungeon
                 switch (int.Parse(input))
                 {
                     case 1:
-                        GameManager.Instance.Player.PlayerData.Chad = "전사";
+                        GameManager.Instance.Player.SetChad("전사");
                         break;
                     case 2:
-                        GameManager.Instance.Player.PlayerData.Chad = "궁수";
+                        GameManager.Instance.Player.SetChad("궁수");
                         break;
                     default:
                         GameManager.Instance.UI.ErrorText();
@@ -129,7 +127,6 @@ namespace Sparta_Dungeon
             Console.WriteLine("   5.휴식하기");
 
             GameManager.Instance.UI.InputText(ConsoleColor.Green);
-
 
             string input = Console.ReadLine();
 
@@ -317,7 +314,7 @@ namespace Sparta_Dungeon
 
             //기능 추가 필요(아이템 목록)
 
-            //기능 추가 필요(아이템 구매)
+            // 기능 추가 필요(아이템 구매)
 
             GameManager.Instance.UI.InputText();
             string input = Console.ReadLine();
@@ -417,7 +414,8 @@ namespace Sparta_Dungeon
             while (true)
             {
                 GameManager.Instance.UI.TiteleText("!!!전투!!!");
-                GameManager.Instance.UI.EnemyText(GameManager.Instance.Enemy.ShowEnemies());
+                
+                //몬스터 
 
                 GameManager.Instance.UI.PlayerUI();
 
@@ -462,7 +460,7 @@ namespace Sparta_Dungeon
             while (true)
             {
                 GameManager.Instance.UI.TiteleText("공격하기");
-                GameManager.Instance.UI.EnemyText(GameManager.Instance.Enemy.ShowEnemies());
+                // 적 표시 기능 추가하기
 
                 GameManager.Instance.UI.PlayerUI();
 
@@ -500,7 +498,7 @@ namespace Sparta_Dungeon
             while (true)
             {
                 GameManager.Instance.UI.TiteleText("아이템 사용");
-                GameManager.Instance.UI.EnemyText(GameManager.Instance.Enemy.ShowEnemies());
+                //적 표시 기능 추가하기
 
                 GameManager.Instance.UI.PlayerUI();
 
@@ -534,7 +532,7 @@ namespace Sparta_Dungeon
         void BattleLogScene()
         {
             GameManager.Instance.UI.TiteleText("!!!적의 행동!!!");
-            GameManager.Instance.UI.EnemyText(GameManager.Instance.Enemy.ShowEnemies());
+            //적 표시 기능 추가하기
 
             GameManager.Instance.UI.PlayerUI();
 

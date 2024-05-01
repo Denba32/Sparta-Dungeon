@@ -16,6 +16,7 @@ namespace Sparta_Dungeon
         public Equipment() { }
         public Equipment(int oid, string name, int atk, int def, string description, int price, bool isEquipped, bool isSelled)
         {
+            
             EquipData = new EquipmentData();
             EquipData.Oid = oid;
             EquipData.Name = name;
