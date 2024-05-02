@@ -1,5 +1,4 @@
 ﻿
-
 namespace Sparta_Dungeon
 {
     public class Player : IDamagable
@@ -243,11 +242,9 @@ namespace Sparta_Dungeon
             {
                 SetGold(-500);
                 PlayerData.Vit = 100;
-                GameManager.Instance.isHealed = true;
             }
             else
             {
-                GameManager.Instance.isEmpty = true;
             }
         }
 
@@ -270,7 +267,11 @@ namespace Sparta_Dungeon
         {
             if(PlayerData.Vit > 0)
             {
+                Console.WriteLine($"{PlayerData.Name} 을(를) 맞췄습니다.  [데미지 : {damage}]");
+                float prevHP = PlayerData.Vit;
                 PlayerData.Vit -= damage;
+                GameManager.Instance.UI.DamagedPlayerUI(prevHP.ToString());
+
             }
             else
             {

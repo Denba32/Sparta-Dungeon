@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sparta_Dungeon
+﻿namespace Sparta_Dungeon
 {
     public class EventManager
     {
@@ -69,6 +62,82 @@ namespace Sparta_Dungeon
             onReward?.Invoke(exp);
         }
 
+        public event Action? onRespawnEnemy;
 
+        // 적을 리스폰하는 함수
+        public void RespawnEnemy()
+        {
+            onRespawnEnemy?.Invoke();
+        }
+        #region 던전 내부 진입 시
+        public event Action? onEnterDungeon;
+
+        public void EnterDungeon()
+        {
+            onEnterDungeon?.Invoke();
+        }
+
+        #endregion
+
+        #region 배틀 공격 대상 선택 시
+        
+        public event Action? onSelectEnemy;
+
+        public void SelectEnemy()
+        {
+            onSelectEnemy?.Invoke();
+        }
+
+        #endregion
+
+        #region 플레이어의 공격과 결과 출력
+        public event Action<int, float>? onPlayerAttack;
+
+        public void StartPlayerAttack(int sel, float atk)
+        {
+            onPlayerAttack?.Invoke(sel, atk);
+        }
+
+        #endregion
+
+
+        #region 플레이어가 스킬 공격을 시도 시
+
+        public event Action<int, float>? onPlayerSkillAttack;
+
+        public void StartPlayerSkillAttack(int sel, float atk)
+        {
+            onPlayerSkillAttack?.Invoke(sel, atk);
+        }
+
+        public event Action<int>? onCheckCount;
+
+        public void CheckCount(int num)
+        {
+            onCheckCount?.Invoke(num);
+        }
+
+        #endregion
+
+        #region 에너미의 공격 시
+        public event Action? onEnemyAttack;
+
+        public void EnemyAttack()
+        {
+            onEnemyAttack?.Invoke();
+        }
+
+        #endregion
+
+        #region 에너미의 공격 결과
+        public event Action? onEnemyAttackResult;
+
+        public void EnemyAttackRsult()
+        {
+            onEnemyAttackResult?.Invoke();
+        }
+        #endregion
+
+        
     }
 }

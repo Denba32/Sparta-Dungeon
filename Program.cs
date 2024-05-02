@@ -1,6 +1,4 @@
 ﻿
-using static Sparta_Dungeon.Define;
-
 namespace Sparta_Dungeon
 {
 
@@ -10,5 +8,7 @@ namespace Sparta_Dungeon
         {
             GameManager.Instance.GameStart();
         }
+
+
     }
 }

@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using static Sparta_Dungeon.Define;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace Sparta_Dungeon
+﻿namespace Sparta_Dungeon
 {
     public class UIManager
     {
@@ -104,19 +94,25 @@ namespace Sparta_Dungeon
             Console.WriteLine("   잘못된 입력입니다!!!");
             Thread.Sleep(300);
         }
+        // 내용을 받아서 출력하는 메서드
+        public void ErrorText(string str) 
+        {
+            Console.SetCursorPosition(0, 28);
+            Console.WriteLine($"   {str}");
+            Thread.Sleep(300);
+        }
         // 보유 골드를 화면 우상단에 표시
         public void GoldText()
         {
             Console.SetCursorPosition(30, 6);
             Console.WriteLine($"[보유중인 골드] : {GameManager.Instance.Player.PlayerData.Gold} G");
         }
-        // 몬스터 출력
-        public void EnemyText(string str)
+        // 몬스터 정보 출력
+        public void EnemyText()
         {
             Console.SetCursorPosition(0, 4);
-            Console.WriteLine(str);
+            GameManager.Instance.Event.EnterDungeon();
             Console.WriteLine("");
-
         }
         // 캐릭터 정보 출력
         public void PlayerUI()
@@ -137,6 +133,27 @@ namespace Sparta_Dungeon
             {
                 Console.Write("=");
             }
+        }
+
+        public void DamagedPlayerUI(string prevHP)
+        {
+            Console.SetCursorPosition(0, 9);
+            for (int i = 0; i < 40; i++)
+            {
+                Console.Write("=");
+            }
+            Console.SetCursorPosition(3, 10);
+            Console.WriteLine($"[{GameManager.Instance.Player.PlayerData.Name}]");
+            Console.SetCursorPosition(3, 12);
+            Console.WriteLine($"Lv . {GameManager.Instance.Player.PlayerData.Level}    ({GameManager.Instance.Player.PlayerData.Chad})");
+            Console.SetCursorPosition(3, 13);
+            Console.WriteLine($"HP  {prevHP} -> {GameManager.Instance.Player.PlayerData.Vit}");
+            Console.SetCursorPosition(0, 14);
+            for (int i = 0; i < 40; i++)
+            {
+                Console.Write("=");
+            }
+
         }
         // 던전의 층을 표시
         public void NowFloorText()
@@ -162,25 +179,30 @@ namespace Sparta_Dungeon
             Console.SetCursorPosition(3, 10);
             Console.WriteLine(list[num]);
         }
+
+
+        #region ========== 선택지 문구를 띄워주는 메서드 ==========
+
         // 전투 선택지를 띄워줌
         public void BattelActionText()
         {
             Console.SetCursorPosition(0, 15);
-            Console.WriteLine($"   0.도망간다.");
             Console.WriteLine($"   1.공격한다.");
-            Console.WriteLine($"   2.아이템을 사용한다.");
-            Console.WriteLine($"   3.승리 테스트");
-            Console.WriteLine($"   4.패배 테스트");
+            Console.WriteLine($"   2.스킬.");
+
+            Console.WriteLine($"   0.도망간다.");
+
+
         }
         // 전투 - 공격 선택지
         public void BattelAttackText()
         {
             Console.SetCursorPosition(0, 15);
             Console.WriteLine($"   0.돌아간다.");
-            Console.WriteLine($"   1.전투 테스트.");
             Console.SetCursorPosition(0, 16);
             // 공격 스킬등 추가 
         }
+     
         // 전투 - 아이템 사용 선택지
         public void BattleItemText()
         {
@@ -189,8 +211,35 @@ namespace Sparta_Dungeon
             Console.SetCursorPosition(0, 16);
             // 아이템 목록 추가
         }
+
+        public void BattleNextText()
+        {
+            Console.SetCursorPosition(0, 15);
+            Console.WriteLine($"   0.다음.");
+            Console.SetCursorPosition(0, 16);
+        }
+
+        // 플레이어의 공격 후 몬스터의 데미지 결과를 출력
+        public void BattleResultText(string result)
+        {
+            Console.SetCursorPosition(0, 4);
+            Console.WriteLine(result);
+            Console.WriteLine("");
+        }
+
+        #endregion
+
         public void BattleLogText()
         {
+            Console.SetCursorPosition(0, 15);
+            Console.WriteLine("여기에 플레이어의 행동을 출력");
+            Console.SetCursorPosition(0, 16);
+            Console.WriteLine("여기부터 아래로 적의 행동을 출력");
+        }
+        public void BattleLogText(string text)
+        {
+            Console.SetCursorPosition(0, 4);
+            Console.WriteLine(text);
             Console.SetCursorPosition(0, 15);
             Console.WriteLine("여기에 플레이어의 행동을 출력");
             Console.SetCursorPosition(0, 16);

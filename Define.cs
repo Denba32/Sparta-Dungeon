@@ -37,5 +37,17 @@ namespace Sparta_Dungeon
             EquipQuest,
             LevelupQuest
         }
+        public enum Turn
+        {
+            Player,
+            Enemy
+        }
+        public enum BattleSituation
+        {
+            Progress,
+            Victory,
+            Defeat
+        }
+
     }
 }

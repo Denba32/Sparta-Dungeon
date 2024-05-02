@@ -45,6 +45,17 @@ namespace Sparta_Dungeon
             return default(T);
         }
 
+        public void ClearData<T>()
+        {
+            string path = $"{DefaultPath()}\\{typeof(T)}.json";
+            FileInfo fileInfo = new FileInfo(path);
+
+            if (fileInfo.Exists)
+            {
+                fileInfo.Delete();
+            }
+
+        }
         private void FileWrite(string path, string data)
         {
             FileStream fileStream = new FileStream(

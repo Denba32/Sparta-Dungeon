@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sparta_Dungeon
+﻿namespace Sparta_Dungeon
 {
     public class Store
     {
@@ -45,12 +39,10 @@ namespace Sparta_Dungeon
             {
                 if (items[index - 1].EquipData.IsSelled)
                 {
-                    GameManager.Instance.isBuyed = true;
                     return;
                 }
                 if (items[index - 1].EquipData.Price > GameManager.Instance.Player.PlayerData.Gold)
                 {
-                    GameManager.Instance.isEmpty = true;
                     return;
                 }
                 else
