@@ -21,23 +21,5 @@ namespace Sparta_Dungeon
             Weapon,
             Armor
         }
-
-
-        public enum GameState
-        {
-            None,
-            Main,
-            Status,
-            Inventory,
-            ItemManagement,
-            Store,
-            BuyItem,
-            SellItem,
-            Dungeon,
-            DungeonClear,
-            DungeonFailed,
-            Hospital,
-            End
-        }
     }
 }

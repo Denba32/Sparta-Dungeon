@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -54,5 +55,18 @@ namespace Sparta_Dungeon
             onBuyItem?.Invoke(equipment);
         }
 
+        public event Action? onShowItems;
+
+        public void ShowItemList()
+        {
+            onShowItems?.Invoke();
+        }
+
+        public event Action<int>? onReward;
+
+        public void Reward(int exp)
+        {
+            onReward?.Invoke(exp);
+        }
     }
 }

@@ -16,6 +16,7 @@ namespace Sparta_Dungeon
         public Equipment() { }
         public Equipment(int oid, string name, int atk, int def, string description, int price, bool isEquipped, bool isSelled)
         {
+            
             EquipData = new EquipmentData();
             EquipData.Oid = oid;
             EquipData.Name = name;
@@ -27,19 +28,18 @@ namespace Sparta_Dungeon
             EquipData.IsSelled = isSelled;
         }
 
-        public string ShowItemInfo()
+        public void ShowItemInfo()
         {
-            string data = "";
+
             if(Type == Define.EquipType.Weapon)
             {
-                data += $"{IsEquipped()}{EquipData.Name}  | 공격력 +{EquipData.Atk}  | {EquipData.Description}";
+                Console.WriteLine($"   {IsEquipped()}{EquipData.Name}  | 공격력 +{EquipData.Atk}  | {EquipData.Description}");
             }
             else if(Type == Define.EquipType.Armor)
             {
-                data += $"{IsEquipped()}{EquipData.Name}  | 방어력 +{EquipData.Def}  | {EquipData.Description}";
-
+                Console.WriteLine($"   {IsEquipped()}{EquipData.Name}  | 방어력 +{EquipData.Def}  | {EquipData.Description}");
             }
-            return data;
+
         }
 
         public string IsEquipped()

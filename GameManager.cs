@@ -34,19 +34,20 @@ namespace Sparta_Dungeon
         }
 
         private DataManager data = new DataManager();
+        private EventManager _event = new EventManager();
+
+
         private SceneManager scene = new SceneManager();
         private UIManager ui = new UIManager();
-        private EventManager _event = new EventManager();
         private Player player = new Player();
+        private Dungeon dungeon = new Dungeon();
 
         public DataManager Data { get => Instance.data; }
         public UIManager UI { get => Instance.ui; }
         public EventManager Event { get => Instance._event; }
         public SceneManager Scene { get => Instance.scene; }
         public Player Player { get => Instance.player; }
-
-        public Define.GameState state = GameState.Main;
-
+        public Dungeon Dungeon { get => Instance.dungeon; }
 
         // Error 발생 시 True로 만들어서 입력란 밑에 에러를 발생시키는 코드
         public bool isError = false;

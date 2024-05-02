@@ -10,11 +10,11 @@ namespace Sparta_Dungeon
     public class Inventory
     {
         public List<Equipment> items { get; private set; } = new List<Equipment>();
-    
-
+        
         public Inventory()
         {
             GameManager.Instance.Event.onSellItem += SetItem;
+            GameManager.Instance.Event.onShowItems += ShowItems;
         }
         
         public void Init()
@@ -30,7 +30,13 @@ namespace Sparta_Dungeon
             SetItem(armor);
             SetItem(oldSword);
         }
-
+        public void ShowItems()
+        {
+            for (int i = 0; i < items.Count; i++)
+            {
+                items[i].ShowItemInfo();
+            }
+        }
         public int GetItemCount()
         {
             return items.Count;
@@ -66,14 +72,6 @@ namespace Sparta_Dungeon
                 for (int i = 0; i < items.Count; i++) 
                 { 
                  
-                    if (items[i].Type == Define.EquipType.Weapon)
-                    {
-                        data += $"- {i + 1} {items[i].ShowItemInfo()}\n";
-                    }
-                    else
-                    {
-                        data += $"- {i + 1} {items[i].ShowItemInfo()}\n";
-                    }
                 }
                 return data;
             }
