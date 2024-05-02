@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "E:\\GitHub\\Sparta-Dungeon\\Sparta Dungeon.csproj": {}
+    "C:\\Users\\USER\\Desktop\\Git\\Sparta-Dungeon\\Sparta Dungeon.csproj": {}
   },
   "projects": {
-    "E:\\GitHub\\Sparta-Dungeon\\Sparta Dungeon.csproj": {
+    "C:\\Users\\USER\\Desktop\\Git\\Sparta-Dungeon\\Sparta Dungeon.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\GitHub\\Sparta-Dungeon\\Sparta Dungeon.csproj",
+        "projectUniqueName": "C:\\Users\\USER\\Desktop\\Git\\Sparta-Dungeon\\Sparta Dungeon.csproj",
         "projectName": "Sparta Dungeon",
-        "projectPath": "E:\\GitHub\\Sparta-Dungeon\\Sparta Dungeon.csproj",
-        "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-        "outputPath": "E:\\GitHub\\Sparta-Dungeon\\obj\\",
+        "projectPath": "C:\\Users\\USER\\Desktop\\Git\\Sparta-Dungeon\\Sparta Dungeon.csproj",
+        "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\USER\\Desktop\\Git\\Sparta-Dungeon\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\USER\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -70,7 +70,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

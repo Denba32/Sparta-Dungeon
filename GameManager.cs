@@ -41,6 +41,7 @@ namespace Sparta_Dungeon
         private UIManager ui = new UIManager();
         private Player player = new Player();
         private Dungeon dungeon = new Dungeon();
+        private QuestManager quest = new QuestManager();
 
         public DataManager Data { get => Instance.data; }
         public UIManager UI { get => Instance.ui; }
@@ -48,6 +49,7 @@ namespace Sparta_Dungeon
         public SceneManager Scene { get => Instance.scene; }
         public Player Player { get => Instance.player; }
         public Dungeon Dungeon { get => Instance.dungeon; }
+        public QuestManager Quest { get => Instance.quest; }
 
         // Error 발생 시 True로 만들어서 입력란 밑에 에러를 발생시키는 코드
         public bool isError = false;

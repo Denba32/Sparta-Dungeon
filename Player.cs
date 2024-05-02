@@ -149,7 +149,7 @@ namespace Sparta_Dungeon
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write($"{PlayerData.Def}");
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.WriteLine($" + ({Inven.GetWeaponAbility()})");
+                Console.WriteLine($" + ({Inven.GetArmorAbility()})");
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("");
             }

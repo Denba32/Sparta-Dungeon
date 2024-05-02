@@ -18,7 +18,7 @@ namespace Sparta_Dungeon
         }
         public void Attack()
         {
-            player.Damage(enemyData.Atk);
+            GameManager.Instance.Player.Damage(enemyData.Atk);
         }
         public void Damage(float damage)
         {

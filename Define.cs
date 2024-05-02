@@ -21,5 +21,21 @@ namespace Sparta_Dungeon
             Weapon,
             Armor
         }
+
+        public enum QuestState
+        {
+            CanAccept,
+            AcceptQuest,
+            ProcessQuest,
+            ClearQuest,
+            RewardQuest
+        }
+
+        public enum QuestType
+        {
+            HuntQuest,
+            EquipQuest,
+            LevelupQuest
+        }
     }
 }

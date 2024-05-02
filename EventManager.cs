@@ -68,5 +68,7 @@ namespace Sparta_Dungeon
         {
             onReward?.Invoke(exp);
         }
+
+
     }
 }
