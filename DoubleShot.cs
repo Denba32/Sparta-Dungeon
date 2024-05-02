@@ -20,7 +20,7 @@ namespace Sparta_Dungeon
             for(int i = 0; i < 2; i++)
             {
                 int targetNum = random.Next(0, damagable.Count);
-                damagable[targetNum].SkDamage(damage * 2);
+                damagable[targetNum].SkDamage(damage * 1.5f);
             }
         }
 

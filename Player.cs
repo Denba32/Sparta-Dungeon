@@ -10,9 +10,11 @@ namespace Sparta_Dungeon
         public Equipment? Weapon { get; set; }
         public Equipment? Armor { get; set; }
 
+        public List<Potion> potions = new List<Potion>();
+
         public SkillController skillController = new SkillController();
 
-
+        public int count = 0;
         public PlayerData PlayerData
         {
             get
@@ -38,7 +40,10 @@ namespace Sparta_Dungeon
                 playerData = value;
             }
         }
-
+        public void Attack(IDamagable damagable)
+        {
+            damagable.Damage(PlayerData.Atk);
+        }
 
         // 인벤토리
         public Inventory Inven
@@ -112,6 +117,18 @@ namespace Sparta_Dungeon
             }
         }
 
+        public void UsePotion()
+        {
+            if (potions[0] != null)
+            {
+                PlayerData.Vit += potions[0].Heal();
+                // 회복을 완료했습니다.
+            }
+            else
+            {
+                // TODO 포션이 없음을 출력함
+            }
+        }
         // 모든 스테이터스 정보를 포맷화하여 출력
         public void ShowAllStatus()
         {

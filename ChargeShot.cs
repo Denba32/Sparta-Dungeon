@@ -15,7 +15,7 @@ namespace Sparta_Dungeon
         public void Execute(IDamagable damagable, float damage)
         {
             Console.WriteLine("더블 샷!");
-            damagable.SkDamage(damage);
+            damagable.SkDamage(damage *2);
         }
 
         public void Execute(List<IDamagable> damagable, float damage)

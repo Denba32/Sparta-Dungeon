@@ -13,7 +13,9 @@ namespace Sparta_Dungeon
         public int Scale { get; set; }
         public Random rand = new Random();
         [JsonProperty]
+
         public List<Enemy> enemies { get; set; } = new List<Enemy>();
+
         public DungeonData()
         {
             enemies.Add(new Enemy("미니언", 1, 15, 3, 'Y'));

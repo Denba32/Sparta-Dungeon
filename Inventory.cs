@@ -30,6 +30,7 @@ namespace Sparta_Dungeon
             SetItem(armor);
             SetItem(oldSword);
         }
+
         public void ShowItems()
         {
             for (int i = 0; i < items.Count; i++)
@@ -37,6 +38,8 @@ namespace Sparta_Dungeon
                 items[i].ShowItemInfo();
             }
         }
+
+
         public int GetItemCount()
         {
             return items.Count;

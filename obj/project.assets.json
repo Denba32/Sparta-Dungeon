@@ -602,19 +602,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\admin\\.nuget\\packages\\": {}
+    "C:\\Users\\ksuo1\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\GitHub\\Sparta-Dungeon\\Sparta Dungeon.csproj",
+      "projectUniqueName": "C:\\Users\\ksuo1\\source\\repos\\ConsoleApp1\\Sparta Dungeon\\Sparta Dungeon.csproj",
       "projectName": "Sparta Dungeon",
-      "projectPath": "E:\\GitHub\\Sparta-Dungeon\\Sparta Dungeon.csproj",
-      "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-      "outputPath": "E:\\GitHub\\Sparta-Dungeon\\obj\\",
+      "projectPath": "C:\\Users\\ksuo1\\source\\repos\\ConsoleApp1\\Sparta Dungeon\\Sparta Dungeon.csproj",
+      "packagesPath": "C:\\Users\\ksuo1\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ksuo1\\source\\repos\\ConsoleApp1\\Sparta Dungeon\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ksuo1\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
