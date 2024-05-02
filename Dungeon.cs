@@ -8,7 +8,7 @@ namespace Sparta_Dungeon
     public interface IDamagable
     {
         void Damage(float damage);
-        void SkDamage(float skdamage);
+        void SkDamage(float damage);
     }
     public class Dungeon
     {
