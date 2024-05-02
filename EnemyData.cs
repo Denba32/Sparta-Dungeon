@@ -19,8 +19,6 @@ namespace Sparta_Dungeon
         [JsonProperty]
         public float Vit { get; set; }
         [JsonProperty]
-        public float MaxVit { get; set; }
-        [JsonProperty]
         public char LifeYn { get; set; }
 
         public EnemyData(string name, float level, float atk, float vit, char lifeYn)
