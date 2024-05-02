@@ -10,6 +10,7 @@ namespace Sparta_Dungeon
         void Damage(float damage);
         void SkDamage(float damage);
     }
+
     public class Dungeon
     {
         private DungeonData? dungeonData;

@@ -22,7 +22,7 @@ namespace Sparta_Dungeon
         public void Execute(IDamagable damagable, float damage)
         {
             Console.WriteLine("알파 스트라이크!");
-            damagable.SkDamage(damage);
+            damagable.SkDamage(damage * 2);
         }
 
 
