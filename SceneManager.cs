@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace Sparta_Dungeon
 {
     public class SceneManager
@@ -172,6 +174,7 @@ namespace Sparta_Dungeon
 
         #endregion
 
+
         #region ========== 상태 화면 ==========
         // 상태 화면
         void StatusScene()
@@ -260,10 +263,6 @@ namespace Sparta_Dungeon
 
             GameManager.Instance.UI.SelectGuide(0);
             Console.WriteLine("   0.나가기");
-
-
-            //기능 추가 필요(아이템 목록)
-            //기능 추가 필요(아이템 장착 기능)
 
             GameManager.Instance.UI.InputText(ConsoleColor.Cyan);
             string input = Console.ReadLine();
@@ -746,27 +745,32 @@ namespace Sparta_Dungeon
         //  퀘스트 게시판
         void QuestBoardScene()
         {
-            GameManager.Instance.UI.TiteleText("퀘스트 게시판");
+            GameManager.Instance.UI.TiteleText("퀘스트 게시판", ConsoleColor.DarkYellow);
             GameManager.Instance.UI.LoreText("[현재 모집중인 퀘스트를 확인합니다.]");
 
             GameManager.Instance.Quest.ShowQuestList();
 
             GameManager.Instance.UI.SelectGuide(0);
             Console.WriteLine("   0.나가기");
-            GameManager.Instance.UI.InputText("원하는 행동이나 퀘스트의 번호를 입력해주세요");
+            GameManager.Instance.UI.InputText("원하는 행동이나 퀘스트의 번호를 입력해주세요", ConsoleColor.DarkYellow);
 
             string input = Console.ReadLine();
 
             if (GameManager.Instance.UI.IsNumTest(input))
             {
-                switch (int.Parse(input))
+                if (int.Parse(input) == 0)
                 {
-                    case 0:
-                        break;
-                    default:
-                        GameManager.Instance.UI.ErrorText();
-                        QuestBoardScene();
-                        break;
+                    return;
+                }
+                else if (int.Parse(input) > GameManager.Instance.Quest.quests.Count)
+                {
+                    GameManager.Instance.UI.ErrorText();
+                    QuestBoardScene();
+                }
+                else
+                {
+                    GameManager.Instance.Quest.quests[int.Parse(input) - 1].Clear();
+                    QuestCheckScene(int.Parse(input));
                 }
             }
             else
@@ -775,6 +779,93 @@ namespace Sparta_Dungeon
                 QuestBoardScene();
             }
 
+        }
+        void QuestCheckScene(int num)
+        {
+            GameManager.Instance.Quest.quests[num - 1].Clear();
+            GameManager.Instance.UI.TiteleText("퀘스트 게시판",ConsoleColor.DarkYellow);
+            GameManager.Instance.UI.LoreText("[퀘스트의 정보를 확인합니다.]");
+
+            GameManager.Instance.Quest.ShowQuestInfo(num);
+
+            GameManager.Instance.Quest.QuestSelectText(num);
+
+            GameManager.Instance.UI.SelectGuide(0);
+            Console.WriteLine("   0.나가기");
+            GameManager.Instance.UI.InputText(ConsoleColor.DarkYellow);
+
+            string input = Console.ReadLine();
+
+            if (GameManager.Instance.UI.IsNumTest(input))
+            {
+                if (int.Parse(input) == 0)
+                {
+                    return;
+                }
+                else if (GameManager.Instance.Quest.quests[num - 1].State == Define.QuestState.CanAccept)
+                {
+                    switch (int.Parse(input))
+                    {
+                        case 1:
+                            GameManager.Instance.UI.SystemText("   퀘스트를 수락하셨습니다.", ConsoleColor.Green);
+                            GameManager.Instance.Quest.quests[num - 1].State = Define.QuestState.AcceptQuest;
+                            GameManager.Instance.Quest.quests[num - 1].Clear();
+                            QuestCheckScene(num);
+                            break;
+                        case 2:
+                            GameManager.Instance.UI.SystemText("   퀘스트를 거절하셨습니다.", ConsoleColor.Red);
+                            QuestBoardScene();
+                            break;
+                        default:
+                            GameManager.Instance.UI.ErrorText();
+                            QuestCheckScene(num);
+                            break;
+                    }
+                }
+                else if (GameManager.Instance.Quest.quests[num - 1].State == Define.QuestState.AcceptQuest)
+                {
+                    switch (int.Parse(input))
+                    {
+                        case 1:
+                            GameManager.Instance.UI.SystemText("   퀘스트를 포기하셨습니다.", ConsoleColor.Red);
+                            GameManager.Instance.Quest.quests[num - 1].State = Define.QuestState.CanAccept;
+                            QuestCheckScene(num);
+                            break;
+                        case 2:
+                            GameManager.Instance.UI.SystemText("   아직 완료할 수 없습니다!!!", ConsoleColor.Red);
+                            QuestCheckScene(num);
+                            break;
+                        default:
+                            GameManager.Instance.UI.ErrorText();
+                            QuestCheckScene(num);
+                            break;
+                    }
+                }
+                else if (GameManager.Instance.Quest.quests[num - 1].State == Define.QuestState.ClearQuest)
+                {
+                    switch (int.Parse(input))
+                    {
+                        case 1:
+                            GameManager.Instance.UI.SystemText("   퀘스트를 완료하셨습니다!!!", ConsoleColor.Cyan, 400);
+                            GameManager.Instance.Quest.quests[num - 1].State = Define.QuestState.CanAccept;
+                            QuestBoardScene();
+                            break;
+                        default:
+                            GameManager.Instance.UI.ErrorText();
+                            QuestCheckScene(num);
+                            break;
+                    }
+                }
+                else
+                {
+                    QuestCheckScene(num);
+                }
+            }
+            else
+            {
+                GameManager.Instance.UI.ErrorText();
+                QuestCheckScene(num);
+            }
         }
 
         #endregion

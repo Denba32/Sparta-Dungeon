@@ -8,18 +8,24 @@ namespace Sparta_Dungeon
 {
     internal class EquipQuest : Quest
     {
-        public Equipment RequireEquip {  get; set; }
+        public int RequireEquip {  get; set; }
 
-        public EquipQuest(string title, string description, Equipment equipment) : base(title, description)
+        public EquipQuest(string title, string description, int oid) : base(title, description)
         {
             Type = Define.QuestType.EquipQuest;
             State = Define.QuestState.CanAccept;
-            RequireEquip = equipment;
+            RequireEquip = oid;
         }
 
         public override void Clear()
         {
-            base.Clear();
+            for (int i = 0; i < GameManager.Instance.Player.Inven.items.Count; i++)
+            {
+                if (GameManager.Instance.Player.Inven.items[i].EquipData.IsEquipped == true)
+                {
+                    int num = GameManager.Instance.Player.Inven.items[i].EquipData.Oid;
+                }                
+            }
         }
 
         public override void Notify()

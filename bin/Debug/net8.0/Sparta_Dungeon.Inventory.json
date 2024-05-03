@@ -1,1 +1,1 @@
-﻿{"items":[{"EquipData":{"Oid":6,"Name":"스파르타의 창","Atk":7,"Def":0,"Description":"스파르타의 전사들이 사용했다는 전설의 창입니다.","Price":3200,"IsEquipped":true,"IsSelled":false},"Type":0}]}
+﻿{"items":[{"EquipData":{"Oid":6,"Name":"스파르타의 창","Atk":7,"Def":0,"Description":"스파르타의 전사들이 사용했다는 전설의 창입니다.","Price":3200,"IsEquipped":true,"IsSelled":false},"Type":0},{"EquipData":{"Oid":2,"Name":"무쇠갑옷","Atk":0,"Def":9,"Description":"무쇠로 만들어져 튼튼한 갑옷입니다.","Price":2200,"IsEquipped":true,"IsSelled":false},"Type":1}]}
