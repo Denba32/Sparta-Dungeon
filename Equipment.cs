@@ -53,6 +53,7 @@ namespace Sparta_Dungeon
                 }
             }
 
+
         }
 
         public string IsEquipped()
@@ -71,7 +72,7 @@ namespace Sparta_Dungeon
         {
             if (EquipData.IsSelled)
             {
-                return "구매완료";
+                return "[구매완료]";
             }
             else
             {

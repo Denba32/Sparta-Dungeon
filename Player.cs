@@ -266,7 +266,6 @@ namespace Sparta_Dungeon
             Console.WriteLine("");
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.Write("   공격력 : ");
-
             if (Weapon != null)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
@@ -275,20 +274,11 @@ namespace Sparta_Dungeon
                 Console.WriteLine($" + ({Inven.GetWeaponAbility()})");
                 Console.WriteLine("");
             }
-            // 무기는 있지만 방어구는 있는 경우
-            else if(Weapon == null)
-            {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.Write($"{PlayerData.Atk}");
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.WriteLine("");
-
-            }
-            // 무기는 장착했지만 방어구는 없는 경우
-            else if (Weapon != null && Armor == null)
+            else
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine($"{PlayerData.Atk}");
+                Console.ForegroundColor = ConsoleColor.Magenta;
                 Console.WriteLine("");
             }
             Console.ForegroundColor = ConsoleColor.Cyan;
@@ -299,13 +289,13 @@ namespace Sparta_Dungeon
                 Console.Write($"{PlayerData.Def}");
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Console.WriteLine($" + ({Inven.GetArmorAbility()})");
-                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("");
             }
             else
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.Write($"{PlayerData.Def}");
+                Console.WriteLine($"{PlayerData.Def}");
+                Console.ForegroundColor = ConsoleColor.Magenta;
                 Console.WriteLine("");
             }
             Console.ForegroundColor = ConsoleColor.Cyan;

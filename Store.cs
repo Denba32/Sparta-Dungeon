@@ -1,14 +1,18 @@
-﻿namespace Sparta_Dungeon
+﻿using System;
+
+namespace Sparta_Dungeon
 {
     public class Store
     {
         public List<Equipment> items { get; set; } = new List<Equipment>();
 
-
         public Store()
         {
             GameManager.Instance.Event.onSellItem += Sell;
-            
+            GameManager.Instance.Event.onBuy += Buy;
+            GameManager.Instance.Event.onShowShopList += ShowAllItemData;
+            Init();
+
         }
 
         public void Init()
@@ -21,15 +25,62 @@
             items.Add(new Weapon(6, "스파르타의 창", 7, 0, "스파르타의 전사들이 사용했다는 전설의 창입니다.", 3200, false, true));
         }
 
-        public string ShowAllItemData()
+        public void ShowAllItemData(bool istrue)
         {
-            string data = "";
-            foreach (var item in items)
+            for(int i = 0; i < items.Count; i++)
             {
-                data += $"{item.EquipData.Name},{item.EquipData.Atk},{item.EquipData.Def},{item.EquipData.Description},{item.EquipData.Price},{Enum.GetName(item.Type)},{item.EquipData.IsEquipped},{item.EquipData.IsSelled},";
+                if (istrue)
+                {
+                    Console.SetCursorPosition(1, 8 + i);
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.Write("[ヰ]");
+                    GameManager.Instance.UI.ConsoleColorReset();
+                }
+                else
+                {
+                    Console.SetCursorPosition(0, 8 + i);
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.Write("[ ");
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.Write($"{1 + i}");
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.Write(" ]");
+                    GameManager.Instance.UI.ConsoleColorReset();
+                }
+                if (items[i].Type == Define.EquipType.Weapon)
+                {
+                    Console.SetCursorPosition(6 , 8 + i);
+                    Console.Write($"{items[i].EquipData.Name}");
+                    Console.SetCursorPosition(22, 8 + i);
+                    Console.Write($"|  공격력 : { items[i].EquipData.Atk}" );
+                    Console.SetCursorPosition(38, 8 + i);
+                    Console.Write($"|  {items[i].EquipData.Description}");
+                    Console.SetCursorPosition(93, 8 + i);
+                    Console.Write("|  ");
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.Write($"{items[i].EquipData.Price}");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.SetCursorPosition(102, 8 + i);
+                    Console.WriteLine("G");
+                }
+                else
+                {
+                    Console.SetCursorPosition(6, 8 + i);
+                    Console.Write($"{items[i].EquipData.Name}");
+                    Console.SetCursorPosition(22, 8 + i);
+                    Console.Write($"|  방어력 : {items[i].EquipData.Def}");
+                    Console.SetCursorPosition(38, 8 + i);
+                    Console.Write($"|  {items[i].EquipData.Description}");
+                    Console.SetCursorPosition(93, 8 + i);
+                    Console.Write("|  ");
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.Write($"{items[i].EquipData.Price}");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.SetCursorPosition(102, 8 + i);
+                    Console.WriteLine("G");
+                }
+                
             }
-            data += "\n";
-            return data;
         }
 
         // 플레이어가 상점으로부터 아이템을 구매할 때 사용하는 메서드
@@ -37,96 +88,44 @@
         {
             if (items.Count > 0)
             {
-                if (items[index - 1].EquipData.IsSelled)
+                if (index - 1 >= items.Count)
                 {
-                    return;
+                    GameManager.Instance.UI.ErrorText();
                 }
-                if (items[index - 1].EquipData.Price > GameManager.Instance.Player.PlayerData.Gold)
+                else if (items[index - 1].EquipData.Price > GameManager.Instance.Player.PlayerData.Gold)
                 {
-                    return;
+                    GameManager.Instance.UI.SystemText("   소지금이 부족합니다!!!", ConsoleColor.Red, 400);
                 }
                 else
                 {
-                    GameManager.Instance.Player.SetGold(-items[index - 1].EquipData.Price);
-                    items[index - 1].EquipData.IsSelled = true;
+                    if(items[index - 1].Type == Define.EquipType.Weapon)
+                    {
+                        GameManager.Instance.Player.SetGold(-items[index - 1].EquipData.Price);
+                        GameManager.Instance.Player.Inven.items.Add(new Weapon(items[index - 1].EquipData.Oid, items[index - 1].EquipData.Name, items[index - 1].EquipData.Atk, 0, items[index - 1].EquipData.Description, items[index - 1].EquipData.Price, false, false));
+                    }
+                    else
+                    {
+                        GameManager.Instance.Player.SetGold(-items[index - 1].EquipData.Price);
+                        GameManager.Instance.Player.Inven.items.Add(new Armor(items[index - 1].EquipData.Oid, items[index - 1].EquipData.Name, 0, items[index - 1].EquipData.Def, items[index - 1].EquipData.Description, items[index - 1].EquipData.Price, false, false));
+                    }
+                    GameManager.Instance.UI.SystemText("   아이템을 구매했습니다!",ConsoleColor.Green, 400);
                 }
             }
-            GameManager.Instance.Event.BuyItem(items[index - 1]);
         }
 
         // 플레이어가 상점으로부터 아이템을 판매할 때 사용하는 메서드
-        public void Sell(Equipment equipment)
+        public void Sell(int index)
         {
-            foreach (var item in items)
+            if (index - 1 >= GameManager.Instance.Player.Inven.items.Count)
             {
-                if (equipment.EquipData.Oid == item.EquipData.Oid)
-                {
-                    item.EquipData.IsSelled = false;
-                    break;
-                }
-
-            }
-
-        }
-
-
-        public int GetItemCount() => items.Count;
-        // 상점에서 소유하고 있는 총 아이템 정보에 대해서 출력
-        public string ShowItemlist(bool isBuy)
-        {
-            string data = "";
-
-            if (GetItemCount() > 0)
-            {
-                if (isBuy)
-                {
-                    for (int i = 0; i < items.Count; i++)
-                    {
-                        if (items[i].Type == Define.EquipType.Weapon)
-                        {
-                            data += $"- {i + 1} {items[i].EquipData.Name}    | 공격력 +{items[i].EquipData.Atk}  | {items[i].EquipData.Description}  | {items[i].IsSelled()}\n";
-                        }
-                        else
-                        {
-                            data += $"- {i + 1} {items[i].EquipData.Name}    | 방어력 +{items[i].EquipData.Def}  | {items[i].EquipData.Description}  | {items[i].IsSelled()}\n";
-                        }
-                    }
-                }
-                else
-                {
-                    for (int i = 0; i < items.Count; i++)
-                    {
-                        if (items[i].Type == Define.EquipType.Weapon)
-                        {
-                            data += $"- {items[i].EquipData.Name}    | 공격력 +{items[i].EquipData.Atk}  | {items[i].EquipData.Description}  | {items[i].IsSelled()}\n";
-                        }
-                        else
-                        {
-                            data += $"- {items[i].EquipData.Name}    | 방어력 +{items[i].EquipData.Def}  | {items[i].EquipData.Description}  | {items[i].IsSelled()}\n";
-                        }
-                    }
-                }
+                GameManager.Instance.UI.ErrorText();
             }
             else
             {
-                return "";
-            }
-
-            return data;
-
-
-        }
-
-        // 판매 여부에 따라 결과를 출력해주는 메서드
-        public string IsSelled(Equipment item)
-        {
-            if (item.EquipData.IsSelled)
-            {
-                return "구매완료";
-            }
-            else
-            {
-                return item.EquipData.Price.ToString();
+                GameManager.Instance.Player.SetGold( + (int)(items[index - 1].EquipData.Price * 0.8f));
+                GameManager.Instance.Event.Detached(GameManager.Instance.Player.Inven.items[index - 1]);
+                GameManager.Instance.Player.Inven.items.RemoveAt(index - 1);
+                GameManager.Instance.UI.SystemText("   아이템을 판매했습니다!", ConsoleColor.Green, 400);
             }
         }
     }

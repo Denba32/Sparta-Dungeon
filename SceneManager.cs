@@ -3,6 +3,7 @@ namespace Sparta_Dungeon
 {
     public class SceneManager
     {
+        
         #region ========== 초반 시작 화면 : 이름 설정 직업 설정 ==========
         // 시작 화면
         public void StartScene()
@@ -191,7 +192,6 @@ namespace Sparta_Dungeon
                 switch (int.Parse(input))
                 {
                     case 0:
-                        TownScene();
                         break;
                     default:
                         GameManager.Instance.UI.ErrorText();
@@ -214,16 +214,17 @@ namespace Sparta_Dungeon
         // 인벤토리 화면
         void InventoryScene()
         {
-            GameManager.Instance.UI.TiteleText("인벤토리");
-            GameManager.Instance.UI.LoreText("보유중인 아이템을 관리할 수 있습니다.", "[아이템 목록]");
+            GameManager.Instance.UI.TiteleText("인벤토리", ConsoleColor.Cyan);
+            GameManager.Instance.UI.GoldText();
+            GameManager.Instance.UI.LoreText("보유중인 아이템을 관리할 수 있습니다.", "[아이템 목록]", ConsoleColor.White, ConsoleColor.Cyan);
 
-            GameManager.Instance.Event.ShowItemList();
+            GameManager.Instance.Event.ShowSelectorItemList(true);
 
             GameManager.Instance.UI.SelectGuide(1);
-            Console.WriteLine("   0.나가기");
             Console.WriteLine("   1.장착 관리");
+            Console.WriteLine("   0.나가기");
 
-            GameManager.Instance.UI.InputText();
+            GameManager.Instance.UI.InputText(ConsoleColor.Cyan);
             string input = Console.ReadLine();
 
             if (GameManager.Instance.UI.IsNumTest(input))
@@ -231,7 +232,6 @@ namespace Sparta_Dungeon
                 switch (int.Parse(input))
                 {
                     case 0:
-                        TownScene();
                         break;
                     case 1:
                         ItemManageScene();
@@ -251,10 +251,11 @@ namespace Sparta_Dungeon
         // 인벤토리 관리화면(기능 추가 필요)
         void ItemManageScene()
         {
-            GameManager.Instance.UI.TiteleText("인벤토리");
-            GameManager.Instance.UI.LoreText("원하는 아이템의 번호를 입력해서 장착/해제할 수 있습니다.", "[아이템 목록]");
+            GameManager.Instance.UI.TiteleText("인벤토리", ConsoleColor.Cyan);
+            GameManager.Instance.UI.GoldText();
+            GameManager.Instance.UI.LoreText("원하는 아이템의 번호를 입력해서 장착/해제할 수 있습니다.", "[아이템 목록]", ConsoleColor.White, ConsoleColor.Cyan);
 
-            GameManager.Instance.Event.ShowSelectorItemList();
+            GameManager.Instance.Event.ShowSelectorItemList(false);
 
 
             GameManager.Instance.UI.SelectGuide(0);
@@ -264,7 +265,7 @@ namespace Sparta_Dungeon
             //기능 추가 필요(아이템 목록)
             //기능 추가 필요(아이템 장착 기능)
 
-            GameManager.Instance.UI.InputText();
+            GameManager.Instance.UI.InputText(ConsoleColor.Cyan);
             string input = Console.ReadLine();
 
             if (GameManager.Instance.UI.IsNumTest(input))
@@ -307,18 +308,18 @@ namespace Sparta_Dungeon
         // 상점 화면(기능 추가 필요)
         void StoreScene()
         {
-            GameManager.Instance.UI.TiteleText("상점");
+            GameManager.Instance.UI.TiteleText("상점", ConsoleColor.Cyan);
             GameManager.Instance.UI.GoldText();
-            GameManager.Instance.UI.LoreText("필요한 아이템을 얻을 수 있는 상점입니다.", "[아이템 목록]");
+            GameManager.Instance.UI.LoreText("필요한 아이템을 얻을 수 있는 상점입니다.", "[아이템 목록]", ConsoleColor.White, ConsoleColor.Cyan);
+
+            GameManager.Instance.Event.ShowShopList(true);
 
             GameManager.Instance.UI.SelectGuide(2);
-            Console.WriteLine("   0.나가기");
             Console.WriteLine("   1.아이템 구매");
             Console.WriteLine("   2.아이템 판매");
+            Console.WriteLine("   0.나가기");
 
-            //기능 추가 필요(아이템 목록)
-
-            GameManager.Instance.UI.InputText();
+            GameManager.Instance.UI.InputText(ConsoleColor.Cyan);
             string input = Console.ReadLine();
 
             if (GameManager.Instance.UI.IsNumTest(input))
@@ -326,7 +327,6 @@ namespace Sparta_Dungeon
                 switch (int.Parse(input))
                 {
                     case 0:
-                        TownScene();
                         break;
                     case 1:
                         BuyItemScene();
@@ -351,31 +351,28 @@ namespace Sparta_Dungeon
         // 아이템 구매 화면(기능 추가 필요)
         void BuyItemScene()
         {
-            GameManager.Instance.UI.TiteleText("상점 - 아이템 구매");
+            GameManager.Instance.UI.TiteleText("상점 - 아이템 구매", ConsoleColor.Cyan);
             GameManager.Instance.UI.GoldText();
-            GameManager.Instance.UI.LoreText("원하는 아이템의 번호를 입력하면 구매합니다.", "[아이템 목록]");
+            GameManager.Instance.UI.LoreText("원하는 아이템의 번호를 입력하면 구매합니다.", "[아이템 목록]", ConsoleColor.White, ConsoleColor.Cyan);
 
             GameManager.Instance.UI.SelectGuide(0);
             Console.WriteLine("   0.나가기");
 
-            //기능 추가 필요(아이템 목록)
+            GameManager.Instance.Event.ShowShopList(false);            
 
-            // 기능 추가 필요(아이템 구매)
-
-            GameManager.Instance.UI.InputText();
+            GameManager.Instance.UI.InputText(ConsoleColor.Cyan);
             string input = Console.ReadLine();
 
             if (GameManager.Instance.UI.IsNumTest(input))
             {
-                switch (int.Parse(input))
+                if(int.Parse(input) == 0)
                 {
-                    case 0:
-                        StoreScene();
-                        break;
-                    default:
-                        GameManager.Instance.UI.ErrorText();
-                        BuyItemScene();
-                        break;
+                    StoreScene();
+                }
+                else
+                {
+                    GameManager.Instance.Event.Buy(int.Parse(input));
+                    BuyItemScene();
                 }
             }
             else
@@ -387,31 +384,28 @@ namespace Sparta_Dungeon
         // 아이템 판매 화면(기능 추가 필요)
         void SellItemScene()
         {
-            GameManager.Instance.UI.TiteleText("상점 - 아이템 판매");
+            GameManager.Instance.UI.TiteleText("상점 - 아이템 판매", ConsoleColor.Cyan);
             GameManager.Instance.UI.GoldText();
-            GameManager.Instance.UI.LoreText("원하는 아이템의 번호를 입력하면 판매합니다.", "[아이템 목록]");
+            GameManager.Instance.UI.LoreText("원하는 아이템의 번호를 입력하면 판매합니다.", "[아이템 목록]", ConsoleColor.White, ConsoleColor.Cyan);
+
+            GameManager.Instance.Event.ShowSelectorItemList(false);
 
             GameManager.Instance.UI.SelectGuide(0);
             Console.WriteLine("   0.나가기");
 
-            //기능 추가 필요(아이템 목록)
-
-            //기능 추가 필요(아이템 판매)
-
-            GameManager.Instance.UI.InputText();
+            GameManager.Instance.UI.InputText(ConsoleColor.Cyan);
             string input = Console.ReadLine();
 
             if (GameManager.Instance.UI.IsNumTest(input))
             {
-                switch (int.Parse(input))
+                if (int.Parse(input) == 0)
                 {
-                    case 0:
-                        StoreScene();
-                        break;
-                    default:
-                        GameManager.Instance.UI.ErrorText();
-                        SellItemScene();
-                        break;
+                    StoreScene();
+                }
+                else
+                {
+                    GameManager.Instance.Event.SellItem(int.Parse(input));
+                    SellItemScene();
                 }
             }
             else

@@ -1,4 +1,6 @@
-﻿namespace Sparta_Dungeon
+﻿using System.Drawing;
+
+namespace Sparta_Dungeon
 {
     public class UIManager
     {
@@ -26,16 +28,20 @@
             ConsoleColorReset();
         }
         // 매개변수에 씬의 설명을 입력하면 화면 상단에 출력
-        public void LoreText(string str, string str2 = null)
+        public void LoreText(string str, string str2 = null, ConsoleColor color = ConsoleColor.White, ConsoleColor color2 = ConsoleColor.White)
         {
             Console.SetCursorPosition(3, 4);
+            Console.ForegroundColor = color;
             Console.WriteLine(str);
             Console.WriteLine("");
+            ConsoleColorReset();
             if (str2 != null)
             {
                 Console.SetCursorPosition(3, 6);
+                Console.ForegroundColor = color2;
                 Console.WriteLine(str2);
                 Console.WriteLine("");
+                ConsoleColorReset();
             }
         }
         // 선택지의 최대 번호를 입력시 선택지들을 입력텍스트의 바로 위로 출력되게 해줌
@@ -81,11 +87,13 @@
             return int.TryParse(str, out num);
         }
         // 매개변수에 입력된 문자열을 하단에 출력
-        public void SystemText(string str)
+        public void SystemText(string str, ConsoleColor color = ConsoleColor.White, int num = 300)
         {
+            Console.ForegroundColor = color;
             Console.SetCursorPosition(0, 28);
             Console.WriteLine(str);
-            Thread.Sleep(300);
+            Thread.Sleep(num);
+            ConsoleColorReset();
         }
         // 오류메세지를 하단에 출력
         public void ErrorText()
@@ -105,7 +113,13 @@
         public void GoldText()
         {
             Console.SetCursorPosition(30, 6);
-            Console.WriteLine($"[보유중인 골드] : {GameManager.Instance.Player.PlayerData.Gold} G");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write("[보유중인 골드] : ");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.Write($"{GameManager.Instance.Player.PlayerData.Gold}");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine(" G");
+            ConsoleColorReset();
         }
         // 몬스터 정보 출력
         public void EnemyText()

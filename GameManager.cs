@@ -43,8 +43,9 @@
         public void GameStart()
         {
             Event.onSave += AllSave;
-
+            Store store = new Store();
             Dungeon dungeon = new Dungeon();
+            
             // Event.onSave += AllSave;
             // 플레이어의 정보가 존재하지 않을 시
             if (!Data.FileExists(typeof(PlayerData)))
