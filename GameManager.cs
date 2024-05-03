@@ -30,22 +30,21 @@
         private SceneManager scene = new SceneManager();
         private UIManager ui = new UIManager();
         private Player player = new Player();
-        private QuestManager quest = new QuestManager();
 
         public DataManager Data { get => Instance.data; }
         public UIManager UI { get => Instance.ui; }
         public EventManager Event { get => Instance._event; }
         public SceneManager Scene { get => Instance.scene; }
         public Player Player { get => Instance.player; }
-        public QuestManager Quest { get => Instance.quest; }
 
 
         public void GameStart()
         {
             Event.onSave += AllSave;
-            Store store = new Store();
+
             Dungeon dungeon = new Dungeon();
-            
+            Store store = new Store();
+
             // Event.onSave += AllSave;
             // 플레이어의 정보가 존재하지 않을 시
             if (!Data.FileExists(typeof(PlayerData)))

@@ -12,8 +12,6 @@
             GameManager.Instance.Event.onShowSelectorItemList += ShowSelectItems;
         }
 
-
-
         public void Init()
         {
             Armor armor = new Armor(2, "무쇠갑옷", 0, 9, "무쇠로 만들어져 튼튼한 갑옷입니다.", 2200, false, true);
@@ -185,7 +183,7 @@
             }
         }
 
-        // 장비를 장착하는 코메서드
+        // 장비를 장착하는 메서드
         public void Equip(Equipment equip)
         {
             // 장비를 미장착중일 때

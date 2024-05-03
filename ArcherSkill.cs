@@ -8,7 +8,7 @@ namespace Sparta_Dungeon
 {
     public class ArcherSkill : Skill
     {
-        public ArcherSkill(string name, int requireMP, string description) : base(name, requireMP, description)
+        public ArcherSkill(string name, int requireMP, string description, Player player) : base(name, requireMP, description, player)
         {
         }
     }

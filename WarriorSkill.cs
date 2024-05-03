@@ -8,15 +8,9 @@ namespace Sparta_Dungeon
 {
     public class WarriorSkill : Skill
     {
-        public WarriorSkill(string name, int requireMP, string description) : base(name, requireMP, description)
+        public WarriorSkill(string name, int requireMP, string description, Player player) : base(name, requireMP, description, player)
         {
 
         }
-
-        //public override void Execute()
-        //{
-        //    base.Execute();
-        //    Console.WriteLine("워리어 스킬");
-        //}
     }
 }

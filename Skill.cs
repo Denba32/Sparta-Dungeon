@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Sparta_Dungeon
 {
     public interface ISkillExecutable
     {
+        void CheckMP(int mp);
+        void ShowSkill(int num);
         void Execute(IDamagable damagable, float damage);
         void Execute(List<IDamagable> damagable, float damage);
     }
@@ -19,23 +16,33 @@ namespace Sparta_Dungeon
         public float Damage { get; set; } 
         public string Description { get; set; }
 
-        public Skill(string name, int requireMP, string description)
+        protected Player player;
+
+        public Skill(string name, int requireMP, string description, Player player)
         {
             Name = name;
             this.RequireMP = requireMP;
             Description = description;
+            this.player = player;
         }
-
-        //// Execute -> 스킬 사용
-        //public virtual void Execute()
-        //{
-        //    Console.WriteLine("스킬");
-        //}
-
-        public void ShowSkill()
+        
+        // 스킬 사용 전 MP가 문제 없는지 체크
+        public void CheckMP(int mp)
         {
-            string data = $"{Name} - MP {RequireMP}\n" +
-                $"{Description}";
+            if(mp >= RequireMP)
+            {
+
+            }
+            else
+            {
+                GameManager.Instance.UI.ErrorText("MP가 부족합니다.");
+                GameManager.Instance.Scene.BattleSkillScene();
+            }
+        }
+        public void ShowSkill(int num)
+        {
+            Console.WriteLine($"  {num + 1}. {Name} - MP {RequireMP}\n" +
+                $"     {Description}");
         }
     }
 }

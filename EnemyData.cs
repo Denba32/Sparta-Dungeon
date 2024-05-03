@@ -5,24 +5,26 @@ namespace Sparta_Dungeon
     [System.Serializable]
     public class EnemyData
     {
-        [JsonProperty]
         public string Name {  get; set; }
-        [JsonProperty]
-        public float Level { get; set; }
-        [JsonProperty]
-        public float Atk { get; set; }
-        [JsonProperty]
-        public float Vit { get; set; }
-        [JsonProperty]
-        public char LifeYn { get; set; }
 
-        public EnemyData(string name, float level, float atk, float vit, char lifeYn)
+        public float Level { get; set; }
+
+        public float Atk { get; set; }
+
+        public float Vit { get; set; }
+
+        public int DropGold { get; set; }
+        
+        public Equipment? DropItem { get; set; }
+
+        public EnemyData(string name, float level, float atk, float vit, int dropGold, Equipment? dropItem = null)
         {
             Name = name;
             Level = level;
             Atk = atk;
             Vit = vit;
-            LifeYn = lifeYn;
+            DropGold = dropGold;
+            DropItem = dropItem;
         }
 
     }

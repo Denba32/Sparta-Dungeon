@@ -1,6 +1,4 @@
 ﻿
-using System;
-
 namespace Sparta_Dungeon
 {
     public class SceneManager
@@ -29,6 +27,8 @@ namespace Sparta_Dungeon
 
             Console.ReadKey();
         }
+
+
         // 로그인 화면
         public void LoginScene()
         {
@@ -438,7 +438,6 @@ namespace Sparta_Dungeon
                 switch (int.Parse(input))
                 {
                     case 0:
-                        TownScene();
                         break;
                     case 1:
                         GameManager.Instance.Event.RespawnEnemy();
@@ -478,15 +477,17 @@ namespace Sparta_Dungeon
                 {
                     switch (int.Parse(input))
                     {
+                           // 되돌아가기
                         case 0:
-                            DungeonSelectScene();
-                            break;
-                            // 공격 실행
+                            
+                            return;
+                            // 일반 공격 실행
                         case 1:
                             BattleAttackScene();
                             break;
+                            // 스킬 공격 실행
                         case 2:
-                            BattleItemScene();
+                            BattleSkillScene();
                             break;
                         default:
                             GameManager.Instance.UI.ErrorText();
@@ -522,21 +523,26 @@ namespace Sparta_Dungeon
 
                 if (GameManager.Instance.UI.IsNumTest(input))
                 {
-                    if(int.Parse(input) == 0)
+                    if (int.Parse(input) == 0)
                     {
-                        return;
+                        BattleScene();
+                        break;
                     }
-                    else if(int.Parse(input) < 0)
+                    else if (int.Parse(input) < 0)
                     {
                         GameManager.Instance.UI.ErrorText();
-                        return;
                     }
-                    
-                    // 공격으로 넘어가기 전 에너미 번호를 넘어선 값을 넣었는지 체크
-                    GameManager.Instance.Event.CheckCount(int.Parse(input));
+                    else
+                    {
 
-                    // TODO : 공격 범위 내에 공격 시 처리
-                    PlayerAttackResultScene(int.Parse(input));
+                        // 공격으로 넘어가기 전 에너미 번호를 넘어선 값을 넣었는지 체크
+                        GameManager.Instance.Event.CheckAttackCount(int.Parse(input));
+
+                        // TODO : 공격 범위 내에 공격 시 처리
+                        PlayerAttackResultScene(int.Parse(input));
+                        break;
+                    }
+
                 }
                 else
                 {
@@ -584,19 +590,19 @@ namespace Sparta_Dungeon
                 }
             }
         }
-        //전투중 아이템 선택창
-        void BattleItemScene()
+        // 소유중인 스킬을 표시하고 선택하는 씬
+        public void BattleSkillScene()
         {
             while (true)
             {
-                GameManager.Instance.UI.TiteleText("아이템 사용");
+                GameManager.Instance.UI.TiteleText("스킬 사용하기");
                 //적 표시 기능 추가하기
+
+                GameManager.Instance.UI.EnemyText();
 
                 GameManager.Instance.UI.PlayerUI();
 
-                GameManager.Instance.UI.BattleItemText();
-
-                GameManager.Instance.UI.NowFloorText();
+                GameManager.Instance.UI.BattleSkillText();
 
                 while (true)
                 {
@@ -605,19 +611,158 @@ namespace Sparta_Dungeon
 
                     if (GameManager.Instance.UI.IsNumTest(input))
                     {
-                        switch (int.Parse(input))
+                        if (int.TryParse(input, out int sel))
                         {
-                            case 0:
-                                return;
-                            default:
+                            if (sel > 2 || sel < 0)
+                            {
                                 GameManager.Instance.UI.ErrorText();
-                                break;
+                                BattleSkillScene();
+                            }
+                            else if(sel == 0)
+                            {
+                                BattleScene();
+                            }
+                            else
+                            {
+                                GameManager.Instance.Event.CheckManaCount(sel);
+                                BattleSkillAttackScene(sel);
+                            }
                         }
                     }
                     else
                     {
                         GameManager.Instance.UI.ErrorText();
                     }
+                }
+            }
+        }
+
+        // 스킬 사용 대상을 선택하는 씬
+        void BattleSkillAttackScene(int skillNum)
+        {
+            while (true)
+            {
+                if (skillNum == 1) {
+
+                    while (true)
+                    {
+                        // 1인 스킬을 사용한 경우
+                        GameManager.Instance.UI.TiteleText("스킬 사용하기");
+                        //적 표시 기능 추가하기
+
+                        GameManager.Instance.Event.SelectEnemy();
+
+
+                        GameManager.Instance.UI.PlayerUI();
+                        GameManager.Instance.UI.BattelAttackText();
+
+                        GameManager.Instance.UI.InputText();
+
+                        string input = Console.ReadLine();
+
+                        if (GameManager.Instance.UI.IsNumTest(input))
+                        {
+                            if (int.TryParse(input, out int sel))
+                            {
+                                if (sel == 0)
+                                {
+                                    BattleSkillScene();
+                                }
+                                else if (sel < 0)
+                                {
+                                    GameManager.Instance.UI.ErrorText();
+                                    BattleSkillAttackScene(skillNum);
+                                }
+                                // 공격 대상 고르는 부분
+                                else
+                                {
+                                    PlayerSkillAttackResultScene(skillNum, sel);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            GameManager.Instance.UI.ErrorText();
+                        }
+                    }
+                }
+
+                // 플레이어 랜덤 공격
+                else if (skillNum == 2)
+                {
+                    PlayerSkillAttackResultScene(skillNum);
+                }
+
+
+
+            }
+        }
+
+
+        void PlayerSkillAttackResultScene(int skillNum, int selEnemy)
+        {
+            while (true)
+            {
+                GameManager.Instance.UI.TiteleText("플레이어 공격 결과");
+
+                // 몬스터 결과 출력
+                GameManager.Instance.Event.StartPlayerSkillAttack(skillNum, selEnemy);
+
+                GameManager.Instance.UI.BattleNextText();
+                GameManager.Instance.UI.InputText();
+
+
+                if (int.TryParse(Console.ReadLine(), out int sel))
+                {
+                    switch (sel)
+                    {
+                        // 적의 턴으로 넘아감
+                        case 0:
+                            BattleEnemyLogScene();
+                            break;
+
+                        default:
+                            GameManager.Instance.UI.ErrorText();
+                            break;
+                    }
+                }
+                else
+                {
+                    GameManager.Instance.UI.ErrorText();
+                }
+            }
+        }
+        // 다중 공격 씬 처리
+        void PlayerSkillAttackResultScene(int skillNum)
+        {
+            while (true)
+            {
+                GameManager.Instance.UI.TiteleText("플레이어 공격 결과");
+
+                // 몬스터 결과 출력
+                GameManager.Instance.Event.StartPlayerSkillAttack(skillNum);
+
+                GameManager.Instance.UI.BattleNextText();
+                GameManager.Instance.UI.InputText();
+
+
+                if (int.TryParse(Console.ReadLine(), out int sel))
+                {
+                    switch (sel)
+                    {
+                        // 적의 턴으로 넘아감
+                        case 0:
+                            BattleEnemyLogScene();
+                            break;
+
+                        default:
+                            GameManager.Instance.UI.ErrorText();
+                            break;
+                    }
+                }
+                else
+                {
+                    GameManager.Instance.UI.ErrorText();
                 }
             }
         }
@@ -635,6 +780,9 @@ namespace Sparta_Dungeon
             GameManager.Instance.UI.TiteleText("!!!승리!!!");
             GameManager.Instance.UI.LoreText("전투에서 승리하셨습니다!");
 
+            GameManager.Instance.Event.Reward();
+
+            //GameManager.Instance.UI.PlayerUI();
             GameManager.Instance.UI.SelectGuide(1);
             Console.WriteLine("   0.마을로 돌아가기");
             Console.WriteLine("   1.다음 층으로");
@@ -655,14 +803,15 @@ namespace Sparta_Dungeon
                         break;
                     default:
                         GameManager.Instance.UI.ErrorText();
-                        WinScene();
+
                         break;
                 }
             }
             else
             {
                 GameManager.Instance.UI.ErrorText();
-                WinScene();
+
+                return;
             }
         }
 
@@ -696,7 +845,6 @@ namespace Sparta_Dungeon
 
         #endregion
 
-
         #region ========== 회복 씬 ==========
 
         // 휴식 화면(기능 추가 필요)
@@ -720,6 +868,7 @@ namespace Sparta_Dungeon
                 switch (int.Parse(input))
                 {
                     case 0:
+                        TownScene();
                         break;
                     case 1:
                         GameManager.Instance.UI.SystemText("   미구현!!!");

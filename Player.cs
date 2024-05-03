@@ -14,9 +14,14 @@ namespace Sparta_Dungeon
 
         // public List<Potion> potions = new List<Potion>();
 
-        public SkillController skillController = new SkillController();
+        private SkillController skillController;
 
         public int count = 0;
+        
+        public Player()
+        {
+            skillController = new SkillController(this);
+        }
         public PlayerData PlayerData
         {
             get
@@ -34,8 +39,11 @@ namespace Sparta_Dungeon
                     {
                         PlayerData = new PlayerData("플레이어", 1, "전사", 10.0f, 5.0f, 100.0f, 50, 0, 1500);
                     }
+
+                    GameManager.Instance.Event.onSelectSkill += ShowAllSkill;
+                    GameManager.Instance.Event.onCheckManaCount += skillController.CheckRequireMP;
+
                 }
-                GameManager.Instance.Event.onReward += Reward;
 
                 return playerData;
             }
@@ -205,15 +213,11 @@ namespace Sparta_Dungeon
             }
         }
 
-        public void Attack(IDamagable damagable)
-        {
-            damagable.Damage(PlayerData.Atk);
-
-        }
         public void SetGold(int gold)
         {
             PlayerData.Gold += gold;
         }
+
         public void Sell(int index)
         {
             if (Inven.GetItemCount() > 0)
@@ -223,16 +227,6 @@ namespace Sparta_Dungeon
                     Equipment? equipment = Inven.GetItem(index - 1);
                     SetGold((int)(equipment.EquipData.Price * 0.85));
                     Inven.SellItem(equipment);
-
-                    //if (equipment.Type == Define.EquipType.Weapon)
-                    //{
-                    //    GameManager.Instance.Event.DetachWeapon(equipment);
-
-                    //}
-                    //else if (equipment.Type == Define.EquipType.Armor)
-                    //{
-                    //    GameManager.Instance.Event.DetachArmor(equipment);
-                    //}
                 }
             }
         }
@@ -303,6 +297,13 @@ namespace Sparta_Dungeon
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine($"{PlayerData.Vit}");
             Console.WriteLine("");
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write("   마  나 : ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"{PlayerData.Mp}");
+            Console.WriteLine("");
+
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.Write("   소지금 : ");
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -310,6 +311,10 @@ namespace Sparta_Dungeon
             Console.ForegroundColor = ConsoleColor.White;
         }
 
+        public void Attack(IDamagable damagable)
+        {
+            damagable.Damage(PlayerData.Atk);
+        }
 
         /// <summary>
         /// 스킬 컨트롤러를 참조하여 스킬을 사용합니다.
@@ -333,6 +338,19 @@ namespace Sparta_Dungeon
             skillController.ExecuteSkill(PlayerData.Chad, skillNum, targets, PlayerData.Atk);
         }
 
+        public void ShowAllSkill()
+        {
+            if(skillController.skillBook.TryGetValue(PlayerData.Chad, out List<ISkillExecutable> skillBook))
+            {
+                for(int i = 0; i < skillBook.Count; i++)
+                {
+                    skillBook[i].ShowSkill(i);
+                }
+            }
+        }
+
+
+
         // 선택지 때 본인의 직업을 고르는 부분
         public void SetChad(string chad)
         {
@@ -348,15 +366,21 @@ namespace Sparta_Dungeon
 
 
         // 던전 보상 및 출력
-        public int RewardGold(int gold)
+        public void RewardGold(int gold)
         {
+            Console.WriteLine("[획득 아이템]");
+            Console.WriteLine($"{gold} Gold\n");
             PlayerData.Gold += gold;
-            return PlayerData.Gold;
         }
 
         public void Reward(int exp)
         {
+            Console.WriteLine($"던전에서 몬스터 {exp}마리를 잡았습니다.");
+
+            int prev = PlayerData.Exp;
             PlayerData.Exp += exp;
+
+            Console.WriteLine($"exp {prev} -> {PlayerData.Exp}\n");
             LevelUp();
         }
 
@@ -421,6 +445,11 @@ namespace Sparta_Dungeon
         public void SkDamage(float damage)
         {
             throw new NotImplementedException();
+        }
+
+        public bool IsDead()
+        {
+            return PlayerData.Vit <= 0;
         }
     }
 }

@@ -8,14 +8,20 @@ namespace Sparta_Dungeon
 {
     public class ChargeShot : ArcherSkill, ISkillExecutable
     {
-        public ChargeShot(string name, int requireMP, string description) : base(name, requireMP, description)
+        public ChargeShot(string name, int requireMP, string description, Player player) : base(name, requireMP, description, player)
         {
         }
 
         public void Execute(IDamagable damagable, float damage)
         {
-            Console.WriteLine("더블 샷!");
-            damagable.SkDamage(damage *2);
+            if(player.PlayerData.Mp >= RequireMP)
+            {
+                player.PlayerData.Mp -= RequireMP;
+
+                Console.WriteLine("더블 샷!\n");
+                damagable.SkDamage(damage * 2);
+            }
+
         }
 
         public void Execute(List<IDamagable> damagable, float damage)
@@ -23,5 +29,6 @@ namespace Sparta_Dungeon
             throw new NotImplementedException();
 
         }
+
     }
 }
