@@ -1,4 +1,6 @@
 ﻿
+using System.Numerics;
+
 namespace Sparta_Dungeon
 {
 
@@ -20,6 +22,7 @@ namespace Sparta_Dungeon
      */
     public interface IDamagable
     {
+        bool IsDead();
         void Damage(float damage);
         void SkDamage(float damage);
     }
@@ -50,10 +53,7 @@ namespace Sparta_Dungeon
          * 각 플레이어, 적 별 턴에 대한 행동에 대한 동작을
          * 던전에서 관리
          * 
-         * 
          */
-
-
         public Dungeon()
         {
             GameManager.Instance.Event.onRespawnEnemy += SpawnEnemy;
@@ -62,9 +62,12 @@ namespace Sparta_Dungeon
             GameManager.Instance.Event.onSelectEnemy += ShowSelectEnemies;
             GameManager.Instance.Event.onPlayerAttack += AttackToEnemy;
             GameManager.Instance.Event.onPlayerSkillAttack += SkillAttackEnemy;
-            GameManager.Instance.Event.onCheckCount += CheckCount;
+            GameManager.Instance.Event.onPlayerRangeSkillAttack += SkillAttackEnemy;
+            GameManager.Instance.Event.onCheckAttackCount += CheckCount;
             GameManager.Instance.Event.onEnemyAttack += AttacktoPlayer;
 
+            GameManager.Instance.Event.onEnemyAllDie += IsAllDie;
+            GameManager.Instance.Event.onReward += Reward;
         }
 
         private DungeonData dungeonData = new DungeonData();
@@ -89,6 +92,36 @@ namespace Sparta_Dungeon
                 int randIdx = dungeonData.rand.Next(0, dungeonData.enemies.Count);
                 dungeonData.respawnList.Add(new Enemy(dungeonData.enemies[randIdx]));
             }
+        }
+
+        public bool IsAllDie()
+        {
+            int count = 0;
+            for(int i = 0; i < dungeonData.respawnList.Count; i++)
+            {
+                if(dungeonData.respawnList[i].isDead)
+                {
+                    count++;
+                }
+            }
+            return dungeonData.respawnList.Count == count ? true : false;
+        }
+
+        public void Reward()
+        {
+            int rewardGold = 0;
+
+            foreach(Enemy enemy in dungeonData.respawnList)
+            {
+                rewardGold += enemy.GetDropGold();
+            }
+
+            // 해당 플레이어에게 경험치를 부여
+            GameManager.Instance.Player.Reward(dungeonData.respawnList.Count);
+
+            GameManager.Instance.Player.RewardGold(rewardGold);
+
+
         }
 
         #region ========== Player Turn ==========
@@ -240,9 +273,27 @@ namespace Sparta_Dungeon
                 return;
             }
 
+            Console.SetCursorPosition(0, 4);
+            Console.WriteLine($"{GameManager.Instance.Player.PlayerData.Name} 의 공격!");
             dungeonData.respawnList[num].Damage(atk);
         }
+        
+        public void SkillAttackEnemy(int sel)
+        {
+            int num = sel;
 
+
+            Console.SetCursorPosition(0, 4);
+            Console.WriteLine($"{GameManager.Instance.Player.PlayerData.Name} 의 스킬 공격!");
+
+            List<IDamagable> damagables = new List<IDamagable>();
+            for(int i = 0; i < dungeonData.respawnList.Count; i++)
+            {
+                damagables.Add(dungeonData.respawnList[i]);
+            }
+            GameManager.Instance.Player.UseSkill(num, damagables);
+
+        }
 
         /*
          * 코드 기능
@@ -254,12 +305,19 @@ namespace Sparta_Dungeon
          * 이를 던전에서 인지하고
          * 해당 몬스터에게 스킬 데미지를 입힙니다.
          */
-        public void SkillAttackEnemy(int sel, float atk)
+        public void SkillAttackEnemy(int sel, int enemy)
         {
-            int num = sel - 1;
-            dungeonData.respawnList[num].SkDamage(atk);
+            int num = sel;
+            int enemycount = enemy - 1;
+
+            Console.SetCursorPosition(0, 4);
+            Console.WriteLine($"{GameManager.Instance.Player.PlayerData.Name} 의 스킬 공격!");
+
+            GameManager.Instance.Player.UseSkill(num, dungeonData.respawnList[enemycount]);
         }
+
         #endregion
 
+        
     }
 }

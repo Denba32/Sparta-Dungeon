@@ -3,22 +3,27 @@ namespace Sparta_Dungeon
 {
     public class SkillController
     {
+        Player player;
         // <직업이름, 스킬 종류>
         public Dictionary<string, List<ISkillExecutable>> skillBook = new Dictionary<string, List<ISkillExecutable>>();
     
-        public SkillController()
+        public SkillController(Player player)
         {
+            this.player = player;
+
             List<ISkillExecutable> warriorSkill = new List<ISkillExecutable>();
             List<ISkillExecutable> archerSkill = new List<ISkillExecutable>();
 
-            warriorSkill.Add(new AlphaStrike("알파 스트라이크", 10, "공격력 * 2 로 하나의 적을 공격합니다."));
-            warriorSkill.Add(new DoubleStrike("더블 스트라이크", 15, "공격력 * 1.5로 2명의 적을 랜덤으로 공격합니다."));
+            warriorSkill.Add(new AlphaStrike("알파 스트라이크", 10, "공격력 * 2 로 하나의 적을 공격합니다.", player));
+            warriorSkill.Add(new DoubleStrike("더블 스트라이크", 15, "공격력 * 1.5로 2명의 적을 랜덤으로 공격합니다.", player));
 
-            archerSkill.Add(new ChargeShot("차지 샷", 10, "공격력 * 2 로 하나의 적을 공격합니다."));
-            archerSkill.Add(new DoubleShot("더블 샷", 15, "공격력 * 1.5 로 2명의 적을 랜덤으로 공격합니다."));
+            archerSkill.Add(new ChargeShot("차지 샷", 10, "공격력 * 2 로 하나의 적을 공격합니다.", player));
+            archerSkill.Add(new DoubleShot("더블 샷", 15, "공격력 * 1.5 로 2명의 적을 랜덤으로 공격합니다.", player));
 
             skillBook.Add("전사", warriorSkill);
             skillBook.Add("궁수", archerSkill);
+
+            // GameManager.Instance.Event.onCheckManaCount += CheckRequireMP;
         }
 
 
@@ -38,10 +43,7 @@ namespace Sparta_Dungeon
             {
                 skill[skillNum - 1].Execute(damagable, atk);
             }
-            else
-            {
-                // TODO :  잘못된 입력이라는 것을 출력해야할 부분
-            }
+
         }
 
         /// <summary>
@@ -59,9 +61,14 @@ namespace Sparta_Dungeon
             {
                 skill[skillNum-1].Execute(damagable, atk);
             }
-            else
+
+        }
+
+        public void CheckRequireMP(int sel)
+        {
+            if(skillBook.TryGetValue(player.PlayerData.Chad, out List<ISkillExecutable> skill))
             {
-                // TODO :  잘못된 입력이라는 것을 출력해야할 부분
+                skill[sel-1].CheckMP(player.PlayerData.Mp);
             }
         }
     }

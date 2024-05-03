@@ -1,4 +1,6 @@
-﻿namespace Sparta_Dungeon
+﻿using System;
+
+namespace Sparta_Dungeon
 {
     public class EventManager
     {
@@ -37,11 +39,13 @@
             onShowSelectorItemList?.Invoke();
         }
 
-        public event Action<int>? onReward;
 
-        public void Reward(int exp)
+        // 던전 보상
+        public event Action? onReward;
+
+        public void Reward()
         {
-            onReward?.Invoke(exp);
+            onReward?.Invoke();
         }
 
         public event Action? onRespawnEnemy;
@@ -85,18 +89,37 @@
 
         #region 플레이어가 스킬 공격을 시도 시
 
-        public event Action<int, float>? onPlayerSkillAttack;
+        public event Action? onSelectSkill;
 
-        public void StartPlayerSkillAttack(int sel, float atk)
+        public void ShowSelectSkill()
         {
-            onPlayerSkillAttack?.Invoke(sel, atk);
+            onSelectSkill?.Invoke();
         }
 
-        public event Action<int>? onCheckCount;
+        public event Action<int>? onPlayerRangeSkillAttack;
 
-        public void CheckCount(int num)
+        public event Action<int, int>? onPlayerSkillAttack;
+        public void StartPlayerSkillAttack(int sel)
         {
-            onCheckCount?.Invoke(num);
+            onPlayerRangeSkillAttack?.Invoke(sel);
+        }
+
+        public void StartPlayerSkillAttack(int sel, int enemy)
+        {
+            onPlayerSkillAttack?.Invoke(sel, enemy);
+        }
+
+        public event Action<int>? onCheckAttackCount;
+
+        public void CheckAttackCount(int num)
+        {
+            onCheckAttackCount?.Invoke(num);
+        }
+
+        public event Action<int>? onCheckManaCount;
+        public void CheckManaCount(int num)
+        {
+            onCheckManaCount?.Invoke(num);
         }
 
         #endregion
@@ -111,6 +134,12 @@
 
         #endregion
 
+        public event Func<bool>? onEnemyAllDie;
+
+        public bool EnemyAllDie()
+        {
+            return onEnemyAllDie?.Invoke() ?? false;
+        }
         //#region 에너미의 공격 결과
         //public event Action? onEnemyAttackResult;
 

@@ -8,7 +8,6 @@
         public Store()
         {
             GameManager.Instance.Event.onSellItem += Sell;
-            
         }
 
         public void Init()
@@ -72,6 +71,9 @@
 
         public int GetItemCount() => items.Count;
         // 상점에서 소유하고 있는 총 아이템 정보에 대해서 출력
+       
+
+        // 상점이 가지고 있는 아이템 판매
         public string ShowItemlist(bool isBuy)
         {
             string data = "";

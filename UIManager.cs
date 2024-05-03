@@ -128,7 +128,9 @@
             Console.WriteLine($"Lv . {GameManager.Instance.Player.PlayerData.Level}    ({GameManager.Instance.Player.PlayerData.Chad})");
             Console.SetCursorPosition(3, 13);
             Console.WriteLine($"HP  {GameManager.Instance.Player.PlayerData.Vit}");
-            Console.SetCursorPosition(0, 14);
+            Console.SetCursorPosition(3, 14);
+            Console.WriteLine($"MP  {GameManager.Instance.Player.PlayerData.Mp}");
+            Console.SetCursorPosition(0, 15);
             for (int i = 0; i < 40; i++)
             {
                 Console.Write("=");
@@ -186,7 +188,7 @@
         // 전투 선택지를 띄워줌
         public void BattelActionText()
         {
-            Console.SetCursorPosition(0, 15);
+            Console.SetCursorPosition(0, 16);
             Console.WriteLine($"   1.공격한다.");
             Console.WriteLine($"   2.스킬.");
 
@@ -197,16 +199,19 @@
         // 전투 - 공격 선택지
         public void BattelAttackText()
         {
-            Console.SetCursorPosition(0, 15);
-            Console.WriteLine($"   0.돌아간다.");
             Console.SetCursorPosition(0, 16);
+            Console.WriteLine($"   0.돌아간다.");
+            Console.SetCursorPosition(0, 17);
             // 공격 스킬등 추가 
         }
      
-        // 전투 - 아이템 사용 선택지
-        public void BattleItemText()
+        // 전투 - 스킬 사용 선택지
+        public void BattleSkillText()
         {
-            Console.SetCursorPosition(0, 15);
+            Console.SetCursorPosition(0, 16);
+            // 스킬 목록 출력
+            GameManager.Instance.Event.ShowSelectSkill();
+            Console.WriteLine();
             Console.WriteLine($"   0.돌아간다.");
             Console.SetCursorPosition(0, 16);
             // 아이템 목록 추가
@@ -214,7 +219,7 @@
 
         public void BattleNextText()
         {
-            Console.SetCursorPosition(0, 15);
+            Console.SetCursorPosition(0, 16);
             Console.WriteLine($"   0.다음.");
             Console.SetCursorPosition(0, 16);
         }
@@ -231,18 +236,18 @@
 
         public void BattleLogText()
         {
-            Console.SetCursorPosition(0, 15);
-            Console.WriteLine("여기에 플레이어의 행동을 출력");
             Console.SetCursorPosition(0, 16);
+            Console.WriteLine("여기에 플레이어의 행동을 출력");
+            Console.SetCursorPosition(0, 17);
             Console.WriteLine("여기부터 아래로 적의 행동을 출력");
         }
         public void BattleLogText(string text)
         {
             Console.SetCursorPosition(0, 4);
             Console.WriteLine(text);
-            Console.SetCursorPosition(0, 15);
-            Console.WriteLine("여기에 플레이어의 행동을 출력");
             Console.SetCursorPosition(0, 16);
+            Console.WriteLine("여기에 플레이어의 행동을 출력");
+            Console.SetCursorPosition(0, 17);
             Console.WriteLine("여기부터 아래로 적의 행동을 출력");
         }
         public void ConsoleColorReset()

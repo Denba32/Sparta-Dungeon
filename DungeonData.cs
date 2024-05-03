@@ -29,10 +29,15 @@ namespace Sparta_Dungeon
         {
             Turn = Define.Turn.Player;
             BattleSituation = Define.BattleSituation.Progress;
-            enemies.Add(new EnemyData("미니언", 2, 6, 15, 'Y'));
-            enemies.Add(new EnemyData("대포미니언", 5, 7, 25, 'Y'));
-            enemies.Add(new EnemyData("공허충", 3, 12, 10, 'Y'));
-            enemies.Add(new EnemyData("내셔남작", 10, 30, 40, 'Y'));
+
+            enemies.Add(new EnemyData("미니언", 2, 7, 15, 100, new Weapon(8, "낡은 검", 3, 0, "낡아서 사용할 수 있을지 모를 검입니다.", 500, false, false)));
+
+            enemies.Add(new EnemyData("대포미니언", 5, 8, 17, 200, new Armor(2, "무쇠 갑옷", 0, 7, "무쇠로 만들어져 튼튼한 갑옷입니다.", 1500, false, false)));
+
+
+            enemies.Add(new EnemyData("공허충", 3, 12, 10, 300));
+
+            enemies.Add(new EnemyData("내셔남작", 10, 30, 40, 400));
         }
 
     }

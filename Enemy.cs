@@ -12,9 +12,9 @@
          * 
          * 기본적으로 Enemy를 생성하는 방식입니다.
          */
-        public Enemy(string name, float level, float atk, float vit, char lifeYn)
+        public Enemy(string name, float level, float atk, float vit, int rewardGold, Equipment? dropItem)
         {
-            enemyData = new EnemyData(name, level, atk, vit, lifeYn);
+            enemyData = new EnemyData(name, level, atk, vit, rewardGold, dropItem);
             random = new Random();
         }
 
@@ -31,7 +31,7 @@
          */
         public Enemy(EnemyData enemyData)
         {
-            this.enemyData = new EnemyData(enemyData.Name, enemyData.Level, enemyData.Atk, enemyData.Vit, enemyData.LifeYn);
+            this.enemyData = new EnemyData(enemyData.Name, enemyData.Level, enemyData.Atk, enemyData.Vit, enemyData.DropGold, enemyData.DropItem);
             random = new Random();
         }
 
@@ -56,8 +56,6 @@
 
         public void Damage(float damage)
         {
-            Console.SetCursorPosition(0, 4);
-            Console.WriteLine($"{GameManager.Instance.Player.PlayerData.Name} 의 공격!");
             // 회피할 경우
             if (random.Next(0, 100) < 10)
             {
@@ -116,23 +114,44 @@
         }
         public void SkDamage(float Skdamage)
         {
-            if (enemyData.Vit <= 0)
+            if(!isDead)
+            {
+                Console.WriteLine($"Lv. {enemyData.Level} {enemyData.Name} 을(를) 맞췄습니다. [데미지 : {Skdamage}]\n");
+
+                float prevVit = enemyData.Vit;
+
+                enemyData.Vit -= Skdamage;
+
+
+                if (enemyData.Vit <= 0)
+                {
+                    enemyData.Vit = 0;
+
+                    Console.WriteLine($"Lv. {enemyData.Level} {enemyData.Name}");
+                    Console.WriteLine($"HP {prevVit} -> Dead\n");
+                    Dead();
+                }
+                else
+                {
+                    Console.WriteLine($"Lv. {enemyData.Level} {enemyData.Name}");
+                    Console.WriteLine($"HP {prevVit} -> {enemyData.Vit}\n");
+                }
+            }
+            else
             {
                 GameManager.Instance.UI.ErrorText();
                 return;
-            }
-            enemyData.Vit -= Skdamage;
-            
-            if (enemyData.Vit <= 0)
-            {
-                enemyData.Vit = 0;
-                Dead();
             }
         }
 
         private void Dead()
         {
             isDead = true;
+        }
+
+        public bool IsDead()
+        {
+            return isDead;
         }
         
         public string ShowEnemyInfo()
@@ -148,6 +167,11 @@
             }
 
             return data;
+        }
+
+        public int GetDropGold()
+        {
+            return enemyData.DropGold;
         }
     }
 }

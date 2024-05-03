@@ -8,7 +8,7 @@ namespace Sparta_Dungeon
 {
     public class AlphaStrike : WarriorSkill, ISkillExecutable
     {
-        public AlphaStrike(string name, int requireMP, string description) : base(name, requireMP, description)
+        public AlphaStrike(string name, int requireMP, string description, Player player) : base(name, requireMP, description, player)
         {
 
         }
@@ -21,15 +21,13 @@ namespace Sparta_Dungeon
 
         public void Execute(IDamagable damagable, float damage)
         {
-            Console.WriteLine("알파 스트라이크!");
-            damagable.SkDamage(damage * 2);
+            if (player.PlayerData.Mp >= RequireMP)
+            {
+                player.PlayerData.Mp -= RequireMP;
+
+                Console.WriteLine("알파 스트라이크!\n");
+                damagable.SkDamage(damage * 2);
+            }
         }
-
-
-        //public override void Execute()
-        //{
-        //    base.Execute();
-        //    Console.WriteLine("알파 스트라이크!");
-        //}
     }
 }
