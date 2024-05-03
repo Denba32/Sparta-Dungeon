@@ -28,16 +28,29 @@ namespace Sparta_Dungeon
             EquipData.IsSelled = isSelled;
         }
 
-        public void ShowItemInfo()
+        public void ShowItemInfo(bool isSelect)
         {
-
-            if(Type == Define.EquipType.Weapon)
+            if(isSelect)
             {
-                Console.WriteLine($"   {IsEquipped()}{EquipData.Name}  | 공격력 +{EquipData.Atk}  | {EquipData.Description}");
+                if (Type == Define.EquipType.Weapon)
+                {
+                    Console.WriteLine($"{IsEquipped()}{EquipData.Name}  | 공격력 +{EquipData.Atk}  | {EquipData.Description}");
+                }
+                else if (Type == Define.EquipType.Armor)
+                {
+                    Console.WriteLine($"{IsEquipped()}{EquipData.Name}  | 방어력 +{EquipData.Def}  | {EquipData.Description}");
+                }
             }
-            else if(Type == Define.EquipType.Armor)
+            else
             {
-                Console.WriteLine($"   {IsEquipped()}{EquipData.Name}  | 방어력 +{EquipData.Def}  | {EquipData.Description}");
+                if (Type == Define.EquipType.Weapon)
+                {
+                    Console.WriteLine($"   {IsEquipped()}{EquipData.Name}  | 공격력 +{EquipData.Atk}  | {EquipData.Description}");
+                }
+                else if (Type == Define.EquipType.Armor)
+                {
+                    Console.WriteLine($"   {IsEquipped()}{EquipData.Name}  | 방어력 +{EquipData.Def}  | {EquipData.Description}");
+                }
             }
 
         }
@@ -69,29 +82,29 @@ namespace Sparta_Dungeon
         public virtual void Equip(Equipment equip)
         {
             EquipData.IsEquipped = true;
-            if(Type == Define.EquipType.Weapon)
-            {
-                GameManager.Instance.Event.EquipWeapon(equip);
-            }
-            else if (Type == Define.EquipType.Armor)
-            {
-                GameManager.Instance.Event.EquipArmor(equip);
-            }
+            //if(Type == Define.EquipType.Weapon)
+            //{
+            //    GameManager.Instance.Event.EquipWeapon(equip);
+            //}
+            //else if (Type == Define.EquipType.Armor)
+            //{
+            //    GameManager.Instance.Event.EquipArmor(equip);
+            //}
         }
 
         public virtual void Detach(Equipment equip)
         {
             EquipData.IsEquipped = false;
-            if (Type == Define.EquipType.Weapon)
-            {
-                GameManager.Instance.Event.DetachWeapon(equip);
+            //if (Type == Define.EquipType.Weapon)
+            //{
+            //    GameManager.Instance.Event.DetachWeapon(equip);
 
-            }
-            else if (Type == Define.EquipType.Armor)
-            {
-                GameManager.Instance.Event.DetachArmor(equip);
+            //}
+            //else if (Type == Define.EquipType.Armor)
+            //{
+            //    GameManager.Instance.Event.DetachArmor(equip);
 
-            }
+            //}
         }
     }
 }

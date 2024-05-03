@@ -29,10 +29,10 @@ namespace Sparta_Dungeon
         {
             Turn = Define.Turn.Player;
             BattleSituation = Define.BattleSituation.Progress;
-            enemies.Add(new EnemyData("미니언", 1, 15, 3, 'Y'));
-            enemies.Add(new EnemyData("대포미니언", 5, 25, 7, 'Y'));
-            enemies.Add(new EnemyData("공허충", 3, 10, 12, 'Y'));
-            enemies.Add(new EnemyData("내셔남작", 6, 40, 20, 'Y'));
+            enemies.Add(new EnemyData("미니언", 2, 6, 15, 'Y'));
+            enemies.Add(new EnemyData("대포미니언", 5, 7, 25, 'Y'));
+            enemies.Add(new EnemyData("공허충", 3, 12, 10, 'Y'));
+            enemies.Add(new EnemyData("내셔남작", 10, 30, 40, 'Y'));
         }
 
     }

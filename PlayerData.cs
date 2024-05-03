@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -38,11 +39,11 @@ namespace Sparta_Dungeon
 
         public PlayerData()
         {
-            GameManager.Instance.Event.onEquipWeapon += PlusWeaponAbility;
-            GameManager.Instance.Event.onEquipArmor += PlusArmorAbility;
+            //GameManager.Instance.Event.onEquipWeapon += PlusWeaponAbility;
+            //GameManager.Instance.Event.onEquipArmor += PlusArmorAbility;
 
-            GameManager.Instance.Event.onDetachWeapon += MinusWeaponAbility;
-            GameManager.Instance.Event.onDetachArmor += MinusArmorAbility;
+            //GameManager.Instance.Event.onDetachWeapon += MinusWeaponAbility;
+            //GameManager.Instance.Event.onDetachArmor += MinusArmorAbility;
         }
 
         public PlayerData(string name, int level, string chad, float atk, float def, float vit, int mp, int exp, int gold)
@@ -57,11 +58,11 @@ namespace Sparta_Dungeon
             Exp = exp;
             Gold = gold;
 
-            GameManager.Instance.Event.onEquipWeapon += PlusWeaponAbility;
-            GameManager.Instance.Event.onEquipArmor += PlusArmorAbility;
+            //GameManager.Instance.Event.onEquipWeapon += PlusWeaponAbility;
+            //GameManager.Instance.Event.onEquipArmor += PlusArmorAbility;
 
-            GameManager.Instance.Event.onDetachWeapon += MinusWeaponAbility;
-            GameManager.Instance.Event.onDetachArmor += MinusArmorAbility;
+            //GameManager.Instance.Event.onDetachWeapon += MinusWeaponAbility;
+            //GameManager.Instance.Event.onDetachArmor += MinusArmorAbility;
         }
 
         #region Property Setter
@@ -88,38 +89,54 @@ namespace Sparta_Dungeon
         }
 
         #region Add Event Function
-        private void PlusWeaponAbility(Equipment weapon)
+        public void PlusWeaponAbility(Equipment? weapon)
         {
-            if (weapon.EquipData.IsEquipped)
+            if (weapon != null)
             {
-                Atk += weapon.EquipData.Atk;
+                if (weapon.EquipData.IsEquipped)
+                {
+                    Atk += weapon.EquipData.Atk;
+                }
             }
+
         }
 
-        private void MinusWeaponAbility(Equipment weapon)
+        public void MinusWeaponAbility(Equipment? weapon)
         {
-            if(!weapon.EquipData.IsEquipped)
+            if(weapon != null)
             {
-                Atk -= weapon.EquipData.Atk;
+                if (!weapon.EquipData.IsEquipped)
+                {
+                    Atk -= weapon.EquipData.Atk;
 
+                }
             }
+
         }
 
-        private void PlusArmorAbility(Equipment armor)
+        public void PlusArmorAbility(Equipment? armor)
         {
-            if (armor.EquipData.IsEquipped)
+            if(armor != null)
             {
-                Def += armor.EquipData.Def;
+                if (armor.EquipData.IsEquipped)
+                {
+                    Def += armor.EquipData.Def;
+                }
             }
+
         }
 
-        private void MinusArmorAbility(Equipment armor)
+        public void MinusArmorAbility(Equipment? armor)
         {
-            if (!armor.EquipData.IsEquipped)
+            if(armor != null)
             {
-                Def -= armor.EquipData.Def;
+                if (!armor.EquipData.IsEquipped)
+                {
+                    Def -= armor.EquipData.Def;
 
+                }
             }
+
         }
 
         #endregion

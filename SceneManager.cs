@@ -1,4 +1,5 @@
-﻿namespace Sparta_Dungeon
+﻿
+namespace Sparta_Dungeon
 {
     public class SceneManager
     {
@@ -117,7 +118,7 @@
         // 마을 화면
         public void TownScene()
         {
-            
+            GameManager.Instance.Event.OnSave();
             GameManager.Instance.UI.TiteleText("마을", ConsoleColor.Green);            
             GameManager.Instance.UI.LoreText("스파르타 마을에 오신 여러분 환영합니다.", "이곳에서 던전으로 들어가기 전 활동을 할 수 있습니다.");
 
@@ -133,6 +134,7 @@
             GameManager.Instance.UI.InputText(ConsoleColor.Green);
 
             string input = Console.ReadLine();
+
 
             if (GameManager.Instance.UI.IsNumTest(input))
             {
@@ -169,7 +171,6 @@
 
         #endregion
 
-
         #region ========== 상태 화면 ==========
         // 상태 화면
         void StatusScene()
@@ -190,6 +191,7 @@
                 switch (int.Parse(input))
                 {
                     case 0:
+                        TownScene();
                         break;
                     default:
                         GameManager.Instance.UI.ErrorText();
@@ -229,6 +231,7 @@
                 switch (int.Parse(input))
                 {
                     case 0:
+                        TownScene();
                         break;
                     case 1:
                         ItemManageScene();
@@ -251,8 +254,12 @@
             GameManager.Instance.UI.TiteleText("인벤토리");
             GameManager.Instance.UI.LoreText("원하는 아이템의 번호를 입력해서 장착/해제할 수 있습니다.", "[아이템 목록]");
 
+            GameManager.Instance.Event.ShowSelectorItemList();
+
+
             GameManager.Instance.UI.SelectGuide(0);
             Console.WriteLine("   0.나가기");
+
 
             //기능 추가 필요(아이템 목록)
             //기능 추가 필요(아이템 장착 기능)
@@ -262,15 +269,27 @@
 
             if (GameManager.Instance.UI.IsNumTest(input))
             {
-                switch (int.Parse(input))
+                if(int.Parse(input) == 0)
                 {
-                    case 0:
-                        InventoryScene();
-                        break;
-                    default:
-                        GameManager.Instance.UI.ErrorText();
-                        ItemManageScene();
-                        break;
+                    InventoryScene();
+                }
+                else if(int.Parse(input) > GameManager.Instance.Player.Inven.GetItemCount())
+                {
+                    GameManager.Instance.UI.ErrorText();
+                    ItemManageScene();
+                }
+                else if(int.Parse(input) < 0)
+                {
+                    GameManager.Instance.UI.ErrorText();
+                    ItemManageScene();
+                }
+                else
+                {
+                    GameManager.Instance.Player.Inven.SelectItem(int.Parse(input));
+                    GameManager.Instance.Event.OnSave();
+
+                    ItemManageScene();
+
                 }
             }
             else
@@ -307,6 +326,7 @@
                 switch (int.Parse(input))
                 {
                     case 0:
+                        TownScene();
                         break;
                     case 1:
                         BuyItemScene();
@@ -425,6 +445,7 @@
                 switch (int.Parse(input))
                 {
                     case 0:
+                        TownScene();
                         break;
                     case 1:
                         GameManager.Instance.Event.RespawnEnemy();
@@ -465,7 +486,8 @@
                     switch (int.Parse(input))
                     {
                         case 0:
-                            return;
+                            DungeonSelectScene();
+                            break;
                             // 공격 실행
                         case 1:
                             BattleAttackScene();
@@ -561,7 +583,6 @@
                         default:
                             GameManager.Instance.UI.ErrorText();
                             break;
-
                     }
                 }
                 else

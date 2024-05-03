@@ -27,8 +27,6 @@
 
         private DataManager data = new DataManager();
         private EventManager _event = new EventManager();
-
-
         private SceneManager scene = new SceneManager();
         private UIManager ui = new UIManager();
         private Player player = new Player();
@@ -41,12 +39,15 @@
         public Player Player { get => Instance.player; }
         public QuestManager Quest { get => Instance.quest; }
 
+
         public void GameStart()
         {
-            Dungeon dungeon = new Dungeon(Player);
+            Event.onSave += AllSave;
 
+            Dungeon dungeon = new Dungeon();
+            // Event.onSave += AllSave;
             // 플레이어의 정보가 존재하지 않을 시
-            if(!Data.FileExists(typeof(PlayerData)))
+            if (!Data.FileExists(typeof(PlayerData)))
             {
                 Scene.StartScene();
                 Scene.LoginScene();
@@ -54,13 +55,21 @@
 
             while (true)
             {
-                Data.Save<PlayerData>(Player.PlayerData);
-                Data.Save<Inventory>(Player.Inven);
-
+                // 저장 시도
                 // TODO 자동 저장, 플레이어 정보, 인벤 정보, 상점 정보,
                 // 던전 클리어 횟수 정보
                 Scene.TownScene();
             }
         }
+
+        public void AllSave()
+        {
+            Data.Save<PlayerData>(Player.PlayerData); ;
+            Data.Save<Inventory>(Player.Inven);
+        }
     }
-}
+}// 재귀 호출 함수
+
+// State패턴
+
+// Fsm ( Exit-> Transition -> Enter )

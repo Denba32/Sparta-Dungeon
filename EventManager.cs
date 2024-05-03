@@ -2,37 +2,12 @@
 {
     public class EventManager
     {
-        // 무기가 장착되었을 때의 Event Action
-        public event Action<Equipment>? onEquipWeapon;
+        public event Action? onSave;
 
-        public void EquipWeapon(Equipment weapon)
-        {
-            onEquipWeapon?.Invoke(weapon);
+        public void OnSave() 
+        { 
+            onSave?.Invoke(); 
         }
-        // 무기가 해제되었을 때의 Event Action
-        public event Action<Equipment>? onDetachWeapon;
-
-        public void DetachWeapon(Equipment weapon)
-        {
-            onDetachWeapon?.Invoke(weapon);
-        }
-
-        // 방어구가 장착되었을 때의 Event Action
-        public event Action<Equipment>? onEquipArmor;
-
-        public void EquipArmor(Equipment armor)
-        {
-            onEquipArmor?.Invoke(armor);
-        }
-
-        // 방어구가 해제되었을 때의 Event Action
-        public event Action<Equipment>? onDetachArmor;
-
-        public void DetachArmor(Equipment armor)
-        {
-            onDetachArmor?.Invoke(armor);
-        }
-
         // 플레이어가 아이템을 팔 때의 Event Action
         public event Action<Equipment>? onSellItem;
 
@@ -53,6 +28,13 @@
         public void ShowItemList()
         {
             onShowItems?.Invoke();
+        }
+
+        public event Action? onShowSelectorItemList;
+
+        public void ShowSelectorItemList()
+        {
+            onShowSelectorItemList?.Invoke();
         }
 
         public event Action<int>? onReward;
@@ -129,14 +111,14 @@
 
         #endregion
 
-        #region 에너미의 공격 결과
-        public event Action? onEnemyAttackResult;
+        //#region 에너미의 공격 결과
+        //public event Action? onEnemyAttackResult;
 
-        public void EnemyAttackRsult()
-        {
-            onEnemyAttackResult?.Invoke();
-        }
-        #endregion
+        //public void EnemyAttackRsult()
+        //{
+        //    onEnemyAttackResult?.Invoke();
+        //}
+        //#endregion
 
         
     }

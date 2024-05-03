@@ -1,4 +1,5 @@
-﻿namespace Sparta_Dungeon
+﻿
+namespace Sparta_Dungeon
 {
 
     /*
@@ -36,8 +37,6 @@
      */
     public class Dungeon
     {
-        // 던전에 진입한 플레이어 입니다.
-        private Player player;
         /*
          * 코드 기능
          * 
@@ -51,14 +50,12 @@
          * 각 플레이어, 적 별 턴에 대한 행동에 대한 동작을
          * 던전에서 관리
          * 
-         * 싱글톤으로 구현된 Player를 최대한 남발하여 사용하지 않도록
-         * 플레이어를 생성자를 통해서 미리 받아왔습니다.
          * 
          */
-        public Dungeon(Player player)
-        {
-            this.player = player;
 
+
+        public Dungeon()
+        {
             GameManager.Instance.Event.onRespawnEnemy += SpawnEnemy;
 
             GameManager.Instance.Event.onEnterDungeon += ShowEnemies;
@@ -67,6 +64,7 @@
             GameManager.Instance.Event.onPlayerSkillAttack += SkillAttackEnemy;
             GameManager.Instance.Event.onCheckCount += CheckCount;
             GameManager.Instance.Event.onEnemyAttack += AttacktoPlayer;
+
         }
 
         private DungeonData dungeonData = new DungeonData();
@@ -92,13 +90,14 @@
                 dungeonData.respawnList.Add(new Enemy(dungeonData.enemies[randIdx]));
             }
         }
+
         #region ========== Player Turn ==========
 
 
         /*
          * 코드 기능
          * 
-         * 리스폰된 모든 몬스터의 정보를 출력하는 메서드
+         * 스폰된 모든 몬스터의 정보를 출력하는 메서드
          * 
          * [변경점]
          * 기존 던전에서 포맷팅으로 출력해온 정보를
@@ -140,8 +139,6 @@
 
                 dungeonData.respawnList[i].Attack();
 
-
-
                 while (i <= dungeonData.respawnList.Count)
                 {
 
@@ -151,7 +148,7 @@
                         {
                             // 플레이어가 HP가 0일 경우
                             // 0을 누를 시 사망씬으로 넘어갑니다.
-                            if (player.PlayerData.Vit <= 0)
+                            if (GameManager.Instance.Player.PlayerData.Vit <= 0)
                             {
                                 GameManager.Instance.Scene.DieScene();
 

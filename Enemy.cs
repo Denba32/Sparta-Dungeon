@@ -7,7 +7,6 @@
 
         public bool isDead = false;
 
-
         /*
          * 코드 기능
          * 
@@ -45,14 +44,12 @@
 
                 Console.WriteLine($"Lv.{enemyData.Level} {enemyData.Name} 의 공격!");
                 // GameManager.Instance.UI.BattelAttackText
+
                 GameManager.Instance.Player.Damage(enemyData.Atk);
 
                 GameManager.Instance.UI.BattleNextText();
 
                 GameManager.Instance.UI.InputText("대상을 선택해주세요.");
-
-
-
             }
         }
 
@@ -77,16 +74,17 @@
             
             
             // 최소 데미지 - 최대 데미지 예를 들어 최소가 9 최대가 11일 경우 2가 나오고 이를 랜덤으로 생성( 0, 1, 2 중 하나) + 최소 데미지 = 데미지
+
             // 데미지 = 최소데미지 + 0, 최소데미지 + 1, 최소데미지 +2 > 0 일경우 9데미지, 1일경우 10 데미지, 2일 경우 11데미지 가 나옴으로서 10%의 오차를 가지게 함
 
 
-            float lastdamage = (float)Math.Round(damage);
+            float lastdamage = (float)Math.Ceiling(damage);
 
             // 치명타가 걸릴 경우
             if (random.Next(0, 110) < 15)
             {
                 lastdamage = lastdamage * 1.6f;
-                lastdamage = (float)Math.Round(lastdamage);
+                lastdamage = (float)Math.Ceiling(lastdamage);
                 Console.WriteLine($"Lv. {enemyData.Level} {enemyData.Name} 을(를) 맞췄습니다. [데미지 : {lastdamage}] - 치명타 공격!!\n");
             }
             else
@@ -143,37 +141,13 @@
             if(isDead)
             {
                 data = $"Lv.{enemyData.Level} {enemyData.Name} Dead\n";
-
             }
             else
             {
                 data = $"Lv.{enemyData.Level} {enemyData.Name} HP {enemyData.Vit}\n";
-
             }
 
             return data;
         }
-
-        public EnemyData GetEnemyData()
-        {
-            return enemyData;
-        }
-        public string GetName()
-        {
-            return enemyData.Name;
-        }
-        public float GetLevel()
-        {
-            return enemyData.Level;
-        }
-        public float GetAtk()
-        {
-            return enemyData.Atk;
-        }
-        public float GetVit()
-        {
-            return enemyData.Vit;
-        }
-
     }
 }

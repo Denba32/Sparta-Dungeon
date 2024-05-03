@@ -9,8 +9,11 @@
         {
             GameManager.Instance.Event.onSellItem += SetItem;
             GameManager.Instance.Event.onShowItems += ShowItems;
+            GameManager.Instance.Event.onShowSelectorItemList += ShowSelectItems;
         }
-        
+
+
+
         public void Init()
         {
             Armor armor = new Armor(2, "무쇠갑옷", 0, 9, "무쇠로 만들어져 튼튼한 갑옷입니다.", 2200, false, true);
@@ -25,11 +28,29 @@
             SetItem(oldSword);
         }
 
+
+        /*
+         * 인벤토리 진입 시,
+         * 소유하고 있는 장비를 출력
+         */
         public void ShowItems()
         {
             for (int i = 0; i < items.Count; i++)
             {
-                items[i].ShowItemInfo();
+                items[i].ShowItemInfo(false);
+            }
+        }
+
+        /*
+         * 인벤토리 장비 변경 진입 시
+         * 소유하고 있는 장비와 번호를 출력
+         */
+        private void ShowSelectItems()
+        {
+            for (int i = 0; i < items.Count; i++)
+            {
+                Console.Write($"   ({i + 1})");
+                items[i].ShowItemInfo(true);
             }
         }
 
@@ -78,6 +99,11 @@
             }
         }
 
+        /*
+         * 상점에 진입 시,
+         * 인벤토리에 진입하여
+         * 판매할 아이템을 출력
+         */
         public string ShowAllSellItem()
         {
             string data = String.Empty;
@@ -104,7 +130,7 @@
             }
         }
 
-
+        // 장비를 장착하는 코메서드
         public void Equip(Equipment equip)
         {
             // 장비를 미장착중일 때
@@ -145,35 +171,57 @@
                 equip.Equip(equip);
             }
         }
+        private void Detach(Equipment equip)
+        {
+            if (equip.EquipData.IsEquipped)
+            {
+                if (equip.Type == Define.EquipType.Weapon)
+                {
+                    if (GameManager.Instance.Player.Weapon.EquipData.Oid == equip.EquipData.Oid)
+                    {
+                        items.Find(x => x.EquipData.Oid == equip.EquipData.Oid).EquipData.IsEquipped = false;
+                        equip.Detach(equip);
+                        GameManager.Instance.Player.Weapon = null;
+                        
+                    }
+                }
+                else if (equip.Type == Define.EquipType.Armor)
+                {
+                    if (GameManager.Instance.Player.Armor.EquipData.Oid == equip.EquipData.Oid)
+                    {
+                        items.Find(x => x.EquipData.Oid == equip.EquipData.Oid).EquipData.IsEquipped = false;
+                        equip.Detach(equip);
+                        GameManager.Instance.Player.Armor = null;
+                        
+                    }
+                }
+            }
+        }
+
 
         /*
-         * 1.아이템이 장착되어있는 것일 경우
-         * 2.장착되어있지 않을경우
+         * 선택한 아이템을
+         * 장착하게 도와주는 코드
          */
-
         public void SelectItem(int count)
         {
             int selNum = count - 1;
 
+            // 선택한 장비가 장착 중이라고 뜬다면
             if (items[selNum].EquipData.IsEquipped)
             {
                 // 무기일 경우
                 if (items[selNum].Type == Define.EquipType.Weapon)
                 {
-                    if (GameManager.Instance.Player.Weapon.EquipData.Oid ==items[selNum].EquipData.Oid)
-                    {
-                        Detach(items[selNum]);
-                    }
+                    Detach(items[selNum]);
                 }
                 // 방어구일 경우
                 else
                 {
-                    if (GameManager.Instance.Player.Armor.EquipData.Oid == items[selNum].EquipData.Oid)
-                    {
-                        Detach(items[selNum]);
-                    }
+                    Detach(items[selNum]);
                 }
             }
+            // 
             else
             {
                 if (items[selNum].Type == Define.EquipType.Weapon)
@@ -203,31 +251,7 @@
                 }
             }
         }
-        private void Detach(Equipment equip)
-        {
-            if (equip.EquipData.IsEquipped)
-            {
-                if (equip.Type == Define.EquipType.Weapon)
-                {
-                    if (GameManager.Instance.Player.Weapon.EquipData.Oid == equip.EquipData.Oid)
-                    {
-                        items.Find(x => x == equip).EquipData.IsEquipped = false;
-                        GameManager.Instance.Player.Weapon = null;
-                        equip.Detach(equip);
-                    }
-                }
-                else if (equip.Type == Define.EquipType.Armor)
-                {
-                    if (GameManager.Instance.Player.Armor.EquipData.Oid == equip.EquipData.Oid)
-                    {
-                        items.Find(x => x == equip).EquipData.IsEquipped = false;
 
-                        GameManager.Instance.Player.Armor = null;
-                        equip.Detach(equip);
-                    }
-                }
-            }
-        }
         public int GetWeaponAbility()
         {
             if (GameManager.Instance.Player.Weapon == null)
