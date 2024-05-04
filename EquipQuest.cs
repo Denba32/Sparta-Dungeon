@@ -14,7 +14,7 @@ namespace Sparta_Dungeon
         {
             Type = Define.QuestType.EquipQuest;
             State = Define.QuestState.CanAccept;
-            RequireEquip = oid;
+            RequireEquip = oid; //ddd
         }
 
         public override void Clear()
