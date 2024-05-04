@@ -11,19 +11,29 @@ namespace Sparta_Dungeon
         public int QuestNum = 0;
         public string Title { get; set; }
         public string Description { get; set; }
+        public int Reward { get; set; }
         public Define.QuestType Type { get; set; }
         public Define.QuestState State { get; set; }
 
-        public Quest(string title, string description)
-        { 
+        public Quest(string title, string description, int reward)
+        {
             Title = title;
             Description = description;
-        }
+            Reward = reward;
+         }
         public virtual void Notify()
         {
 
         }
-        public virtual void Clear()
+        public void Clear()
+        {
+            if (State == Define.QuestState.ClearQuest)
+            {
+                State = Define.QuestState.RewardQuest;
+                GameManager.Instance.Player.PlayerData.Gold += Reward;
+            }
+        }
+        public virtual void RequireText(int num)
         {
 
         }

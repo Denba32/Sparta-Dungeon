@@ -95,6 +95,19 @@ namespace Sparta_Dungeon
             Thread.Sleep(num);
             ConsoleColorReset();
         }
+        // 퀘스트 보상 출력
+        public void RewardText(int num, ConsoleColor color = ConsoleColor.Cyan, ConsoleColor color2 = ConsoleColor.Yellow, int num2 = 400)
+        {
+            Console.ForegroundColor = color;
+            Console.SetCursorPosition(3, 28);
+            Console.Write("퀘스트를 클리어하여, ");
+            Console.ForegroundColor = color2;
+            Console.Write(num);
+            Console.ForegroundColor = color;
+            Console.WriteLine("G를 획득하셨습니다!!!");
+            Thread.Sleep(num2);
+            ConsoleColorReset();
+        }
         // 오류메세지를 하단에 출력
         public void ErrorText()
         {
