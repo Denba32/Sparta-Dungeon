@@ -916,9 +916,13 @@ namespace Sparta_Dungeon
                     GameManager.Instance.UI.ErrorText();
                     QuestBoardScene();
                 }
+                else if (GameManager.Instance.Quest.quests[int.Parse(input) - 1].State == Define.QuestState.RewardQuest)
+                {
+                    GameManager.Instance.UI.SystemText("   이미 완료한 퀘스트입니다!!!",ConsoleColor.Cyan, 400);
+                    QuestBoardScene();
+                }
                 else
                 {
-                    GameManager.Instance.Quest.quests[int.Parse(input) - 1].Clear();
                     QuestCheckScene(int.Parse(input));
                 }
             }
@@ -931,7 +935,10 @@ namespace Sparta_Dungeon
         }
         void QuestCheckScene(int num)
         {
-            GameManager.Instance.Quest.quests[num - 1].Clear();
+            if (GameManager.Instance.Quest.quests[num - 1].State == Define.QuestState.AcceptQuest || GameManager.Instance.Quest.quests[num - 1].State == Define.QuestState.ClearQuest)
+            {
+                GameManager.Instance.Quest.quests[num - 1].Notify();
+            }
             GameManager.Instance.UI.TiteleText("퀘스트 게시판",ConsoleColor.DarkYellow);
             GameManager.Instance.UI.LoreText("[퀘스트의 정보를 확인합니다.]");
 
@@ -949,7 +956,7 @@ namespace Sparta_Dungeon
             {
                 if (int.Parse(input) == 0)
                 {
-                    return;
+                    QuestBoardScene();
                 }
                 else if (GameManager.Instance.Quest.quests[num - 1].State == Define.QuestState.CanAccept)
                 {
@@ -958,7 +965,6 @@ namespace Sparta_Dungeon
                         case 1:
                             GameManager.Instance.UI.SystemText("   퀘스트를 수락하셨습니다.", ConsoleColor.Green);
                             GameManager.Instance.Quest.quests[num - 1].State = Define.QuestState.AcceptQuest;
-                            GameManager.Instance.Quest.quests[num - 1].Clear();
                             QuestCheckScene(num);
                             break;
                         case 2:
@@ -995,8 +1001,13 @@ namespace Sparta_Dungeon
                     switch (int.Parse(input))
                     {
                         case 1:
-                            GameManager.Instance.UI.SystemText("   퀘스트를 완료하셨습니다!!!", ConsoleColor.Cyan, 400);
+                            GameManager.Instance.UI.SystemText("   퀘스트를 포기하셨습니다.", ConsoleColor.Red);
                             GameManager.Instance.Quest.quests[num - 1].State = Define.QuestState.CanAccept;
+                            QuestCheckScene(num);
+                            break;
+                        case 2:
+                            GameManager.Instance.UI.RewardText(GameManager.Instance.Quest.quests[num - 1].Reward);
+                            GameManager.Instance.Quest.quests[num - 1].Clear();
                             QuestBoardScene();
                             break;
                         default:
