@@ -8,7 +8,7 @@ namespace Sparta_Dungeon
 {
     public class HuntQuest : Quest
     {
-        public int count = 0;
+        public int Count = 0;
         public int RequireCount { get; set; }
         public string Target {  get; set; }
 
@@ -27,11 +27,11 @@ namespace Sparta_Dungeon
 
             if (State == Define.QuestState.CanAccept)
             {
-                count = 0;
+                Count = 0;
             }
-            else if (RequireCount >= count)
+            else if (RequireCount >= Count)
             {
-                count = RequireCount;
+                Count = RequireCount;
                 State = Define.QuestState.ClearQuest;
             }
         }
@@ -67,7 +67,7 @@ namespace Sparta_Dungeon
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.Write($"[진행 상황] : [{target}] ");
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.Write($"{0} / {RequireCount} ");
+                Console.Write($"{Count} / {RequireCount} ");
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.WriteLine("마리");
             }
