@@ -97,24 +97,19 @@ namespace Sparta_Dungeon
         }
 
         public event Action<int>? onPlayerRangeSkillAttack;
-
-        public event Action<int, int>? onPlayerSkillAttack;
         public void StartPlayerSkillAttack(int sel)
         {
             onPlayerRangeSkillAttack?.Invoke(sel);
         }
+
+        public event Action<int, int>? onPlayerSkillAttack;
 
         public void StartPlayerSkillAttack(int sel, int enemy)
         {
             onPlayerSkillAttack?.Invoke(sel, enemy);
         }
 
-        public event Action<int>? onCheckAttackCount;
 
-        public void CheckAttackCount(int num)
-        {
-            onCheckAttackCount?.Invoke(num);
-        }
 
         public event Action<int>? onCheckManaCount;
         public void CheckManaCount(int num)
@@ -140,14 +135,22 @@ namespace Sparta_Dungeon
         {
             return onEnemyAllDie?.Invoke() ?? false;
         }
-        //#region 에너미의 공격 결과
-        //public event Action? onEnemyAttackResult;
 
-        //public void EnemyAttackRsult()
-        //{
-        //    onEnemyAttackResult?.Invoke();
-        //}
-        //#endregion
+
+        public event Func<int, bool> onEnemyDie;
+
+        public bool EnemyDie(int enemyID)
+        {
+            return onEnemyDie?.Invoke(enemyID) ?? false;
+        }
+
+        public event Func<int, bool>? onCheckAttackCount;
+
+        public bool CheckAttackCount(int num)
+        {
+            return onCheckAttackCount?.Invoke(num) ?? false;
+        }
+
 
         
     }

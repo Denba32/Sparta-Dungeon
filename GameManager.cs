@@ -26,15 +26,17 @@
         }
 
         private DataManager data = new DataManager();
+        private UIManager ui = new UIManager();
         private EventManager _event = new EventManager();
         private SceneManager scene = new SceneManager();
-        private UIManager ui = new UIManager();
+        private QuestManager quest = new QuestManager();
         private Player player = new Player();
 
         public DataManager Data { get => Instance.data; }
         public UIManager UI { get => Instance.ui; }
         public EventManager Event { get => Instance._event; }
         public SceneManager Scene { get => Instance.scene; }
+        public QuestManager Quest { get => Instance.quest; }
         public Player Player { get => Instance.player; }
 
 

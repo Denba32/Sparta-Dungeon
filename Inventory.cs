@@ -14,16 +14,15 @@
 
         public void Init()
         {
-            Armor armor = new Armor(2, "무쇠갑옷", 0, 9, "무쇠로 만들어져 튼튼한 갑옷입니다.", 2200, false, true);
-            Weapon spear = new Weapon(6, "스파르타의 창", 7, 0, "스파르타의 전사들이 사용했다는 전설의 창입니다.", 3200, false, true);
-            Weapon oldSword = new Weapon(4, "낡은 검", 2, 0, "쉽게 볼 수 있는 낡은 검입니다.", 600, false, true);
+            Armor armor = new Armor(1, "수련자 갑옷", 0, 5, "수련에 도움을 주는 갑옷입니다.", 1000, false, true);
+            Weapon oldSword = new Weapon(8, "낡은 검", 3, 0, "낡아서 사용할 수 있을지 모를 검입니다.", 500, false, true);
 
-            Equip(spear);
-            Equip(armor);
-
-            SetItem(spear);
             SetItem(armor);
             SetItem(oldSword);
+
+            Equip(oldSword);
+            Equip(armor);
+
         }
 
 
@@ -59,6 +58,9 @@
         }
 
 
+        /*
+         * 아이템을 인벤토리에 저장하는 함수
+         */
         public void SetItem(Equipment item)
         {
             items.Add(item);

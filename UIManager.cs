@@ -3,7 +3,6 @@
     public class UIManager
     {
         // 던전 층 수로 쓸 변수
-        public int dungeonFloor = 1;
 
         // 매개변수에 씬의 제목을 입력시 화면 최상단에 출력
         public void TiteleText(string str, ConsoleColor color = ConsoleColor.White, ConsoleColor color2 = ConsoleColor.Black)
@@ -71,7 +70,12 @@
             Console.SetCursorPosition(0, 25);
             Console.WriteLine($"   {str}");
             Console.WriteLine("");
-            Console.Write("   현재 입력 : ");
+            Console.Write("   현재 입력 :               ");
+            Console.SetCursorPosition(0, 28);
+            Console.Write("                         ");
+
+            Console.SetCursorPosition(16, 27);
+
             Console.CursorVisible = false;
         }
         // input이 int인지 검사
@@ -161,7 +165,7 @@
         public void NowFloorText()
         {
             Console.SetCursorPosition(3, 22);
-            Console.WriteLine($"현재 층 수 : {dungeonFloor}");
+            Console.WriteLine($"현재 층 수 : {GameManager.Instance.Player.PlayerData.DungeonFloor}");
         }
         // 사망메세지
         public void DieText()

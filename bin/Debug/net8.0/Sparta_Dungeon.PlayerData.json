@@ -1,1 +1,5 @@
+<<<<<<< Updated upstream
 ﻿{"Name":"qwer","Level":1,"Chad":"전사","Atk":13.0,"Def":16.0,"Vit":34.0,"Mp":40,"Exp":7,"Gold":3300}
+=======
+﻿{"DungeonFloor":2,"Name":"qwer","Level":1,"Chad":"전사","Atk":9.0,"Def":12.0,"Vit":96.0,"Mp":50,"Exp":1,"Gold":1600}
+>>>>>>> Stashed changes

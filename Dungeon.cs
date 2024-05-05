@@ -1,4 +1,5 @@
 ﻿
+using System.ComponentModel;
 using System.Numerics;
 
 namespace Sparta_Dungeon
@@ -60,13 +61,18 @@ namespace Sparta_Dungeon
 
             GameManager.Instance.Event.onEnterDungeon += ShowEnemies;
             GameManager.Instance.Event.onSelectEnemy += ShowSelectEnemies;
+
+            GameManager.Instance.Event.onCheckAttackCount += CheckCount;
+
             GameManager.Instance.Event.onPlayerAttack += AttackToEnemy;
+
             GameManager.Instance.Event.onPlayerSkillAttack += SkillAttackEnemy;
             GameManager.Instance.Event.onPlayerRangeSkillAttack += SkillAttackEnemy;
-            GameManager.Instance.Event.onCheckAttackCount += CheckCount;
             GameManager.Instance.Event.onEnemyAttack += AttacktoPlayer;
 
+            GameManager.Instance.Event.onEnemyDie += IsDie; ;
             GameManager.Instance.Event.onEnemyAllDie += IsAllDie;
+
             GameManager.Instance.Event.onReward += Reward;
         }
 
@@ -87,34 +93,167 @@ namespace Sparta_Dungeon
         {
             dungeonData.respawnList.Clear();
             dungeonData.Scale = dungeonData.rand.Next(1, 5);
-            for (int i = 0; i < dungeonData.Scale; i++)
-            {
-                int randIdx = dungeonData.rand.Next(0, dungeonData.enemies.Count);
-                dungeonData.respawnList.Add(new Enemy(dungeonData.enemies[randIdx]));
-            }
+
+            SpwanByDifficulty(GameManager.Instance.Player.PlayerData.DungeonFloor);
         }
+
+        // 던전 난이도 별 출현하는 몬스터의 변화를 주는 메서드
+        private void SpwanByDifficulty(int difficulty)
+        {
+            switch (difficulty)
+            {
+                // Difficulty 1이 나올 확률 100%
+                case 1:
+                    for (int i = 0; i < dungeonData.Scale; i++)
+                    {
+                        var enemies = dungeonData.enemies.Where(x => x.Difficulty == 1).ToArray();
+
+                        int randIdx = dungeonData.rand.Next(0, enemies.Length);
+                        dungeonData.respawnList.Add(new Enemy(dungeonData.enemies[randIdx]));
+                    }
+                    break;
+
+                // Difficulty 1이 나올 확률 60%
+                // Difficulty 2이 나올 확률 40%
+                case 2:
+                    for (int i = 0; i < dungeonData.Scale; i++)
+                    {
+                        int rand = dungeonData.rand.Next(0, 100);
+                        if (rand < 60)
+                        {
+                            var enemies = dungeonData.enemies.Where(x => x.Difficulty == 1).ToArray();
+                            int randIdx = dungeonData.rand.Next(0, enemies.Length);
+                            dungeonData.respawnList.Add(new Enemy(enemies[randIdx]));
+
+                        }
+                        else if (rand >= 60)
+                        {
+                            var enemies = dungeonData.enemies.Where(x => x.Difficulty == 2).ToArray();
+                            int randIdx = dungeonData.rand.Next(0, enemies.Length);
+                            dungeonData.respawnList.Add(new Enemy(enemies[randIdx]));
+                        }
+                    }
+                    break;
+
+                // Difficulty 1이 나올 확률 30%
+                // Difficulty 2이 나올 확률 50%
+                // Difficulty 3이 나올 확률 20%
+                case 3:
+                    for (int i = 0; i < dungeonData.Scale; i++)
+                    {
+                        int rand = dungeonData.rand.Next(0, 100);
+                        if (rand < 30)
+                        {
+                            var enemies = dungeonData.enemies.Where(x => x.Difficulty == 1).ToArray();
+                            int randIdx = dungeonData.rand.Next(0, enemies.Length);
+                            dungeonData.respawnList.Add(new Enemy(enemies[randIdx]));
+
+                        }
+                        else if (rand >= 30 && rand < 80)
+                        {
+                            var enemies = dungeonData.enemies.Where(x => x.Difficulty == 2).ToArray();
+                            int randIdx = dungeonData.rand.Next(0, enemies.Length);
+                            dungeonData.respawnList.Add(new Enemy(enemies[randIdx]));
+                        }
+                        else if (rand >= 80)
+                        {
+                            var enemies = dungeonData.enemies.Where(x => x.Difficulty == 3).ToArray();
+                            int randIdx = dungeonData.rand.Next(0, enemies.Length);
+                            dungeonData.respawnList.Add(new Enemy(enemies[randIdx]));
+                        }
+                    }
+                    break;
+                // Difficulty 1이 나올 확률 5%
+                // Difficulty 2이 나올 확률 30%
+                // Difficulty 3이 나올 확률 50%
+                // Difficulty 4이 나올 확률 15%
+                case 4:
+                    for (int i = 0; i < dungeonData.Scale; i++)
+                    {
+                        int rand = dungeonData.rand.Next(0, 100);
+                        if (rand < 5)
+                        {
+                            var enemies = dungeonData.enemies.Where(x => x.Difficulty == 1).ToArray();
+                            int randIdx = dungeonData.rand.Next(0, enemies.Length);
+                            dungeonData.respawnList.Add(new Enemy(enemies[randIdx]));
+
+                        }
+                        else if (rand >= 5 && rand < 35)
+                        {
+                            var enemies = dungeonData.enemies.Where(x => x.Difficulty == 2).ToArray();
+                            int randIdx = dungeonData.rand.Next(0, enemies.Length);
+                            dungeonData.respawnList.Add(new Enemy(enemies[randIdx]));
+                        }
+                        else if (rand >= 35 && rand < 85)
+                        {
+                            var enemies = dungeonData.enemies.Where(x => x.Difficulty == 3).ToArray();
+                            int randIdx = dungeonData.rand.Next(0, enemies.Length);
+                            dungeonData.respawnList.Add(new Enemy(enemies[randIdx]));
+                        }
+                        else if (rand >= 85)
+                        {
+                            var enemies = dungeonData.enemies.Where(x => x.Difficulty == 4).ToArray();
+                            int randIdx = dungeonData.rand.Next(0, enemies.Length);
+                            dungeonData.respawnList.Add(new Enemy(enemies[randIdx]));
+                        }
+                    }
+                    break;
+
+                // Difficulty 1이 나올 확률 0%
+                // Difficulty 2이 나올 확률 20%
+                // Difficulty 3이 나올 확률 40%
+                // Difficulty 4이 나올 확률 25%
+                // Difficulty 5이 나올 확률 15%
+                case 5:
+                    for (int i = 0; i < dungeonData.Scale; i++)
+                    {
+                        int rand = dungeonData.rand.Next(0, 100);
+                        if (rand < 20)
+                        {
+                            var enemies = dungeonData.enemies.Where(x => x.Difficulty == 2).ToArray();
+                            int randIdx = dungeonData.rand.Next(0, enemies.Length);
+                            dungeonData.respawnList.Add(new Enemy(enemies[randIdx]));
+
+                        }
+                        else if (rand >= 20 && rand < 60)
+                        {
+                            var enemies = dungeonData.enemies.Where(x => x.Difficulty == 3).ToArray();
+                            int randIdx = dungeonData.rand.Next(0, enemies.Length);
+                            dungeonData.respawnList.Add(new Enemy(enemies[randIdx]));
+                        }
+                        else if (rand >= 60 && rand < 85)
+                        {
+                            var enemies = dungeonData.enemies.Where(x => x.Difficulty == 4).ToArray();
+                            int randIdx = dungeonData.rand.Next(0, enemies.Length);
+                            dungeonData.respawnList.Add(new Enemy(enemies[randIdx]));
+                        }
+                        else if (rand >= 85)
+                        {
+                            var enemies = dungeonData.enemies.Where(x => x.Difficulty == 5).ToArray();
+                            int randIdx = dungeonData.rand.Next(0, enemies.Length);
+                            dungeonData.respawnList.Add(new Enemy(enemies[randIdx]));
+                        }
+                    }
+                    break;
+            }
+
+
+        }
+
 
         public bool IsAllDie()
         {
-            int count = 0;
-            for(int i = 0; i < dungeonData.respawnList.Count; i++)
-            {
-                if(dungeonData.respawnList[i].isDead)
-                {
-                    count++;
-                }
-            }
-            return dungeonData.respawnList.Count == count ? true : false;
+            return dungeonData.respawnList.All(enemy => enemy.isDead);
+        }
+
+        public bool IsDie(int enemyID)
+        {
+            return dungeonData.respawnList[enemyID-1].IsDead();
         }
 
         public void Reward()
         {
-            int rewardGold = 0;
-
-            foreach(Enemy enemy in dungeonData.respawnList)
-            {
-                rewardGold += enemy.GetDropGold();
-            }
+            int rewardGold = dungeonData.respawnList.Sum(enemy => enemy.GetDropGold());
 
             // 해당 플레이어에게 경험치를 부여
             GameManager.Instance.Player.Reward(dungeonData.respawnList.Count);
@@ -177,6 +316,7 @@ namespace Sparta_Dungeon
 
                     if (int.TryParse(Console.ReadLine(), out int sel))
                     {
+
                         if (sel == 0)
                         {
                             // 플레이어가 HP가 0일 경우
@@ -190,7 +330,12 @@ namespace Sparta_Dungeon
                             // 모든 적이 공격을 마칠 경우
                             if (i == dungeonData.respawnList.Count - 1)
                             {
-
+                                // 모든 적이 사망하였을 경우
+                                if (IsAllDie())
+                                {
+                                    // 모든 적이 죽어있는 상태일 경우
+                                    GameManager.Instance.Scene.WinScene();
+                                }
                                 // TODO 플레이어 턴으로 돌리기
                                 GameManager.Instance.Scene.BattleScene();
                             }
@@ -200,18 +345,18 @@ namespace Sparta_Dungeon
                         else
                         {
                             GameManager.Instance.UI.ErrorText();
+                            GameManager.Instance.UI.InputText("대상을 선택해주세요.");
+
                         }
                     }
                     else
                     {
                         GameManager.Instance.UI.ErrorText();
+                        GameManager.Instance.UI.InputText("대상을 선택해주세요.");
+
                     }
                 }
             }
-
-            // 모든 적이 죽어있는 상태일 경우
-            GameManager.Instance.Scene.WinScene();
-
         }
 
 
@@ -243,15 +388,13 @@ namespace Sparta_Dungeon
          * 범위 밖의 대상을 공격하려 할 때, 
          * 다시 공격 대상을 고를 수 있게 처리합니다.
          */
-        public void CheckCount(int count)
+        public bool CheckCount(int count)
         {
             if (count > dungeonData.respawnList.Count)
             {
-                GameManager.Instance.UI.ErrorText();
-                GameManager.Instance.Scene.BattleAttackScene();
-
-                return;
+                return false;
             }
+            return true;
         }
 
         /*
@@ -309,9 +452,6 @@ namespace Sparta_Dungeon
         {
             int num = sel;
             int enemycount = enemy - 1;
-
-            Console.SetCursorPosition(0, 4);
-            Console.WriteLine($"{GameManager.Instance.Player.PlayerData.Name} 의 스킬 공격!");
 
             GameManager.Instance.Player.UseSkill(num, dungeonData.respawnList[enemycount]);
         }

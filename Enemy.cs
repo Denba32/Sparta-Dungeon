@@ -12,9 +12,9 @@
          * 
          * 기본적으로 Enemy를 생성하는 방식입니다.
          */
-        public Enemy(string name, float level, float atk, float vit, int rewardGold, Equipment? dropItem)
+        public Enemy(string name, float level, float atk, float vit, int difficulty, int rewardGold, Equipment? dropItem)
         {
-            enemyData = new EnemyData(name, level, atk, vit, rewardGold, dropItem);
+            enemyData = new EnemyData(name, level, atk, vit, difficulty, rewardGold, dropItem);
             random = new Random();
         }
 
@@ -31,7 +31,7 @@
          */
         public Enemy(EnemyData enemyData)
         {
-            this.enemyData = new EnemyData(enemyData.Name, enemyData.Level, enemyData.Atk, enemyData.Vit, enemyData.DropGold, enemyData.DropItem);
+            this.enemyData = new EnemyData(enemyData.Name, enemyData.Level, enemyData.Atk, enemyData.Vit, enemyData.Difficulty, enemyData.DropGold, enemyData.DropItem);
             random = new Random();
         }
 

@@ -13,16 +13,19 @@ namespace Sparta_Dungeon
 
         public float Vit { get; set; }
 
+        public int Difficulty { get; set; }
+
         public int DropGold { get; set; }
         
         public Equipment? DropItem { get; set; }
 
-        public EnemyData(string name, float level, float atk, float vit, int dropGold, Equipment? dropItem = null)
+        public EnemyData(string name, float level, float atk, float vit, int difficulty, int dropGold, Equipment? dropItem = null)
         {
             Name = name;
             Level = level;
             Atk = atk;
             Vit = vit;
+            Difficulty = difficulty;
             DropGold = dropGold;
             DropItem = dropItem;
         }
