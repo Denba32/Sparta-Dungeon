@@ -11,11 +11,18 @@ namespace Sparta_Dungeon
             onSave?.Invoke(); 
         }
         // 플레이어가 아이템을 팔 때의 Event Action
-        public event Action<Equipment>? onSellItem;
+        public event Action<int>? onSellItem;
 
-        public void SellItem(Equipment equipment)
+        public void SellItem(int equipment)
         {
             onSellItem?.Invoke(equipment);
+        }
+
+        public event Action<int>? onBuy;
+
+        public void Buy(int index)
+        {
+            onBuy?.Invoke(index);
         }
         // 플레이어가 상점에서 아이템을 팔 때 Event Action
         public event Action<Equipment>? onBuyItem;
@@ -32,11 +39,11 @@ namespace Sparta_Dungeon
             onShowItems?.Invoke();
         }
 
-        public event Action? onShowSelectorItemList;
+        public event Action<bool>? onShowSelectorItemList;
 
-        public void ShowSelectorItemList()
+        public void ShowSelectorItemList(bool isTrue)
         {
-            onShowSelectorItemList?.Invoke();
+            onShowSelectorItemList?.Invoke(isTrue);
         }
 
 
@@ -152,6 +159,20 @@ namespace Sparta_Dungeon
         }
 
 
-        
+
+        #region 상점
+
+        public event Action<bool>? onShowShopList;
+        public void ShowShopList(bool istrue)
+        {
+            onShowShopList?.Invoke(istrue);
+        }
+
+        public event Action<Equipment>? onDetach;
+        public void Detached(Equipment equip)
+        {
+            onDetach?.Invoke(equip);
+        }
+        #endregion
     }
 }

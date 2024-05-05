@@ -3,11 +3,11 @@
     [System.Serializable]
     public class Inventory
     {
-        public List<Equipment> items { get; private set; } = new List<Equipment>();
+        public List<Equipment> items { get; set; } = new List<Equipment>();
         
         public Inventory()
         {
-            GameManager.Instance.Event.onSellItem += SetItem;
+            GameManager.Instance.Event.onDetach += Detach;
             GameManager.Instance.Event.onShowItems += ShowItems;
             GameManager.Instance.Event.onShowSelectorItemList += ShowSelectItems;
         }
@@ -42,12 +42,67 @@
          * 인벤토리 장비 변경 진입 시
          * 소유하고 있는 장비와 번호를 출력
          */
-        private void ShowSelectItems()
+        private void ShowSelectItems(bool istrue)
         {
-            for (int i = 0; i < items.Count; i++)
+            for (int i = 0; i < GameManager.Instance.Player.Inven.items.Count; i++)
             {
-                Console.Write($"   ({i + 1})");
-                items[i].ShowItemInfo(true);
+                if (istrue)
+                {
+                    Console.SetCursorPosition(1, 8 + i);
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.Write("[ヰ]");
+                    GameManager.Instance.UI.ConsoleColorReset();
+                }
+                else
+                {
+                    Console.SetCursorPosition(0, 8 + i);
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.Write("[ ");
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.Write($"{1 + i}");
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.Write(" ]");
+                    GameManager.Instance.UI.ConsoleColorReset();
+                }
+                if (GameManager.Instance.Player.Inven.items[i].EquipData.IsEquipped)
+                {
+                    Console.SetCursorPosition(6, 8 + i);
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.Write("[");
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write("E");
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.Write("]");
+                    GameManager.Instance.UI.ConsoleColorReset();
+                }
+                else
+                {
+                    Console.SetCursorPosition(6, 8 + i);
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.Write("[ ]");
+                    GameManager.Instance.UI.ConsoleColorReset();
+                }
+                if (GameManager.Instance.Player.Inven.items[i].Type == Define.EquipType.Weapon)
+                {
+                    Console.SetCursorPosition(10, 8 + i);
+                    Console.Write($"| {GameManager.Instance.Player.Inven.items[i].EquipData.Name}");
+                    Console.SetCursorPosition(28, 8 + i);
+                    Console.Write($"|  공격력 : {GameManager.Instance.Player.Inven.items[i].EquipData.Atk}");
+                    Console.SetCursorPosition(44, 8 + i);
+                    Console.Write($"|  {GameManager.Instance.Player.Inven.items[i].EquipData.Description}");
+                    Console.SetCursorPosition(99, 8 + i);
+                }
+                else
+                {
+                    Console.SetCursorPosition(10, 8 + i);
+                    Console.Write($"| {GameManager.Instance.Player.Inven.items[i].EquipData.Name}");
+                    Console.SetCursorPosition(28, 8 + i);
+                    Console.Write($"|  방어력 : {GameManager.Instance.Player.Inven.items[i].EquipData.Def}");
+                    Console.SetCursorPosition(44, 8 + i);
+                    Console.WriteLine($"|  {GameManager.Instance.Player.Inven.items[i].EquipData.Description}");
+                    Console.SetCursorPosition(99, 8 + i);
+                }
+
             }
         }
 
@@ -173,7 +228,11 @@
         }
         public void Detach(Equipment equip)
         {
-            if (equip.EquipData.IsEquipped)
+            if (equip == null)
+            {
+                return;
+            }
+            else if (equip.EquipData.IsEquipped)
             {
                 if (equip.Type == Define.EquipType.Weapon)
                 {
