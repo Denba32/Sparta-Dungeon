@@ -12,7 +12,6 @@ namespace Sparta_Dungeon
 
         private bool isLoad = false;
 
-        // public List<Potion> potions = new List<Potion>();
 
         private SkillController skillController;
 
@@ -230,28 +229,38 @@ namespace Sparta_Dungeon
                 }
             }
         }
-        /*
+        
         public void UsePotion()
         {
-            if (potions[0] != null)
+            if (Inven.potions.Count > 0)
             {
-                PlayerData.Vit += potions[0].Heal();
+                PlayerData.Vit += Inven.UsePotion();
+                if (PlayerData.Vit > 100)
+                    PlayerData.Vit = 100;
+
+                GameManager.Instance.UI.ErrorText("회복을 완료했습니다.");
+
                 // 회복을 완료했습니다.
             }
             else
             {
-                // TODO 포션이 없음을 출력함
+                GameManager.Instance.UI.ErrorText("포션이 부족합니다.");
+                return;
             }
         }
-        */
+        
         // 모든 스테이터스 정보를 포맷화하여 출력
         public void ShowAllStatus()
         {
-            Console.WriteLine("");
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.Write($"   이  름 : ");
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine($"{PlayerData.Name}");
+            Console.WriteLine("");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write($"   레  벨 : ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"{PlayerData.Level}");
             Console.WriteLine("");
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.Write($"   직  업 : ");
@@ -350,7 +359,6 @@ namespace Sparta_Dungeon
         }
 
 
-
         // 선택지 때 본인의 직업을 고르는 부분
         public void SetChad(string chad)
         {
@@ -364,6 +372,22 @@ namespace Sparta_Dungeon
             }
         }
 
+        /*
+         * 코드 기능 : 레벨업
+         * 
+         * 이번 EXP를 출력해준다.
+         */
+        public void Reward(int exp)
+        {
+            Console.WriteLine($"던전에서 몬스터 {exp}마리를 잡았습니다.");
+
+            int prev = PlayerData.Exp;
+            PlayerData.Exp += exp;
+            PlayerData.Mp += 10;
+
+            Console.WriteLine($"exp {prev} -> {PlayerData.Exp}\n");
+            LevelUp();
+        }
 
         // 던전 보상 및 출력
         public void RewardGold(int gold)
@@ -373,39 +397,40 @@ namespace Sparta_Dungeon
             PlayerData.Gold += gold;
         }
 
-        public void Reward(int exp)
+        public void RewardItem(Equipment[] items)
         {
-            Console.WriteLine($"던전에서 몬스터 {exp}마리를 잡았습니다.");
-
-            int prev = PlayerData.Exp;
-            PlayerData.Exp += exp;
-
-            Console.WriteLine($"exp {prev} -> {PlayerData.Exp}\n");
-            LevelUp();
-        }
-
-        public void Rest()
-        {
-            if (PlayerData.Gold >= 500)
+            for(int i = 0; i < items.Length; i++)
             {
-                SetGold(-500);
-                PlayerData.Vit = 100;
-            }
-            else
-            {
+                Console.WriteLine($"{items[i].EquipData.Name}\n");
+
+                // 포션일 경우
+                if (items[i].EquipData.Oid == 0)
+                {
+                    Inven.potions.Add((Potion)items[i]);
+                }
+                // 장비일 경우
+                else if (items[i].EquipData.Oid > 0)
+                {
+                    Inven.items.Add(items[i]);
+                }
+
             }
         }
 
         public void LevelUp()
         {
-            int requireExp;
-            if (GameManager.Instance.Data.levelDict.TryGetValue(PlayerData.Level, out requireExp))
+            if (GameManager.Instance.Data.levelDict.TryGetValue(PlayerData.Level, out int requireExp))
             {
                 if (PlayerData.Exp >= requireExp)
                 {
+                    Console.Write($"Lv.{PlayerData.Level} {PlayerData.Name} -> ");
+
                     PlayerData.Level++;
+                    
                     PlayerData.Atk += 0.5f;
                     PlayerData.Def += 1.0f;
+
+                    Console.Write($"Lv.{PlayerData.Level} {PlayerData.Name}\n"); 
                 }
             }
         }

@@ -38,9 +38,6 @@ namespace Sparta_Dungeon
         [JsonProperty]
         public int Gold { get;  set; }
 
-        [JsonProperty]
-        public int DungeonFloor = 1;
-
         public PlayerData() { }
         public PlayerData(string name, int level, string chad, float atk, float def, float vit, int mp, int exp, int gold)
         {
@@ -53,13 +50,7 @@ namespace Sparta_Dungeon
             Mp = mp;
             Exp = exp;
             Gold = gold;
-            DungeonFloor = 1;
 
-            //GameManager.Instance.Event.onEquipWeapon += PlusWeaponAbility;
-            //GameManager.Instance.Event.onEquipArmor += PlusArmorAbility;
-
-            //GameManager.Instance.Event.onDetachWeapon += MinusWeaponAbility;
-            //GameManager.Instance.Event.onDetachArmor += MinusArmorAbility;
         }
 
         #region Property Setter

@@ -37,7 +37,7 @@ namespace Sparta_Dungeon
         }
         public override void RequireText(int num)
         {
-            Store store = new Store();
+            Store store = new Store(true);
             string target = "";
 
             for (int i = 0; i < store.items.Count; i++)

@@ -9,11 +9,13 @@ namespace Sparta_Dungeon
     public class QuestManager
     {
         public List<Quest> quests = new List<Quest>();
-        public QuestManager()
+        public QuestManager() { }
+
+        public void Init()
         {
-            quests.Add(new HuntQuest("마을, 위협, 미니언, 처치", "마을, 위협, 미니언, 많은, 미니언, 5마리, 처치.",1500 , "미니언", 5));
+            quests.Add(new HuntQuest("마을, 위협, 미니언, 처치", "마을, 위협, 미니언, 많은, 미니언, 5마리, 처치.", 1500, "미니언", 5));
             quests.Add(new EquipQuest("장비, 착용", "바깥, 위험, 장비, 무쇠갑옷, 착용, 안전.", 500, 2));
-            quests.Add(new LevelQuest("레벨, 수련", "수련, 필요, 강함, 좋음, 레벨, 5, 필요.", 2500, 5));
+            quests.Add(new LevelQuest("레벨, 수련", "수련, 필요, 강함, 좋음, 레벨, 2, 필요.", 2500, 2));
         }
 
         public void ShowQuestList()
@@ -33,6 +35,8 @@ namespace Sparta_Dungeon
                     Console.SetCursorPosition(6, 8 + i);
                     Console.ForegroundColor = ConsoleColor.DarkGray;
                     Console.WriteLine(quests[i].Title);
+
+
                 }
                 else
                 {
@@ -48,6 +52,9 @@ namespace Sparta_Dungeon
                     Console.WriteLine(quests[i].Title);
                 }
             }
+
+            GameManager.Instance.Data.Save<QuestManager>(this);
+
         }
         public void ShowQuestInfo(int num)
         {
@@ -71,6 +78,9 @@ namespace Sparta_Dungeon
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("G");
             Console.ForegroundColor = ConsoleColor.White;
+
+            GameManager.Instance.Data.Save<QuestManager>(this);
+
         }
         public void QuestSelectText(int num)
         {
@@ -148,6 +158,9 @@ namespace Sparta_Dungeon
                 Console.ForegroundColor = ConsoleColor.White;
             }
             Console.WriteLine("");
+
+            GameManager.Instance.Data.Save<QuestManager>(this);
+
         }
     }
 }

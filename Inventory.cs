@@ -4,7 +4,8 @@
     public class Inventory
     {
         public List<Equipment> items { get; set; } = new List<Equipment>();
-        
+        public List<Potion> potions = new List<Potion>();
+
         public Inventory()
         {
             GameManager.Instance.Event.onDetach += Detach;
@@ -23,8 +24,23 @@
             Equip(oldSword);
             Equip(armor);
 
+            // 3개의 포션 장착
+            for(int i = 0; i < 3; i++)
+            {
+                potions.Add(new Potion());
+            }
         }
 
+        public float UsePotion()
+        {
+            if(potions.Count > 0)
+            {
+                Potion potion = potions[potions.Count - 1];
+                potions.Remove(potion);
+                return potion.Heal();
+            }
+            return 0;
+        }
 
         /*
          * 인벤토리 진입 시,

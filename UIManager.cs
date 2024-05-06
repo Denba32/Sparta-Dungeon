@@ -186,13 +186,12 @@ namespace Sparta_Dungeon
             {
                 Console.Write("=");
             }
-
         }
         // 던전의 층을 표시
         public void NowFloorText()
         {
             Console.SetCursorPosition(3, 22);
-            Console.WriteLine($"현재 층 수 : {GameManager.Instance.Player.PlayerData.DungeonFloor}");
+            Console.WriteLine($"현재 층 수 : {GameManager.Instance.Player.PlayerData.Level}");
         }
         // 사망메세지
         public void DieText()

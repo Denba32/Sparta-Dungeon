@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sparta_Dungeon
 {
+    [System.Serializable]
     public class Quest
     {
         public int QuestNum = 0;
@@ -25,6 +26,10 @@ namespace Sparta_Dungeon
         {
 
         }
+
+        public virtual void Process() { }
+        public virtual void Process(Enemy enemy) { }
+
         public void Clear()
         {
             if (State == Define.QuestState.ClearQuest)

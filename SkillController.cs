@@ -64,11 +64,15 @@ namespace Sparta_Dungeon
 
         }
 
-        public void CheckRequireMP(int sel)
+        public bool CheckRequireMP(int sel)
         {
             if(skillBook.TryGetValue(player.PlayerData.Chad, out List<ISkillExecutable> skill))
             {
-                skill[sel-1].CheckMP(player.PlayerData.Mp);
+                return skill[sel-1].CheckMP(player.PlayerData.Mp);
+            }
+            else
+            {
+                return false;
             }
         }
     }

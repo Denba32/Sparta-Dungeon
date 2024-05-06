@@ -31,7 +31,7 @@ namespace Sparta_Dungeon
             BattleSituation = Define.BattleSituation.Progress;
 
             // 일반 몬스터
-            enemies.Add(new EnemyData("미니언", 2, 7, 15, 1, 100, new Weapon(8, "낡은 검", 3, 0, "낡아서 사용할 수 있을지 모를 검입니다.", 500, false, false)));
+            enemies.Add(new EnemyData("미니언", 2, 7, 15, 1, 100, new Potion()));
             enemies.Add(new EnemyData("대포미니언", 5, 8, 17, 1, 200, new Armor(2, "무쇠 갑옷", 0, 7, "무쇠로 만들어져 튼튼한 갑옷입니다.", 1500, false, false)));
 
             // 특수 몬스터

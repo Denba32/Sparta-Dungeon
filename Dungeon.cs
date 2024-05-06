@@ -41,6 +41,8 @@ namespace Sparta_Dungeon
      */
     public class Dungeon
     {
+        private DungeonData dungeonData = new DungeonData();
+
         /*
          * 코드 기능
          * 
@@ -76,8 +78,6 @@ namespace Sparta_Dungeon
             GameManager.Instance.Event.onReward += Reward;
         }
 
-        private DungeonData dungeonData = new DungeonData();
-
 
         /*
          * 코드 기능
@@ -94,7 +94,7 @@ namespace Sparta_Dungeon
             dungeonData.respawnList.Clear();
             dungeonData.Scale = dungeonData.rand.Next(1, 5);
 
-            SpwanByDifficulty(GameManager.Instance.Player.PlayerData.DungeonFloor);
+            SpwanByDifficulty(GameManager.Instance.Player.PlayerData.Level);
         }
 
         // 던전 난이도 별 출현하는 몬스터의 변화를 주는 메서드
@@ -118,15 +118,15 @@ namespace Sparta_Dungeon
                 case 2:
                     for (int i = 0; i < dungeonData.Scale; i++)
                     {
-                        int rand = dungeonData.rand.Next(0, 100);
-                        if (rand < 60)
+                        int randNum = dungeonData.rand.Next(0, 100);
+                        if (randNum < 60)
                         {
                             var enemies = dungeonData.enemies.Where(x => x.Difficulty == 1).ToArray();
                             int randIdx = dungeonData.rand.Next(0, enemies.Length);
                             dungeonData.respawnList.Add(new Enemy(enemies[randIdx]));
 
                         }
-                        else if (rand >= 60)
+                        else if (randNum >= 60)
                         {
                             var enemies = dungeonData.enemies.Where(x => x.Difficulty == 2).ToArray();
                             int randIdx = dungeonData.rand.Next(0, enemies.Length);
@@ -141,21 +141,21 @@ namespace Sparta_Dungeon
                 case 3:
                     for (int i = 0; i < dungeonData.Scale; i++)
                     {
-                        int rand = dungeonData.rand.Next(0, 100);
-                        if (rand < 30)
+                        int randNum = dungeonData.rand.Next(0, 100);
+                        if (randNum < 30)
                         {
                             var enemies = dungeonData.enemies.Where(x => x.Difficulty == 1).ToArray();
                             int randIdx = dungeonData.rand.Next(0, enemies.Length);
                             dungeonData.respawnList.Add(new Enemy(enemies[randIdx]));
 
                         }
-                        else if (rand >= 30 && rand < 80)
+                        else if (randNum >= 30 && randNum < 80)
                         {
                             var enemies = dungeonData.enemies.Where(x => x.Difficulty == 2).ToArray();
                             int randIdx = dungeonData.rand.Next(0, enemies.Length);
                             dungeonData.respawnList.Add(new Enemy(enemies[randIdx]));
                         }
-                        else if (rand >= 80)
+                        else if (randNum >= 80)
                         {
                             var enemies = dungeonData.enemies.Where(x => x.Difficulty == 3).ToArray();
                             int randIdx = dungeonData.rand.Next(0, enemies.Length);
@@ -170,27 +170,27 @@ namespace Sparta_Dungeon
                 case 4:
                     for (int i = 0; i < dungeonData.Scale; i++)
                     {
-                        int rand = dungeonData.rand.Next(0, 100);
-                        if (rand < 5)
+                        int randNum = dungeonData.rand.Next(0, 100);
+                        if (randNum < 5)
                         {
                             var enemies = dungeonData.enemies.Where(x => x.Difficulty == 1).ToArray();
                             int randIdx = dungeonData.rand.Next(0, enemies.Length);
                             dungeonData.respawnList.Add(new Enemy(enemies[randIdx]));
 
                         }
-                        else if (rand >= 5 && rand < 35)
+                        else if (randNum >= 5 && randNum < 35)
                         {
                             var enemies = dungeonData.enemies.Where(x => x.Difficulty == 2).ToArray();
                             int randIdx = dungeonData.rand.Next(0, enemies.Length);
                             dungeonData.respawnList.Add(new Enemy(enemies[randIdx]));
                         }
-                        else if (rand >= 35 && rand < 85)
+                        else if (randNum >= 35 && randNum < 85)
                         {
                             var enemies = dungeonData.enemies.Where(x => x.Difficulty == 3).ToArray();
                             int randIdx = dungeonData.rand.Next(0, enemies.Length);
                             dungeonData.respawnList.Add(new Enemy(enemies[randIdx]));
                         }
-                        else if (rand >= 85)
+                        else if (randNum >= 85)
                         {
                             var enemies = dungeonData.enemies.Where(x => x.Difficulty == 4).ToArray();
                             int randIdx = dungeonData.rand.Next(0, enemies.Length);
@@ -207,33 +207,38 @@ namespace Sparta_Dungeon
                 case 5:
                     for (int i = 0; i < dungeonData.Scale; i++)
                     {
-                        int rand = dungeonData.rand.Next(0, 100);
-                        if (rand < 20)
+                        int randNum = dungeonData.rand.Next(0, 100);
+                        if (randNum < 20)
                         {
                             var enemies = dungeonData.enemies.Where(x => x.Difficulty == 2).ToArray();
                             int randIdx = dungeonData.rand.Next(0, enemies.Length);
                             dungeonData.respawnList.Add(new Enemy(enemies[randIdx]));
 
                         }
-                        else if (rand >= 20 && rand < 60)
+                        else if (randNum >= 20 && randNum < 60)
                         {
                             var enemies = dungeonData.enemies.Where(x => x.Difficulty == 3).ToArray();
                             int randIdx = dungeonData.rand.Next(0, enemies.Length);
                             dungeonData.respawnList.Add(new Enemy(enemies[randIdx]));
                         }
-                        else if (rand >= 60 && rand < 85)
+                        else if (randNum >= 60 && randNum < 85)
                         {
                             var enemies = dungeonData.enemies.Where(x => x.Difficulty == 4).ToArray();
                             int randIdx = dungeonData.rand.Next(0, enemies.Length);
                             dungeonData.respawnList.Add(new Enemy(enemies[randIdx]));
                         }
-                        else if (rand >= 85)
+                        else if (randNum >= 85)
                         {
                             var enemies = dungeonData.enemies.Where(x => x.Difficulty == 5).ToArray();
                             int randIdx = dungeonData.rand.Next(0, enemies.Length);
                             dungeonData.respawnList.Add(new Enemy(enemies[randIdx]));
                         }
                     }
+                    break;
+
+                default:
+                    int rand = dungeonData.rand.Next(0, dungeonData.respawnList.Count);
+                    dungeonData.respawnList.Add(new Enemy(dungeonData.enemies[rand]));
                     break;
             }
 
@@ -254,13 +259,14 @@ namespace Sparta_Dungeon
         public void Reward()
         {
             int rewardGold = dungeonData.respawnList.Sum(enemy => enemy.GetDropGold());
+            Equipment[] items = dungeonData.respawnList.Select(enemy => enemy.GetDropItem()).ToArray();
 
             // 해당 플레이어에게 경험치를 부여
             GameManager.Instance.Player.Reward(dungeonData.respawnList.Count);
 
             GameManager.Instance.Player.RewardGold(rewardGold);
 
-
+            GameManager.Instance.Player.RewardItem(items);
         }
 
         #region ========== Player Turn ==========
@@ -324,8 +330,6 @@ namespace Sparta_Dungeon
                             if (GameManager.Instance.Player.PlayerData.Vit <= 0)
                             {
                                 GameManager.Instance.Scene.DieScene();
-
-
                             }
                             // 모든 적이 공격을 마칠 경우
                             if (i == dungeonData.respawnList.Count - 1)
@@ -336,8 +340,9 @@ namespace Sparta_Dungeon
                                     // 모든 적이 죽어있는 상태일 경우
                                     GameManager.Instance.Scene.WinScene();
                                 }
-                                // TODO 플레이어 턴으로 돌리기
-                                GameManager.Instance.Scene.BattleScene();
+                                return;
+                                //// TODO 플레이어 턴으로 돌리기
+                                //GameManager.Instance.Scene.BattleScene();
                             }
 
                             break;

@@ -116,12 +116,10 @@ namespace Sparta_Dungeon
             onPlayerSkillAttack?.Invoke(sel, enemy);
         }
 
-
-
-        public event Action<int>? onCheckManaCount;
-        public void CheckManaCount(int num)
+        public event Func<int, bool>? onCheckManaCount;
+        public bool CheckManaCount(int num)
         {
-            onCheckManaCount?.Invoke(num);
+            return onCheckManaCount?.Invoke(num) ?? false;
         }
 
         #endregion
@@ -172,6 +170,12 @@ namespace Sparta_Dungeon
         public void Detached(Equipment equip)
         {
             onDetach?.Invoke(equip);
+        }
+
+        public event Action<Enemy>? onDead;
+        public void Dead(Enemy enemy)
+        {
+            onDead?.Invoke(enemy);
         }
         #endregion
     }

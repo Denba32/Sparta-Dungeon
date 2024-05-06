@@ -18,23 +18,36 @@ namespace Sparta_Dungeon
             State = Define.QuestState.CanAccept;
             Target = enemyName;
             RequireCount = requireCount;
+            GameManager.Instance.Event.onDead += Process;
+
         }
+
         public override void Notify()
         {
             DungeonData dungeon = new DungeonData();
 
             // 전투가 끝났을 시타겟과 같은 이름을 가진 몬스터의 갯수를 세서 카운트에 더해주기만 하면 됨
-
             if (State == Define.QuestState.CanAccept)
             {
                 Count = 0;
             }
-            else if (RequireCount >= Count)
+            else if (Count >= RequireCount)
             {
                 Count = RequireCount;
                 State = Define.QuestState.ClearQuest;
             }
         }
+
+        public override void Process(Enemy enemy)
+        {
+            base.Process(enemy);
+
+            if(Target == enemy.GetName())
+            {
+                Count++;
+            }
+        }
+
         public override void RequireText(int num)
         {
             DungeonData dungeon = new DungeonData();

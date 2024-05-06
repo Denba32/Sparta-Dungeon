@@ -1,6 +1,6 @@
 ﻿
 using Newtonsoft.Json;
-using System.Runtime.CompilerServices;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 
 namespace Sparta_Dungeon
@@ -9,6 +9,7 @@ namespace Sparta_Dungeon
     {
         public Dictionary<int, int> levelDict = new Dictionary<int, int>();
 
+
         public DataManager()
         {
             levelDict.Add(1, 10);
@@ -16,6 +17,8 @@ namespace Sparta_Dungeon
             levelDict.Add(3, 65);
             levelDict.Add(4, 100);
         }
+
+
 
         public void Save<T>(T data)
         {

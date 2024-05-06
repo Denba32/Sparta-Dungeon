@@ -3,7 +3,9 @@ namespace Sparta_Dungeon
 {
     public class SceneManager
     {
-        
+        private bool isLocked = false;
+        private bool isOut = false;
+        private bool isNext = false;
         #region ========== 초반 시작 화면 : 이름 설정 직업 설정 ==========
         // 시작 화면
         public void StartScene()
@@ -76,8 +78,6 @@ namespace Sparta_Dungeon
         }
 
         
-        
-        
         // 캐릭터 선택 화면
         public void SelectChar()
         {
@@ -130,8 +130,8 @@ namespace Sparta_Dungeon
             Console.WriteLine("   1.상태 보기");
             Console.WriteLine("   2.인벤토리");
             Console.WriteLine("   3.상점");
-            Console.WriteLine($"   4.던전 입장 : (현재 {GameManager.Instance.Player.PlayerData.DungeonFloor}층)");
-            Console.WriteLine("   5.휴식하기");
+            Console.WriteLine($"   4.던전 입장 : (현재 {GameManager.Instance.Player.PlayerData.Level}층)");
+            Console.WriteLine("   5.회복하기");
             Console.WriteLine("   6.퀘스트 게시판");
 
             GameManager.Instance.UI.InputText(ConsoleColor.Green);
@@ -170,6 +170,8 @@ namespace Sparta_Dungeon
             {
                 GameManager.Instance.UI.ErrorText();
             }
+            if (isOut)
+                isOut = false;
         }
 
         #endregion
@@ -424,11 +426,16 @@ namespace Sparta_Dungeon
         {
             while(true)
             {
+                if (isOut)
+                {
+                    isOut = false;
+                    return;
+                }
                 GameManager.Instance.UI.TiteleText("던전 입구");
                 GameManager.Instance.UI.LoreText("던전에 입장할 수 있습니다.");
 
                 GameManager.Instance.UI.SelectGuide(1);
-                Console.WriteLine($"   1.던전 입장 : (현재 {GameManager.Instance.Player.PlayerData.DungeonFloor}층)");
+                Console.WriteLine($"   1.던전 입장 : (현재 {GameManager.Instance.Player.PlayerData.Level}층)");
                 Console.WriteLine("   0.나가기");
 
 
@@ -443,6 +450,7 @@ namespace Sparta_Dungeon
                         {
                             break;
                         }
+
                         else if(sel == 1)
                         {
                             GameManager.Instance.Event.RespawnEnemy();
@@ -470,6 +478,8 @@ namespace Sparta_Dungeon
         {
             while (true)
             {
+                if (isOut)
+                    return;
                 GameManager.Instance.UI.TiteleText("!!!전투!!!");
 
                 GameManager.Instance.UI.EnemyText();
@@ -489,15 +499,27 @@ namespace Sparta_Dungeon
                     {
                         if(sel == 0)
                         {
+                            isLocked = false;
                             break;
                         }
-                        else if(sel == 1)
+                        // 전투가 끝나기 전까지는 이곳을 반복해야 함
+                        else if (sel == 1)
                         {
                             BattleAttackScene();
+                            
+                            if(!isLocked)
+                            {
+                                break;
+                            }
                         }
                         else if(sel == 2)
                         {
                             BattleSkillScene();
+
+                            if (!isLocked)
+                            {
+                                break;
+                            }
                         }
                         else
                         {
@@ -519,6 +541,8 @@ namespace Sparta_Dungeon
         {
             while (true)
             {
+                if (isOut)
+                    return;
                 GameManager.Instance.UI.TiteleText("공격하기");
 
                 GameManager.Instance.Event.SelectEnemy();
@@ -536,7 +560,12 @@ namespace Sparta_Dungeon
                 {
                     if (int.Parse(input) == 0)
                     {
+                        if (!isLocked)
+                        {
+                            isLocked = true;
+                        }
                         break;
+
                     }
                     else if (int.Parse(input) < 0)
                     {
@@ -544,11 +573,9 @@ namespace Sparta_Dungeon
                     }
                     else
                     {
-
                         // 공격으로 넘어가기 전 에너미 번호를 넘어선 값을 넣었는지 체크
                         if(GameManager.Instance.Event.CheckAttackCount(int.Parse(input)))
                         {
-
                             if (GameManager.Instance.Event.EnemyDie(int.Parse(input)))
                             {
                                 GameManager.Instance.UI.ErrorText();
@@ -557,13 +584,17 @@ namespace Sparta_Dungeon
                             {
                                 // TODO : 공격 범위 내에 공격 시 처리
                                 PlayerAttackResultScene(int.Parse(input));
-                            }
 
+                                if (!isLocked)
+                                {
+                                    isLocked = true;
+                                }
+                                break;
+                            }
                         }
                         else
                         {
                             GameManager.Instance.UI.ErrorText();
-
                         }
 
                     }
@@ -586,6 +617,8 @@ namespace Sparta_Dungeon
         {
             while (true)
             {
+                if (isOut)
+                    return;
                 GameManager.Instance.UI.TiteleText("플레이어 공격 결과");
 
                 // 몬스터 결과 출력
@@ -601,10 +634,14 @@ namespace Sparta_Dungeon
                 if (GameManager.Instance.Event.EnemyAllDie())
                 {
                     WinScene();
+                    break;
                 }
                 BattleEnemyLogScene();
-
+                break;
             }
+
+            // 전투 선택지로 되돌아감
+            return;
         }
         
         // 소유중인 스킬을 표시하고 선택하는 메서드
@@ -612,6 +649,8 @@ namespace Sparta_Dungeon
         {
             while (true)
             {
+                if (isOut)
+                    return;
                 GameManager.Instance.UI.TiteleText("스킬 사용하기");
                 //적 표시 기능 추가하기
 
@@ -634,12 +673,24 @@ namespace Sparta_Dungeon
                         }
                         else if (sel == 0)
                         {
+                            // 그대로 던전 입구까지 나가는 것을 방지
+                            if (!isLocked)
+                            {
+                                isLocked = true;
+                            }
                             break;
                         }
                         else
                         {
-                            GameManager.Instance.Event.CheckManaCount(sel);
-                            BattleSkillAttackScene(sel);
+                            if(GameManager.Instance.Event.CheckManaCount(sel))
+                            {
+                                BattleSkillAttackScene(sel);
+                                if (!isLocked)
+                                {
+                                    isLocked = true;
+                                }
+                                break ;
+                            }
                         }
                     }
                 }
@@ -655,14 +706,14 @@ namespace Sparta_Dungeon
         {
             while (true)
             {
+                if (isOut)
+                    return;
+                // 단일 공격 스킬을 사용한 경우
                 if (skillNum == 1) {
 
-                    // 1인 스킬을 사용한 경우
                     GameManager.Instance.UI.TiteleText("스킬 사용하기");
-                    //적 표시 기능 추가하기
 
                     GameManager.Instance.Event.SelectEnemy();
-
 
                     GameManager.Instance.UI.PlayerUI();
                     GameManager.Instance.UI.BattelAttackText();
@@ -695,14 +746,13 @@ namespace Sparta_Dungeon
                                     else
                                     {
                                         PlayerSkillAttackResultScene(skillNum, sel);
+                                        break;
                                     }
                                 }
                                 else
                                 {
                                     GameManager.Instance.UI.ErrorText();
-
                                 }
-
                             }
                         }
                     }
@@ -716,6 +766,13 @@ namespace Sparta_Dungeon
                 else if (skillNum == 2)
                 {
                     PlayerSkillAttackResultScene(skillNum);
+                    
+                    if(!isLocked)
+                    {
+                        isLocked = true;
+                    }
+                    break;
+
                 }
 
             }
@@ -729,6 +786,8 @@ namespace Sparta_Dungeon
             // ↓데미지 입힌 결과의 UI 띄우는 부분
             while (true)
             {
+                if (isOut)
+                    return;
                 GameManager.Instance.UI.TiteleText("플레이어 공격 결과");
 
                 Console.SetCursorPosition(0, 4);
@@ -743,16 +802,24 @@ namespace Sparta_Dungeon
 
                 if (int.TryParse(Console.ReadLine(), out int sel))
                 {
-                    switch (sel)
+                    if (sel == 0)
                     {
-                        // 적의 턴으로 넘아감
-                        case 0:
+                        // 죽인 순간 모든 적을 처리했을 경우
+                        if (GameManager.Instance.Event.EnemyAllDie())
+                        {
+                            WinScene();
+                            break;
+                        }
+                        else
+                        {
                             BattleEnemyLogScene();
                             break;
+                        }
 
-                        default:
-                            GameManager.Instance.UI.ErrorText();
-                            break;
+                    }
+                    else
+                    {
+                        GameManager.Instance.UI.ErrorText();
                     }
                 }
                 else
@@ -766,6 +833,8 @@ namespace Sparta_Dungeon
         {
             while (true)
             {
+                if (isOut)
+                    return;
                 GameManager.Instance.UI.TiteleText("플레이어 공격 결과");
 
                 // 몬스터 결과 출력
@@ -777,16 +846,25 @@ namespace Sparta_Dungeon
 
                 if (int.TryParse(Console.ReadLine(), out int sel))
                 {
-                    switch (sel)
+                    if(sel == 0)
                     {
-                        // 적의 턴으로 넘아감
-                        case 0:
+                        // 죽인 순간 모든 적을 처리했을 경우
+                        if (GameManager.Instance.Event.EnemyAllDie())
+                        {
+                            WinScene();
+                            break;
+                        }
+                        else
+                        {
                             BattleEnemyLogScene();
                             break;
+                        }
 
-                        default:
-                            GameManager.Instance.UI.ErrorText();
-                            break;
+                    }
+                    else
+                    {
+                        GameManager.Instance.UI.ErrorText();
+
                     }
                 }
                 else
@@ -806,48 +884,53 @@ namespace Sparta_Dungeon
         // 승리 화면(기능 추가 필요)
         public void WinScene()
         {
-            GameManager.Instance.UI.TiteleText("!!!승리!!!");
-            GameManager.Instance.UI.LoreText("전투에서 승리하셨습니다!");
-
-
-            // 보상 정보 출력
-            GameManager.Instance.Event.Reward();
-            GameManager.Instance.Player.PlayerData.DungeonFloor++;
-            GameManager.Instance.Event.OnSave();
-
-
-
-            //GameManager.Instance.UI.PlayerUI();
-            GameManager.Instance.UI.SelectGuide(1);
-            Console.WriteLine("   0.마을로 돌아가기");
-            Console.WriteLine("   1.다음 층으로");
-
-            GameManager.Instance.UI.InputText();
-
-            string input = Console.ReadLine();
-
-            if (GameManager.Instance.UI.IsNumTest(input))
+            while (true)
             {
-                switch (int.Parse(input))
+                GameManager.Instance.UI.TiteleText("!!!승리!!!");
+                GameManager.Instance.UI.LoreText("전투에서 승리하셨습니다!");
+
+                // 보상 정보 출력
+                GameManager.Instance.Event.Reward();
+                // 던전 레벨업
+                GameManager.Instance.Event.OnSave();
+
+                GameManager.Instance.UI.SelectGuide(1);
+
+                Console.WriteLine("   0.마을로 돌아가기");
+                Console.WriteLine("   1.다음 층으로");
+
+                GameManager.Instance.UI.InputText();
+
+                string input = Console.ReadLine();
+
+                if (GameManager.Instance.UI.IsNumTest(input))
                 {
-                    case 0:
-                        TownScene();
-                        break;
-                    case 1:
-                        GameManager.Instance.Event.RespawnEnemy();
-                        BattleScene();
-                        break;
-                    default:
-                        GameManager.Instance.UI.ErrorText();
+                    if (int.TryParse(input, out int sel))
+                    {
+                        if (sel == 0)
+                        {
+                            if(!isOut)
+                            {
+                                isOut = true;
+                            }
+                            return;
 
-                        break;
+                        }
+                        else if (sel == 1)
+                        {
+                            GameManager.Instance.Event.RespawnEnemy();
+                            return;
+                        }
+                        else
+                        {
+                            GameManager.Instance.UI.ErrorText();
+                        }
+                    }
                 }
-            }
-            else
-            {
-                GameManager.Instance.UI.ErrorText();
-
-                return;
+                else
+                {
+                    GameManager.Instance.UI.ErrorText();
+                }
             }
         }
 
@@ -873,7 +956,7 @@ namespace Sparta_Dungeon
 
             GameManager.Instance.Data.ClearData<PlayerData>();
             GameManager.Instance.Data.ClearData<Inventory>();
-
+            GameManager.Instance.Data.ClearData<QuestManager>();
 
             Environment.Exit(0);
         }
@@ -885,48 +968,58 @@ namespace Sparta_Dungeon
         // 휴식 화면(기능 추가 필요)
         void HospitalScene()
         {
-            GameManager.Instance.UI.TiteleText("휴식하기");
-            GameManager.Instance.UI.GoldText();
-            GameManager.Instance.UI.LoreText("500 G로 체력을 화복할 수 있습니다.");
-
-            GameManager.Instance.UI.SelectGuide(1);
-            Console.WriteLine("   0.나가기");
-            Console.WriteLine("   1.휴식하기");
-
-            //기능 추가 필요(체력 회복)
-
-            GameManager.Instance.UI.InputText();
-            string input = Console.ReadLine();
-
-            if (GameManager.Instance.UI.IsNumTest(input))
+            while(true)
             {
-                switch (int.Parse(input))
+                GameManager.Instance.UI.TiteleText("회복");
+                GameManager.Instance.UI.LoreText($"포션을 사용하여\n   체력을 30 회복할 수 있습니다.\n   (남은 포션 : {GameManager.Instance.Player.Inven.potions.Count} )");
+
+                GameManager.Instance.UI.SelectGuide(1);
+                Console.WriteLine("   1.사용하기");
+                Console.WriteLine("   0.나가기");
+
+                //기능 추가 필요(체력 회복)
+
+                GameManager.Instance.UI.InputText();
+                string input = Console.ReadLine();
+
+                if (GameManager.Instance.UI.IsNumTest(input))
                 {
-                    case 0:
-                        TownScene();
-                        break;
-                    case 1:
-                        GameManager.Instance.UI.SystemText("   미구현!!!");
-                        HospitalScene();
-                        break;
-                    default:
-                        GameManager.Instance.UI.ErrorText();
-                        HospitalScene();
-                        break;
+                    if(int.TryParse(input, out int sel))
+                    {
+                        // 돌아가기
+                        if(sel == 0)
+                        {
+                            TownScene();
+                            break;
+                        }
+                        // 회복 포션 사용
+                        else if(sel == 1)
+                        {
+                            GameManager.Instance.Player.UsePotion();
+                            GameManager.Instance.Event.OnSave();
+                        }
+                        else
+                        {
+                            GameManager.Instance.UI.ErrorText();
+                        }
+                    }
+                }
+                else
+                {
+                    GameManager.Instance.UI.ErrorText();
                 }
             }
-            else
-            {
-                GameManager.Instance.UI.ErrorText();
-                HospitalScene();
-            }
+
         }
 
         #endregion
 
 
         #region ========== 퀘스트 씬 ==========
-        //  퀘스트 게시판
+        
+        /*
+         * 퀘스트 게시판 씬
+         */
         void QuestBoardScene()
         {
             GameManager.Instance.UI.TiteleText("퀘스트 게시판", ConsoleColor.DarkYellow);
@@ -968,6 +1061,10 @@ namespace Sparta_Dungeon
             }
 
         }
+
+        /*
+         * 퀘스트 체크 씬
+         */
         void QuestCheckScene(int num)
         {
             if (GameManager.Instance.Quest.quests[num - 1].State == Define.QuestState.AcceptQuest || GameManager.Instance.Quest.quests[num - 1].State == Define.QuestState.ClearQuest)

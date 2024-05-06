@@ -3,7 +3,7 @@ namespace Sparta_Dungeon
 {
     public interface ISkillExecutable
     {
-        void CheckMP(int mp);
+        bool CheckMP(int mp);
         void ShowSkill(int num);
         void Execute(IDamagable damagable, float damage);
         void Execute(List<IDamagable> damagable, float damage);
@@ -27,16 +27,16 @@ namespace Sparta_Dungeon
         }
         
         // 스킬 사용 전 MP가 문제 없는지 체크
-        public void CheckMP(int mp)
+        public bool CheckMP(int mp)
         {
             if(mp >= RequireMP)
             {
-
+                return true;
             }
             else
             {
                 GameManager.Instance.UI.ErrorText("MP가 부족합니다.");
-                GameManager.Instance.Scene.BattleSkillScene();
+                return false;
             }
         }
         public void ShowSkill(int num)

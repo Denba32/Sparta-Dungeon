@@ -35,6 +35,10 @@
             random = new Random();
         }
 
+        public string GetName()
+        {
+            return enemyData.Name;
+        }
         public void Attack()
         {
             if(!isDead)
@@ -147,6 +151,8 @@
         private void Dead()
         {
             isDead = true;
+
+            GameManager.Instance.Event.Dead(this);
         }
 
         public bool IsDead()
@@ -172,6 +178,13 @@
         public int GetDropGold()
         {
             return enemyData.DropGold;
+        }
+
+        public Equipment? GetDropItem()
+        {
+            if (enemyData.DropItem == null)
+                return null;
+            return enemyData.DropItem;
         }
     }
 }

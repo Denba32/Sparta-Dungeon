@@ -2,6 +2,7 @@
 
 namespace Sparta_Dungeon
 {
+    [System.Serializable]
     public class Store
     {
         public List<Equipment> items { get; set; } = new List<Equipment>();
@@ -11,18 +12,24 @@ namespace Sparta_Dungeon
             GameManager.Instance.Event.onSellItem += Sell;
             GameManager.Instance.Event.onBuy += Buy;
             GameManager.Instance.Event.onShowShopList += ShowAllItemData;
-            Init();
+        }
 
+        public Store(bool active)
+        {
+            GameManager.Instance.Event.onSellItem += Sell;
+            GameManager.Instance.Event.onBuy += Buy;
+            GameManager.Instance.Event.onShowShopList += ShowAllItemData;
+            Init();
         }
 
         public void Init()
         {
             items.Add(new Armor(1, "수련자 갑옷", 0, 5, "수련에 도움을 주는 갑옷입니다.", 1000, false, false));
-            items.Add(new Armor(2, "무쇠갑옷", 0, 9, "무쇠로 만들어져 튼튼한 갑옷입니다.", 2200, false, true));
-            items.Add(new Armor(3, "스파르타의 갑옷", 0, 15, "스파르타의 전사들이 사용했다는 전설의 갑옷입니다.", 3500, false, false));
-            items.Add(new Weapon(4, "낡은 검", 2, 0, "쉽게 볼 수 있는 낡은 검 입니다.", 600, false, true));
-            items.Add(new Weapon(5, "청동 도끼", 5, 0, "어디선가 사용됐던거 같은 도끼입니다.", 1500, false, false));
-            items.Add(new Weapon(6, "스파르타의 창", 7, 0, "스파르타의 전사들이 사용했다는 전설의 창입니다.", 3200, false, true));
+            items.Add(new Armor(2, "무쇠갑옷", 0, 7, "무쇠로 만들어져 튼튼한 갑옷입니다.", 1500, false, true));
+            items.Add(new Armor(5, "스파르타의 갑옷", 0, 15, "영웅 르탄이 착용했던 갑옷입니다.", 3200, false, false));
+            items.Add(new Weapon(8, "낡은 검", 2, 0, "수련에 도움을 주는 검입니다.", 300, false, true));
+            items.Add(new Weapon(14, "청동 도끼", 5, 0, "어디선가 사용했던거 같은 도끼입니다.", 1000, false, false));
+            items.Add(new Weapon(20, "스파르타의 창", 16, 0, "영웅 르탄이 착용했던 창입니다.", 4200, false, true));
         }
 
         public void ShowAllItemData(bool istrue)
@@ -109,6 +116,9 @@ namespace Sparta_Dungeon
                         GameManager.Instance.Player.Inven.items.Add(new Armor(items[index - 1].EquipData.Oid, items[index - 1].EquipData.Name, 0, items[index - 1].EquipData.Def, items[index - 1].EquipData.Description, items[index - 1].EquipData.Price, false, false));
                     }
                     GameManager.Instance.UI.SystemText("   아이템을 구매했습니다!",ConsoleColor.Green, 400);
+                    
+                    GameManager.Instance.Data.Save<Store>(this);
+
                 }
             }
         }
@@ -126,6 +136,7 @@ namespace Sparta_Dungeon
                 GameManager.Instance.Event.Detached(GameManager.Instance.Player.Inven.items[index - 1]);
                 GameManager.Instance.Player.Inven.items.RemoveAt(index - 1);
                 GameManager.Instance.UI.SystemText("   아이템을 판매했습니다!", ConsoleColor.Green, 400);
+                GameManager.Instance.Data.Save<Store>(this);
             }
         }
     }
