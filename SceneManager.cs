@@ -5,7 +5,8 @@ namespace Sparta_Dungeon
     {
         private bool isLocked = false;
         private bool isOut = false;
-        private bool isNext = false;
+
+
         #region ========== 초반 시작 화면 : 이름 설정 직업 설정 ==========
         // 시작 화면
         public void StartScene()

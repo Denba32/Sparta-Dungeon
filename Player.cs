@@ -10,13 +10,10 @@ namespace Sparta_Dungeon
 
         private Equipment? armor;
 
-        private bool isLoad = false;
-
-
         private SkillController skillController;
 
-        public int count = 0;
-        
+        private bool isLoad = false;
+
         public Player()
         {
             skillController = new SkillController(this);
@@ -184,11 +181,8 @@ namespace Sparta_Dungeon
                         // 넘어감
                     }
                 }
-
                 armor = value;
             }
-
-
         }
         private void InitEquip()
         {
